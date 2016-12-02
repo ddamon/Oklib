@@ -1,13 +1,13 @@
 package com.oklib.utils.network;
 
 import android.content.Context;
-import android.util.Log;
+
+import com.oklib.utils.logger.Logger;
 
 /**
  * DownSubscriber
- * Created by Tamic on 2016-08-03.
  */
-public class DownSubscriber <ResponseBody extends okhttp3.ResponseBody> extends BaseSubscriber<ResponseBody> {
+public class DownSubscriber<ResponseBody extends okhttp3.ResponseBody> extends BaseSubscriber<ResponseBody> {
     private DownLoadCallBack callBack;
     private Context context;
     private String path;
@@ -38,16 +38,16 @@ public class DownSubscriber <ResponseBody extends okhttp3.ResponseBody> extends 
 
     @Override
     public void onError(final MThrowable e) {
-        Log.d( NovateDownLoadManager.TAG, "DownSubscriber:>>>> onError:" + e.getMessage());
+        Logger.d(DownLoadManager.TAG, "DownSubscriber:>>>> onError:" + e.getMessage());
         callBack.onError(e);
     }
 
     @Override
     public void onNext(ResponseBody responseBody) {
 
-        Log.d(NovateDownLoadManager.TAG, "DownSubscriber:>>>> onNext");
+        Logger.d(DownLoadManager.TAG, "DownSubscriber:>>>> onNext");
 
-        NovateDownLoadManager.getInstance(callBack).writeResponseBodyToDisk(path, name, context, responseBody);
+        DownLoadManager.getInstance(callBack).writeResponseBodyToDisk(path, name, context, responseBody);
 
     }
 }

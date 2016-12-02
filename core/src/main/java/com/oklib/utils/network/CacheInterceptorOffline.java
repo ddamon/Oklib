@@ -3,7 +3,7 @@ package com.oklib.utils.network;
 import android.content.Context;
 import android.util.Log;
 
-import com.dm.core.network.util.NetworkUtil;
+import com.oklib.utils.network.util.NetworkUtil;
 
 import java.io.IOException;
 

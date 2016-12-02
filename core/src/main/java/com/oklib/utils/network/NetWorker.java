@@ -4,13 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.dm.core.network.Exception.ConfigLoader;
-import com.dm.core.network.Exception.FormatException;
-import com.dm.core.network.Exception.NovateException;
-import com.dm.core.network.Exception.ServerException;
-import com.dm.core.network.util.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.oklib.utils.network.Exception.ConfigLoader;
+import com.oklib.utils.network.Exception.FormatException;
+import com.oklib.utils.network.Exception.NovateException;
+import com.oklib.utils.network.Exception.ServerException;
+import com.oklib.utils.network.util.Utils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -175,7 +175,7 @@ public final class NetWorker {
      * @param <T>
      * @return
      */
-    public <T> Observable.Transformer<NovateResponse<T>, T> handleErrTransformer() {
+    public <T> Observable.Transformer<Response<T>, T> handleErrTransformer() {
 
         if (exceptTransformer != null) return exceptTransformer;
 
@@ -194,9 +194,9 @@ public final class NetWorker {
         }
     }
 
-    private class HandleFuc<T> implements Func1<NovateResponse<T>, T> {
+    private class HandleFuc<T> implements Func1<Response<T>, T> {
         @Override
-        public T call(NovateResponse<T> response) {
+        public T call(Response<T> response) {
             if (response == null || (response.getData() == null && response.getResult() == null)) {
                 throw new JsonParseException("后端数据不对");
             }
@@ -593,13 +593,13 @@ public final class NetWorker {
      * @param callBack
      */
     private void executeDownload(String savePath, String name, DownLoadCallBack callBack) {
-        if (NovateDownLoadManager.isDownLoading) {
+        if (DownLoadManager.isDownLoading) {
             downObservable.unsubscribeOn(Schedulers.io());
-            NovateDownLoadManager.isDownLoading = false;
-            NovateDownLoadManager.isCancel = true;
+            DownLoadManager.isDownLoading = false;
+            DownLoadManager.isCancel = true;
             return;
         }
-        NovateDownLoadManager.isDownLoading = true;
+        DownLoadManager.isDownLoading = true;
         downObservable.compose(schedulersTransformerDown)
                 .compose(handleErrTransformer())
                 .subscribe(new DownSubscriber<ResponseBody>(savePath, name, callBack, mContext));
@@ -628,7 +628,7 @@ public final class NetWorker {
         private Executor callbackExecutor;
         private boolean validateEagerly;
         private Context context;
-        private NovateCookieManger cookieManager;
+        private CookieManger cookieManager;
         private Cache cache = null;
         private Proxy proxy;
         private File httpCacheDirectory;
@@ -855,9 +855,9 @@ public final class NetWorker {
          * Sets the handler that can accept cookies from incoming HTTP responses and provides cookies to
          * outgoing HTTP requests.
          * <p/>
-         * <p>If unset, {@linkplain NovateCookieManger#NO_COOKIES no cookies} will be accepted nor provided.
+         * <p>If unset, {@linkplain CookieManger#NO_COOKIES no cookies} will be accepted nor provided.
          */
-        public Builder cookieManager(NovateCookieManger cookie) {
+        public Builder cookieManager(CookieManger cookie) {
             if (cookie == null) throw new NullPointerException("cookieManager == null");
             this.cookieManager = cookie;
             return this;
@@ -886,15 +886,15 @@ public final class NetWorker {
          * Sets the handler that can accept cookies from incoming HTTP responses and provides cookies to
          * outgoing HTTP requests.
          * <p/>
-         * <p>If unset, {@linkplain NovateCookieManger#NO_COOKIES no cookies} will be accepted nor provided.
+         * <p>If unset, {@linkplain CookieManger#NO_COOKIES no cookies} will be accepted nor provided.
          */
         public Builder addSSL(String[] hosts, int[] certificates) {
             if (hosts == null) throw new NullPointerException("hosts == null");
             if (certificates == null) throw new NullPointerException("ids == null");
 
 
-            addSSLSocketFactory(NovateHttpsFactroy.getSSLSocketFactory(context, certificates));
-            addHostnameVerifier(NovateHttpsFactroy.getHostnameVerifier(hosts));
+            addSSLSocketFactory(HttpsFactroy.getSSLSocketFactory(context, certificates));
+            addHostnameVerifier(HttpsFactroy.getHostnameVerifier(hosts));
             return this;
         }
 
@@ -1036,7 +1036,7 @@ public final class NetWorker {
              * <p>If unset, {@link NetWorker CookieManager#NO_COOKIES no cookies} will be accepted nor provided.
              */
             if (isCookie && cookieManager == null) {
-                okhttpBuilder.cookieJar(new NovateCookieManger(context));
+                okhttpBuilder.cookieJar(new CookieManger(context));
             }
 
             if (cookieManager != null) {
@@ -1125,7 +1125,7 @@ public final class NetWorker {
                 Log.d("OkHttp", "ResponseBody:" + jsStr);
                 if (callBack != null) {
                     try {
-                        NovateResponse<T> baseResponse = null;
+                        Response<T> baseResponse = null;
                         if (new Gson().fromJson(jsStr, finalNeedType) == null) {
                             throw new NullPointerException();
                         }

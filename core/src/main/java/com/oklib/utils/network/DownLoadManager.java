@@ -6,7 +6,7 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.dm.core.network.util.Utils;
+import com.oklib.utils.network.util.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,9 +17,8 @@ import java.io.OutputStream;
 import okhttp3.ResponseBody;
 
 /**
- * Created by Tamic on 2016-07-11.
  */
-public class NovateDownLoadManager {
+public class DownLoadManager {
 
     private DownLoadCallBack callBack;
 
@@ -39,19 +38,19 @@ public class NovateDownLoadManager {
 
     public static boolean isCancel = false;
 
-    public NovateDownLoadManager(DownLoadCallBack callBack) {
+    public DownLoadManager(DownLoadCallBack callBack) {
         this.callBack = callBack;
         handler = new Handler(Looper.getMainLooper());
     }
 
-    private static NovateDownLoadManager sInstance;
+    private static DownLoadManager sInstance;
 
     /**
      * DownLoadManager getInstance
      */
-    public static synchronized NovateDownLoadManager getInstance(DownLoadCallBack callBack) {
+    public static synchronized DownLoadManager getInstance(DownLoadCallBack callBack) {
         if (sInstance == null) {
-            sInstance = new NovateDownLoadManager(callBack);
+            sInstance = new DownLoadManager(callBack);
         }
         return sInstance;
     }

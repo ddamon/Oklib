@@ -3,8 +3,8 @@ package com.oklib.utils.network.Exception;
 import android.net.ParseException;
 import android.util.Log;
 
-import com.dm.core.network.MThrowable;
 import com.google.gson.JsonParseException;
+import com.oklib.utils.network.MThrowable;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -14,7 +14,6 @@ import java.net.ConnectException;
 import retrofit2.adapter.rxjava.HttpException;
 
 /**
- * Created by Tamic on 2016-08-12.
  */
 public class NovateException {
 

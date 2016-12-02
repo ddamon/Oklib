@@ -11,8 +11,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * caheInterceptor
- * Created by Tamic on 2016-08-09.
+ * cacheInterceptor
  */
 public class CacheInterceptor implements Interceptor {
 

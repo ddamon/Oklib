@@ -19,11 +19,9 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 /**
- * NovateHttpsFactroy
- * Created by Tamic on 2016-06-27.
  *  {@link // http://developer.android.com/training/articles/security-ssl.html#Concepts}
  */
-public class NovateHttpsFactroy {
+public class HttpsFactroy {
 
     private static HostnameVerifier TRUSTED_VERIFIER;
 

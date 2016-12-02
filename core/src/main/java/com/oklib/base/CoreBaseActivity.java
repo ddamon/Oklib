@@ -34,12 +34,12 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * Created by hpw on 16/10/12.
  */
 
-public abstract class CoreBaseActivity<T extends CoreBasePresenter, E extends CoreBaseModel> extends SupportActivity {
+public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity {
 
     protected String TAG;
 
-    public T mPresenter;
-    public E mModel;
+    public P mPresenter;
+    public M mModel;
     protected Context mContext;
     Unbinder binder;
 

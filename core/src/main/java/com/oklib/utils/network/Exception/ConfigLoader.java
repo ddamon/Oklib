@@ -4,11 +4,10 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.dm.core.network.util.FileUtil;
 import com.google.gson.Gson;
+import com.oklib.utils.network.util.FileUtil;
 
 /**
- * Created by Tamic on 2016-11-07.
  */
 
 public class ConfigLoader {

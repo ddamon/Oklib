@@ -27,12 +27,12 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  *
  */
 
-public abstract class CoreBaseFragment<T extends CoreBasePresenter, E extends CoreBaseModel> extends SupportFragment {
+public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment {
     protected String TAG;
     protected OnBackToFirstListener _mBackToFirstListener;
 
-    public T mPresenter;
-    public E mModel;
+    public P mPresenter;
+    public M mModel;
     protected Context mContext;
     protected Activity mActivity;
     Unbinder binder;

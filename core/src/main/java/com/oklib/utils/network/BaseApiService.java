@@ -24,7 +24,6 @@ import rx.Observable;
 
 /**
  * ApiService
- * Created by Tamic on 2016-06-03.
  */
 public interface BaseApiService {
     @POST()

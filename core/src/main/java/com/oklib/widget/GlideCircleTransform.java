@@ -10,7 +10,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 /**
- * Created by hpw on 16/11/1.
+ * .
  */
 
 public class GlideCircleTransform extends BitmapTransformation {

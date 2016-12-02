@@ -3,7 +3,7 @@ package com.oklib.base;
 import com.oklib.data.repository.Repository;
 
 /**
- * Created by hpw on 16/11/1.
+ * .
  */
 
 public class CoreBaseRepository {

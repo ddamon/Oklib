@@ -3,13 +3,12 @@ package com.oklib.utils.network;
 import android.content.Context;
 import android.util.Log;
 
-import com.dm.core.network.Exception.NovateException;
+import com.oklib.utils.network.Exception.NovateException;
 
 import rx.Subscriber;
 
 /**
  * BaseSubscriber
- * Created by Tamic on 2016-08-03.
  */
 public abstract class BaseSubscriber<T> extends Subscriber<T> {
 
@@ -22,9 +21,9 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
     @Override
     final public void onError(Throwable e) {
         Log.e("NetWorker", e.getMessage());
-        if(e instanceof Throwable){
+        if (e instanceof Throwable) {
             Log.e("NetWorker", "--> e instanceof MThrowable");
-            onError((MThrowable)e);
+            onError((MThrowable) e);
         } else {
             Log.e("NetWorker", "e !instanceof MThrowable");
             onError(new MThrowable(e, NovateException.ERROR.UNKNOWN));
@@ -44,6 +43,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         Log.e("NetWorker", "-->http is Complete");
         // todo some common as  dismiss loadding
     }
+
     public abstract void onError(MThrowable e);
 
 }

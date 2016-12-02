@@ -1,15 +1,9 @@
 package com.oklib.utils.network.Exception;
 
 
-
 import java.util.List;
 
-/**
- * Created by LIUYONGKUI726 on 2016-11-11.
- */
-
 public class Config {
-
 
     /**
      * isFormat : false

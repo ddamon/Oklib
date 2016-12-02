@@ -12,20 +12,18 @@ import okhttp3.HttpUrl;
 
 /**
  * RetrofitClient
- * Created by Tamic on 2016-06-15.
- * {@link # https://github.com/NeglectedByBoss/RetrofitClient}
  */
 
-public class NovateCookieManger implements CookieJar {
+public class CookieManger implements CookieJar {
 
-    private static final String TAG = "NovateCookieManger";
+    private static final String TAG = "CookieManger";
     private static Context mContext;
     private static PersistentCookieStore cookieStore;
 
     /**
-     * Mandatory constructor for the NovateCookieManger
+     * Mandatory constructor for the CookieManger
      */
-    public NovateCookieManger(Context context) {
+    public CookieManger(Context context) {
         mContext = context;
         if (cookieStore == null) {
             cookieStore = new PersistentCookieStore(mContext);

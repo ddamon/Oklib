@@ -16,7 +16,7 @@ import com.oklib.widget.recyclerview.animation.BaseAnimation;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 /**
- * Created by hpw on 16/11/1.
+ * .
  */
 
 public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {

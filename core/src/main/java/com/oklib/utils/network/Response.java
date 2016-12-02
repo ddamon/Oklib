@@ -3,14 +3,10 @@ package com.oklib.utils.network;
 
 import android.content.Context;
 
-import com.dm.core.network.Exception.ConfigLoader;
+import com.oklib.utils.network.Exception.ConfigLoader;
 
 
-/**
- * BaseResponse Data T
- * Created by Tamic on 2016-06-06.
- */
-public class NovateResponse<T> {
+public class Response<T> {
     //结果码
     private int code = 1;
     /*错误信息:msg, error, message*/
@@ -74,7 +70,7 @@ public class NovateResponse<T> {
 
     @Override
     public String toString() {
-        return "NovateResponse{" +
+        return "Response{" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
                 ", error='" + error + '\'' +

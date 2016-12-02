@@ -1,7 +1,6 @@
 package com.oklib.utils.network.Exception;
 
 /**
- * Created by  Tamic on 2016-11-04.
  */
 
 public class FormatException extends RuntimeException {

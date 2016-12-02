@@ -7,9 +7,7 @@ import java.io.Serializable;
 
 import okhttp3.Cookie;
 
-/**
- * Created by LIUYONGKUI726 on 2016-06-09.
- */
+
 public class SerializableOkHttpCookies implements Serializable {
 
     private transient final Cookie cookies;
@@ -57,6 +55,6 @@ public class SerializableOkHttpCookies implements Serializable {
         builder = builder.path(path);
         builder = secure ? builder.secure() : builder;
         builder = httpOnly ? builder.httpOnly() : builder;
-        clientCookies =builder.build();
+        clientCookies = builder.build();
     }
 }
