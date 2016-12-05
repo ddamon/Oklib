@@ -4,12 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import com.oklib.utils.network.Exception.ConfigLoader;
-import com.oklib.utils.network.Exception.FormatException;
 import com.oklib.utils.network.Exception.NovateException;
-import com.oklib.utils.network.Exception.ServerException;
 import com.oklib.utils.network.util.Utils;
 
 import java.io.File;
@@ -71,9 +67,6 @@ public final class NetWorker {
     private Observable.Transformer exceptTransformer = null;
     public static final String TAG = "NetWorker";
 
-    /**
-     * Mandatory constructor for the NetWorker
-     */
     NetWorker(okhttp3.Call.Factory callFactory, String baseUrl, Map<String, String> headers,
               Map<String, String> parameters, BaseApiService apiManager,
               List<Converter.Factory> converterFactories, List<CallAdapter.Factory> adapterFactories,
@@ -106,6 +99,11 @@ public final class NetWorker {
                 .subscribe(subscriber);
     }
 
+    public <T> T call(Observable<T> observable) {
+        return (T) observable.compose(schedulersTransformer)
+                .compose(handleErrTransformer());
+    }
+
     /**
      * Retroift execute get
      * <p>
@@ -113,18 +111,11 @@ public final class NetWorker {
      * <p>
      * you don't need to parse ResponseBody
      */
-    public <T> T executeGet(final String url, final Map<String, String> maps, final ResponseCallBack<T> callBack) {
+    public <T> T executeGet(final String url, final Map<String, String> maps) {
 
-        final Type[] types = callBack.getClass().getGenericInterfaces();
-        if (MethodHandler(types) == null || MethodHandler(types).size() == 0) {
-            return null;
-        }
-        final Type finalNeedType = MethodHandler(types).get(0);
-        Log.d(TAG, "-->:" + "Type:" + types[0]);
         return (T) apiManager.executeGet(url, maps)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(new NovateSubscriber<T>(mContext, finalNeedType, callBack));
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -225,63 +216,23 @@ public final class NetWorker {
     }
 
     /**
-     * /**
-     * Retroift executePost
-     *
-     * @return no parse data
-     * <p>
-     * you must to be parse ResponseBody
-     * <p>
-     * <p/>
-     * For example,
-     * <pre>{@code
-     * NetWorker novate = new NetWorker.Builder()
-     *     .baseUrl("http://api.example.com")
-     *     .addConverterFactory(GsonConverterFactory.create())
-     *     .build();
-     *
-     * novate.post("url", parameters, new BaseSubscriber<ResponseBody>(context) {
-     *    @Override
-     *   public void onError(MThrowable e) {
-     *
-     *   }
-     *
-     *  @Override
-     *  public void onNext(ResponseBody responseBody) {
-     *
-     *   // todo you need to parse responseBody
-     *
-     *  }
-     *  });
-     * <p/>
-     *
-     * }</pre>
+     * @param url
+     * @param parameters
      */
-    public void post(String url, @FieldMap(encoded = true) Map<String, String> parameters, Subscriber<ResponseBody> subscriber) {
+    public void post(String url, @FieldMap(encoded = true) Map<String, String> parameters) {
         apiManager.executePost(url, parameters)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
-     * Retroift executePost
-     *
      * @return parsed data
-     * you don't need to   parse ResponseBody
      */
-    public <T> T executePost(final String url, final Map<String, String> parameters, final ResponseCallBack<T> callBack) {
-        final Type[] types = callBack.getClass().getGenericInterfaces();
-        if (MethodHandler(types) == null || MethodHandler(types).size() == 0) {
-            return null;
-        }
-        final Type finalNeedType = MethodHandler(types).get(0);
-        Log.d(TAG, "-->:" + "Type:" + types[0]);
+    public <T> T executePost(final String url, final Map<String, String> parameters) {
 
         return (T) apiManager.executePost(url, parameters)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(new NovateSubscriber<T>(mContext, finalNeedType, callBack));
+                .compose(handleErrTransformer());
     }
 
 
@@ -289,13 +240,11 @@ public final class NetWorker {
      * Post by Form
      *
      * @param url
-     * @param subscriber
      */
-    public void form(String url, @FieldMap(encoded = true) Map<String, Object> fields, Subscriber<ResponseBody> subscriber) {
+    public void form(String url, @FieldMap(encoded = true) Map<String, Object> fields) {
         apiManager.postForm(url, fields)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
 
@@ -305,18 +254,10 @@ public final class NetWorker {
      * @return parsed data
      * you don't need to   parse ResponseBody
      */
-    public <T> T executeForm(final String url, final @FieldMap(encoded = true) Map<String, Object> fields, final ResponseCallBack<T> callBack) {
-        final Type[] types = callBack.getClass().getGenericInterfaces();
-        if (MethodHandler(types) == null || MethodHandler(types).size() == 0) {
-            return null;
-        }
-        final Type finalNeedType = MethodHandler(types).get(0);
-        Log.d(TAG, "-->:" + "Type:" + types[0]);
-
+    public <T> T executeForm(final String url, final @FieldMap(encoded = true) Map<String, Object> fields) {
         return (T) apiManager.postForm(url, fields)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(new NovateSubscriber<T>(mContext, finalNeedType, callBack));
+                .compose(handleErrTransformer());
     }
 
 
@@ -325,13 +266,11 @@ public final class NetWorker {
      * you  need to parse ResponseBody
      *
      * @param url
-     * @param subscriber
      */
-    public void body(String url, Object body, Subscriber<ResponseBody> subscriber) {
+    public void body(String url, Object body) {
         apiManager.executePostBody(url, body)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -340,18 +279,10 @@ public final class NetWorker {
      * @return parsed data
      * you don't need to   parse ResponseBody
      */
-    public <T> T executeBody(final String url, final Object body, final ResponseCallBack<T> callBack) {
-        final Type[] types = callBack.getClass().getGenericInterfaces();
-        if (MethodHandler(types) == null || MethodHandler(types).size() == 0) {
-            return null;
-        }
-        final Type finalNeedType = MethodHandler(types).get(0);
-        Log.d(TAG, "-->:" + "Type:" + types[0]);
-
+    public <T> T executeBody(final String url, final Object body) {
         return (T) apiManager.executePostBody(url, body)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(new NovateSubscriber<T>(mContext, finalNeedType, callBack));
+                .compose(handleErrTransformer());
     }
 
 
@@ -360,14 +291,12 @@ public final class NetWorker {
      * you  need to parse ResponseBody
      *
      * @param url
-     * @param jsonStr    Json String
-     * @param subscriber
+     * @param jsonStr Json String
      */
-    public void json(String url, String jsonStr, Subscriber<ResponseBody> subscriber) {
+    public void json(String url, String jsonStr) {
         apiManager.postJson(url, Utils.createJson(jsonStr))
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -378,17 +307,10 @@ public final class NetWorker {
      * @return parsed data
      * you don't need to   parse ResponseBody
      */
-    public <T> T executeJson(final String url, final String jsonStr, final ResponseCallBack<T> callBack) {
-        final Type[] types = callBack.getClass().getGenericInterfaces();
-        if (MethodHandler(types) == null || MethodHandler(types).size() == 0) {
-            return null;
-        }
-        final Type finalNeedType = MethodHandler(types).get(0);
-        Log.d(TAG, "-->:" + "Type:" + types[0]);
+    public <T> T executeJson(final String url, final String jsonStr) {
         return (T) apiManager.postJson(url, Utils.createJson(jsonStr))
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(new NovateSubscriber<T>(mContext, finalNeedType, callBack));
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -397,17 +319,10 @@ public final class NetWorker {
      * @return parsed data
      * you don't need to   parse ResponseBody
      */
-    public <T> T executeDelete(final String url, final Map<String, String> maps, final ResponseCallBack<T> callBack) {
-        final Type[] types = callBack.getClass().getGenericInterfaces();
-        if (MethodHandler(types) == null || MethodHandler(types).size() == 0) {
-            return null;
-        }
-        final Type finalNeedType = MethodHandler(types).get(0);
-        Log.d(TAG, "-->:" + "Type:" + types[0]);
+    public <T> T executeDelete(final String url, final Map<String, String> maps) {
         return (T) apiManager.executeDelete(url, maps)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(new NovateSubscriber<T>(mContext, finalNeedType, callBack));
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -416,35 +331,25 @@ public final class NetWorker {
      * @return parsed data
      * you don't need to parse ResponseBody
      */
-    public <T> T executePut(final String url, final Map<String, String> maps, final ResponseCallBack<T> callBack) {
-        final Type[] types = callBack.getClass().getGenericInterfaces();
-
-        if (MethodHandler(types) == null || MethodHandler(types).size() == 0) {
-            return null;
-        }
-        final Type finalNeedType = MethodHandler(types).get(0);
-        Log.d(TAG, "-->:" + "Type:" + types[0]);
+    public <T> T executePut(final String url, final Map<String, String> maps) {
         return (T) apiManager.executePut(url, maps)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(new NovateSubscriber<T>(mContext, finalNeedType, callBack));
+                .compose(handleErrTransformer());
     }
 
 
     /**
      * Test
      *
-     * @param url        url
-     * @param maps       maps
-     * @param subscriber subscriber
-     * @param <T>        T
+     * @param url  url
+     * @param maps maps
+     * @param <T>  T
      * @return
      */
-    public <T> T test(String url, Map<String, String> maps, Subscriber<ResponseBody> subscriber) {
+    public <T> T test(String url, Map<String, String> maps) {
         return (T) apiManager.getTest(url, maps)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -452,31 +357,27 @@ public final class NetWorker {
      *
      * @param url
      * @param requestBody requestBody
-     * @param subscriber  subscriber
      * @param <T>         T
      * @return
      */
-    public <T> T upload(String url, RequestBody requestBody, Subscriber<ResponseBody> subscriber) {
+    public <T> T upload(String url, RequestBody requestBody) {
         return (T) apiManager.upLoadImage(url, requestBody)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
      * uploadImage
      *
-     * @param url        url
-     * @param file       file
-     * @param subscriber
+     * @param url  url
+     * @param file file
      * @param <T>
      * @return
      */
-    public <T> T uploadImage(String url, File file, Subscriber<ResponseBody> subscriber) {
+    public <T> T uploadImage(String url, File file) {
         return (T) apiManager.upLoadImage(url, Utils.createImage(file))
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -484,30 +385,26 @@ public final class NetWorker {
      *
      * @param url
      * @param requestBody requestBody
-     * @param subscriber  subscriber
      * @param <T>         T
      * @return
      */
-    public <T> T uploadFlie(String url, RequestBody requestBody, MultipartBody.Part file, Subscriber<ResponseBody> subscriber) {
+    public <T> T uploadFlie(String url, RequestBody requestBody, MultipartBody.Part file) {
         return (T) apiManager.uploadFlie(url, requestBody, file)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
      * upload Flies
      *
      * @param url
-     * @param subscriber subscriber
-     * @param <T>        T
+     * @param <T> T
      * @return
      */
-    public <T> T uploadFlies(String url, Map<String, RequestBody> files, Subscriber<ResponseBody> subscriber) {
+    public <T> T uploadFlies(String url, Map<String, RequestBody> files) {
         return (T) apiManager.uploadFiles(url, files)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
 
@@ -1074,107 +971,6 @@ public final class NetWorker {
     }
 
 
-    /**
-     * NovateSubscriber
-     *
-     * @param <T>
-     */
-    class NovateSubscriber<T> extends BaseSubscriber<ResponseBody> {
-
-        private ResponseCallBack<T> callBack;
-
-        private Type finalNeedType;
-
-        public NovateSubscriber(Context context, Type finalNeedType, ResponseCallBack<T> callBack) {
-            super(context);
-            this.callBack = callBack;
-
-            this.finalNeedType = finalNeedType;
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            // todo some common as show loadding  and check netWork is NetworkAvailable
-            if (callBack != null) {
-                callBack.onStart();
-            }
-
-        }
-
-        @Override
-        public void onCompleted() {
-            // todo some common as  dismiss loadding
-            if (callBack != null) {
-                callBack.onCompleted();
-            }
-        }
-
-        @Override
-        public void onError(MThrowable e) {
-            if (callBack != null) {
-                callBack.onError(e);
-            }
-        }
-
-        @Override
-        public void onNext(ResponseBody responseBody) {
-            try {
-                byte[] bytes = responseBody.bytes();
-                String jsStr = new String(bytes);
-                Log.d("OkHttp", "ResponseBody:" + jsStr);
-                if (callBack != null) {
-                    try {
-                        Response<T> baseResponse = null;
-                        if (new Gson().fromJson(jsStr, finalNeedType) == null) {
-                            throw new NullPointerException();
-                        }
-                        baseResponse = new Gson().fromJson(jsStr, finalNeedType);
-                        if (ConfigLoader.isFormat(mContext) && baseResponse.getData() == null & baseResponse.getResult() == null) {
-                            throw new FormatException();
-                        }
-
-                        if (baseResponse.isOk(mContext)) {
-                            callBack.onSuccee((T) new Gson().fromJson(jsStr, finalNeedType));
-                        } else {
-                            String msg =
-                                    baseResponse.getMsg() != null ? baseResponse.getMsg() : baseResponse.getError() != null ? baseResponse.getError() : baseResponse.getMessage() != null ? baseResponse.getMessage() : "api未知异常";
-
-                            ServerException serverException = new ServerException(baseResponse.getCode(), msg);
-                            callBack.onError(NovateException.handleException(serverException));
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        if (callBack != null) {
-                            callBack.onError(NovateException.handleException(new FormatException()));
-                        }
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                if (callBack != null) {
-                    callBack.onError(NovateException.handleException(e));
-                }
-            }
-        }
-    }
-
-    /**
-     * ResponseCallBack <T> Support your custom data model
-     */
-    public interface ResponseCallBack<T> {
-
-        public void onStart();
-
-        public void onCompleted();
-
-        public abstract void onError(MThrowable e);
-
-        public abstract void onSuccee(T response);
-
-    }
 }
 
 

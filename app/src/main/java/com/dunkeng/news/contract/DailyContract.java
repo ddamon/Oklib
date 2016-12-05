@@ -24,7 +24,7 @@ public interface DailyContract {
         void doInterval(int i);
     }
 
-    abstract class DailyPresenter extends CoreBasePresenter<Model, View> {
+    abstract class Presenter extends CoreBasePresenter<Model, View> {
         public abstract void getDailyData();
 
         public abstract void startInterval();

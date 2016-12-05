@@ -57,8 +57,6 @@ public class DownLoadManager {
 
     public boolean writeResponseBodyToDisk(String path, String name, Context context, ResponseBody body) {
 
-        Log.d(TAG, "contentType:>>>>" + body.contentType().toString());
-
         if (!TextUtils.isEmpty(name)) {
             String type = "";
             if (!name.contains(".")) {
@@ -81,7 +79,6 @@ public class DownLoadManager {
         if (path == null) {
             path = context.getExternalFilesDir(null) + File.separator + name;
         }
-        Log.d(TAG, "path:-->" + path);
         try {
             // todo change the file location/name according to your needs
             File futureStudioIconFile = new File(path);
@@ -94,7 +91,6 @@ public class DownLoadManager {
 
                 final long fileSize = body.contentLength();
                 long fileSizeDownloaded = 0;
-                Log.d(TAG, "file length: " + fileSize);
                 inputStream = body.byteStream();
                 outputStream = new FileOutputStream(futureStudioIconFile);
 
@@ -108,7 +104,6 @@ public class DownLoadManager {
                     isDownLoading = true;
                     outputStream.write(fileReader, 0, read);
                     fileSizeDownloaded += read;
-                    Log.d(TAG, "file download: " + fileSizeDownloaded + " of " + fileSize);
                     if (callBack != null) {
                         if (callBack != null) {
                             final long finalFileSizeDownloaded = fileSizeDownloaded;
@@ -123,8 +118,6 @@ public class DownLoadManager {
                 }
 
                 outputStream.flush();
-                Log.d(TAG, "file downloaded: " + fileSizeDownloaded + " of " + fileSize);
-
                 isDownLoading = false;
 
 
