@@ -1,8 +1,8 @@
 package com.dunkeng.meizi.contract;
 
-import com.dunkeng.base.CoreBaseModel;
-import com.dunkeng.base.CoreBasePresenter;
-import com.dunkeng.base.CoreBaseView;
+import com.oklib.base.CoreBaseModel;
+import com.oklib.base.CoreBasePresenter;
+import com.oklib.base.CoreBaseView;
 
 /**
  * Created by Damon.Han on 2016/12/2 0002.
