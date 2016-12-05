@@ -534,7 +534,6 @@ public final class NetWorker {
         private Converter.Factory converterFactory;
         private CallAdapter.Factory callAdapterFactory;
         private Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR;
-        private Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR_OFFLINE;
 
         public Builder(Context context) {
             // Add the base url first. This prevents overriding its behavior but also
@@ -828,10 +827,8 @@ public final class NetWorker {
          */
         private Builder addCache(Cache cache, final String cacheControlValue) {
             REWRITE_CACHE_CONTROL_INTERCEPTOR = new CacheInterceptor(mContext, cacheControlValue);
-            REWRITE_CACHE_CONTROL_INTERCEPTOR_OFFLINE = new CacheInterceptorOffline(mContext, cacheControlValue);
             addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-            addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR_OFFLINE);
-            addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR_OFFLINE);
+            addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
             this.cache = cache;
             return this;
         }
