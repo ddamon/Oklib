@@ -510,7 +510,6 @@ public final class NetWorker {
         private static final int DEFAULT_TIMEOUT = 5;
         private static final int DEFAULT_MAXIDLE_CONNECTIONS = 5;
         private static final long DEFAULT_KEEP_ALIVEDURATION = 8;
-        private static final long caheMaxSize = 10 * 1024 * 1024;
 
         private okhttp3.Call.Factory callFactory;
         private String baseUrl;
@@ -528,7 +527,6 @@ public final class NetWorker {
         private CookieManger cookieManager;
         private Cache cache = null;
         private Proxy proxy;
-        private File httpCacheDirectory;
         private SSLSocketFactory sslSocketFactory;
         private ConnectionPool connectionPool;
         private Converter.Factory converterFactory;
@@ -878,15 +876,10 @@ public final class NetWorker {
             if (hostnameVerifier != null) {
                 okhttpBuilder.hostnameVerifier(hostnameVerifier);
             }
-
-            if (httpCacheDirectory == null) {
-                httpCacheDirectory = new File(mContext.getCacheDir(), "Novate_Http_cache");
-            }
-
             if (isCache) {
                 try {
                     if (cache == null) {
-                        cache = new Cache(httpCacheDirectory, caheMaxSize);
+                        cache = HttpCache.getCache();
                     }
 
                     addCache(cache);
@@ -895,7 +888,7 @@ public final class NetWorker {
                     Log.e("OKHttp", "Could not create http cache", e);
                 }
                 if (cache == null) {
-                    cache = new Cache(httpCacheDirectory, caheMaxSize);
+                    cache = HttpCache.getCache();
                 }
             }
 

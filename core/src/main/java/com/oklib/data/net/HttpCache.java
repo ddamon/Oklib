@@ -14,7 +14,7 @@ public class HttpCache {
     private static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 50 * 1024 * 1024;
 
     public static Cache getCache() {
-        return new Cache(new File(CoreApp.getAppContext().getCacheDir().getAbsolutePath() + File.separator + "data/NetCache"),
-                HTTP_RESPONSE_DISK_CACHE_MAX_SIZE);
+        File file = new File(CoreApp.getAppContext().getCacheDir().getAbsolutePath() + File.separator + "data/NetCache");
+        return new Cache(file, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE);
     }
 }
