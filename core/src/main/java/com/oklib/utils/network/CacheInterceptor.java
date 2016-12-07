@@ -56,7 +56,7 @@ public class CacheInterceptor implements Interceptor {
                     .header("Cache-Control", "public, only-if-cached, " + cacheControlValue_Offline)
                     .build();
         } else {
-            Response originalResponse = chain.proceed(chain.request());
+            Response originalResponse = chain.proceed(request);
             String cacheControl = originalResponse.header("Cache-Control");
             Log.e("NetWorker", maxStaleOnline + "s load cache:" + cacheControl);
             //假设服务器不支持缓存

@@ -32,5 +32,4 @@ public abstract class CoreApp extends Application {
         return mApp.getResources();
     }
 
-    public abstract String setBaseUrl();
 }

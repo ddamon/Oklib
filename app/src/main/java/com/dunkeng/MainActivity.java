@@ -3,6 +3,9 @@ package com.dunkeng;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
+import com.dunkeng.news.FragmentDialy;
+
+import me.yokeyword.fragmentation.SupportActivity;
+
+public class MainActivity extends SupportActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            repaceFragment(R.id.frg_main, new FragmentDialy());
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -97,5 +105,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void repaceFragment(int resId, Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(resId, fragment);
+        transaction.commit();
     }
 }

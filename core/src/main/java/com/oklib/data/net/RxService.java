@@ -38,7 +38,8 @@ public class RxService {
             .build();
 
     public static <T> T createApi(Class<T> clazz) {
-        return createApi(clazz, CoreApp.getInstance().setBaseUrl());
+//        return createApi(clazz, CoreApp.getInstance().setBaseUrl());
+        return null;
     }
 
     public static <T> T createApi(Class<T> clazz, String url) {
