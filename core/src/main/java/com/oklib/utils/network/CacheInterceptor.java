@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.oklib.CoreApp;
 import com.oklib.utils.network.util.NetworkUtil;
 
 import java.io.IOException;
@@ -43,35 +44,27 @@ public class CacheInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (!NetworkUtil.isNetworkAvailable(context)) {
-            Log.e("NetWorker", " no network,load cache:" + request.cacheControl().toString());
+        if (!NetworkUtil.isNetworkAvailable(CoreApp.getAppContext())) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
-                    .cacheControl(CacheControl.FORCE_NETWORK)
                     .build();
-            Response response = chain.proceed(request);
-            return response.newBuilder()
+        }
+        Response response = chain.proceed(request);
+        if (NetworkUtil.isNetworkAvailable(CoreApp.getAppContext())) {
+            int maxAge = 0;
+            // 有网络时, 不缓存, 最大保存时长为0
+            response.newBuilder()
+                    .header("Cache-Control", "public, max-age=" + maxAge)
                     .removeHeader("Pragma")
-                    .removeHeader("Cache-Control")
-                    .header("Cache-Control", "public, only-if-cached, " + cacheControlValue_Offline)
                     .build();
         } else {
-            Response originalResponse = chain.proceed(request);
-            String cacheControl = originalResponse.header("Cache-Control");
-            Log.e("NetWorker", maxStaleOnline + "s load cache:" + cacheControl);
-            //假设服务器不支持缓存
-            if (TextUtils.isEmpty(cacheControl) || cacheControl.contains("no-store") || cacheControl.contains("no-cache") ||
-                    cacheControl.contains("must-revalidate")) {
-                return originalResponse.newBuilder()
-                        .removeHeader("Pragma")
-                        .removeHeader("Cache-Control")
-                        .header("Cache-Control", "public, max-age=" + maxStale)
-                        .build();
-
-            } else {
-                return originalResponse;
-            }
+            // 无网络时，设置超时为4周
+            response.newBuilder()
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                    .removeHeader("Pragma")
+                    .build();
         }
+        return response;
     }
 }
 /**

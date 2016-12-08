@@ -15,7 +15,7 @@ import rx.Observable;
 
 public interface DailyContract {
     interface Model extends CoreBaseModel {
-        Observable<DailyListBean> getData();
+        Observable<DailyListBean> getDailyData();
     }
 
     interface View extends CoreBaseView {

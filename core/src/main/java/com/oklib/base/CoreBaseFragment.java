@@ -159,7 +159,9 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         if (getChildFragmentManager().getBackStackEntryCount() > 1) {
             popChild();
         } else {
-            _mBackToFirstListener.onBackToFirstFragment();
+            if (_mBackToFirstListener != null) {
+                _mBackToFirstListener.onBackToFirstFragment();
+            }
             _mActivity.finish();
         }
         return true;

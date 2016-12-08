@@ -1,5 +1,6 @@
 package com.oklib.data.net;
 
+
 import com.oklib.CoreApp;
 
 import java.util.concurrent.TimeUnit;
@@ -38,7 +39,6 @@ public class RxService {
             .build();
 
     public static <T> T createApi(Class<T> clazz) {
-//        return createApi(clazz, CoreApp.getInstance().setBaseUrl());
         return null;
     }
 

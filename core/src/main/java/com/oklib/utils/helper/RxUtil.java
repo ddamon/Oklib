@@ -1,5 +1,6 @@
 package com.oklib.utils.helper;
 
+
 import com.oklib.data.entity.CoreDataResponse;
 import com.oklib.data.net.CoreApiException;
 
@@ -10,9 +11,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by hpw on 16/11/2.
- */
 
 public class RxUtil {
 
@@ -24,6 +22,7 @@ public class RxUtil {
      */
     public static <T> Transformer<T, T> rxSchedulerHelper() {    //compose简化线程
         return observable -> observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
