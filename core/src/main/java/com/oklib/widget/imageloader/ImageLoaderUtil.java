@@ -52,7 +52,7 @@ public class ImageLoaderUtil {
         mStrategy = new GlideImageLoaderStrategy();
     }
 
-    public static ImageLoaderUtil newInstance() {
+    public static ImageLoaderUtil getInstance() {
         if (mInstance == null) {
             synchronized (ImageLoaderUtil.class) {
                 if (mInstance == null) {
@@ -67,6 +67,7 @@ public class ImageLoaderUtil {
     public void loadImage(Context context, ImageLoader imageLoader) {
         mStrategy.loadImage(context, imageLoader);
     }
+
 
     public void setLoadImgStrategy(ImageLoaderStrategy strategy) {
         mStrategy = strategy;

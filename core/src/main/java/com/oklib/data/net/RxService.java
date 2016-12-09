@@ -1,8 +1,6 @@
 package com.oklib.data.net;
 
 
-import com.oklib.CoreApp;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -39,7 +37,7 @@ public class RxService {
             .build();
 
     public static <T> T createApi(Class<T> clazz) {
-        return null;
+        return createApi(clazz,"");
     }
 
     public static <T> T createApi(Class<T> clazz, String url) {

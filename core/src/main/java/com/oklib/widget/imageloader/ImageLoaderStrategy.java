@@ -15,4 +15,5 @@ public interface ImageLoaderStrategy {
      * @param context
      */
     public void loadImage(Context context, ImageLoader img);
+
 }

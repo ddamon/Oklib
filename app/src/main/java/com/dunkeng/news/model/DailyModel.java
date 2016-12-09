@@ -4,7 +4,6 @@ import com.dunkeng.API.ZhiHuApi;
 import com.dunkeng.App;
 import com.dunkeng.Config;
 import com.dunkeng.news.contract.DailyContract;
-import com.oklib.data.net.RxService;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.NetWorker;
 
@@ -22,8 +21,7 @@ public class DailyModel implements DailyContract.Model {
         NetWorker netWorker = new NetWorker.Builder(App.getAppContext())
                 .baseUrl(Config.BASE_URL_ZHIHU)
                 .build();
-        return netWorker.create(ZhiHuApi.class).getDailyList();
-//        return RxService.createApi(ZhiHuApi.class).getDailyList().compose(RxUtil.rxSchedulerHelper());
+        return netWorker.create(ZhiHuApi.class).getDailyList().compose(RxUtil.<DailyListBean>rxSchedulerHelper());
     }
 
 }

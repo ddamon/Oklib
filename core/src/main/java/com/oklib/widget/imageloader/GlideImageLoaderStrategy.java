@@ -2,18 +2,18 @@ package com.oklib.widget.imageloader;
 
 import android.content.Context;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
+import com.ebt.m.utils.imageloader.glide.CircleBorderTransformation;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by Damon.Han on 2016/11/24 0024.
- *
  * @author Damon
  */
 
@@ -44,19 +44,26 @@ public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
     }
 
     public void loadNormal(Context context, ImageLoader imageLoader) {
-        Glide.with(context).load(imageLoader.getUrl())
-                .placeholder(imageLoader.getPlaceHolder())
-                .into(imageLoader.getImgView());
+        DrawableRequestBuilder drawableRequestBuilder =
+                Glide.with(context).load(imageLoader.getUrl())
+                .crossFade()
+                .placeholder(imageLoader.getPlaceHolder());
+        if (imageLoader.isCircle()) {
+            //圆形图片
+            drawableRequestBuilder.bitmapTransform(new CircleBorderTransformation(context, imageLoader.getBorder())).into(imageLoader.getImgView());
+        } else {
+            drawableRequestBuilder.into(imageLoader.getImgView());
+        }
     }
 
     /**
      * 从缓存中加载
      *
-     * @param ctx
-     * @param img
+     * @param context
+     * @param imageLoader
      */
-    public void loadCache(Context ctx, ImageLoader img) {
-        Glide.with(ctx).using(new StreamModelLoader<String>() {
+    public void loadCache(Context context, ImageLoader imageLoader) {
+        DrawableRequestBuilder drawableRequestBuilder = Glide.with(context).using(new StreamModelLoader<String>() {
             @Override
             public DataFetcher<InputStream> getResourceFetcher(final String model, int i, int i1) {
                 return new DataFetcher<InputStream>() {
@@ -81,9 +88,15 @@ public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
                     }
                 };
             }
-        }).load(img.getUrl())
-                .placeholder(img.getPlaceHolder())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(img.getImgView());
+        }).load(imageLoader.getUrl())
+                .crossFade()
+                .placeholder(imageLoader.getPlaceHolder())
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+        if (imageLoader.isCircle()) {
+            //圆形图片
+            drawableRequestBuilder.bitmapTransform(new CircleBorderTransformation(context, imageLoader.getBorder())).into(imageLoader.getImgView());
+        } else {
+            drawableRequestBuilder.into(imageLoader.getImgView());
+        }
     }
 }

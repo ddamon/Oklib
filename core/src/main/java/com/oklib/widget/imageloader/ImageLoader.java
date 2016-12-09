@@ -6,7 +6,7 @@ import com.oklib.R;
 
 
 /**
- * Created by Damon.Han on 2016/11/24 0024.
+ * 图片加载类
  *
  * @author Damon
  */
@@ -17,6 +17,9 @@ public class ImageLoader {
     private int placeHolder; //placeholder when fail to load pics
     private ImageView imgView; //ImageView instantce
     private int wifiStrategy;//load strategy ,wheather under wifi
+    private boolean isCircle;
+    private int border;//
+    private int roundRadius;//
 
     private ImageLoader(Builder builder) {
         this.type = builder.type;
@@ -24,6 +27,9 @@ public class ImageLoader {
         this.placeHolder = builder.placeHolder;
         this.imgView = builder.imgView;
         this.wifiStrategy = builder.wifiStrategy;
+        this.isCircle = builder.isCircle;
+        this.border = builder.border;
+        this.roundRadius = builder.roundRadius;
     }
 
     public int getType() {
@@ -46,19 +52,37 @@ public class ImageLoader {
         return wifiStrategy;
     }
 
+    public boolean isCircle() {
+        return isCircle;
+    }
+
+    public int getRoundRadius() {
+        return roundRadius;
+    }
+
+    public int getBorder() {
+        return border;
+    }
+
     public static class Builder {
         private int type;
         private String url;
         private int placeHolder;
         private ImageView imgView;
         private int wifiStrategy;
+        private boolean isCircle;
+        private int border;//
+        private int roundRadius;//
 
         public Builder() {
             this.type = ImageLoaderUtil.PIC_SMALL;
             this.url = "";
-            this.placeHolder = R.mipmap.prj_default_pic_big;
+            this.placeHolder = R.mipmap.lib_img_default;
             this.imgView = null;
             this.wifiStrategy = ImageLoaderUtil.LOAD_STRATEGY_NORMAL;
+            this.isCircle = false;
+            this.border = 0;
+            this.roundRadius = 0;
         }
 
         public Builder type(int type) {
@@ -83,6 +107,21 @@ public class ImageLoader {
 
         public Builder strategy(int strategy) {
             this.wifiStrategy = strategy;
+            return this;
+        }
+
+        public Builder circle() {
+            this.isCircle = true;
+            return this;
+        }
+
+        public Builder border(int border) {
+            this.border = border;
+            return this;
+        }
+
+        public Builder roundRadius(int roundRadius) {
+            this.roundRadius = roundRadius;
             return this;
         }
 
