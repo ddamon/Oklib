@@ -3,7 +3,6 @@ package com.oklib.utils;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * Created by hpw on 16/10/28.
  */
 
 public class TUtil {

@@ -14,8 +14,6 @@ public class Response<T> {
     /*真实数据 data或者result*/
     private T data, result;
 
-
-
     public int getCode() {
         return code;
     }

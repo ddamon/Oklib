@@ -15,7 +15,7 @@ import retrofit2.adapter.rxjava.HttpException;
 
 /**
  */
-public class NovateException {
+public class NetworkException {
 
     private static final int UNAUTHORIZED = 401;
     private static final int FORBIDDEN = 403;

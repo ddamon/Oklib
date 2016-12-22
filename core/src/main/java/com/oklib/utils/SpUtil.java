@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import com.oklib.CoreConstants;
 
 /**
- * Created by hpw on 16/10/28.
  */
 
 public class SpUtil {

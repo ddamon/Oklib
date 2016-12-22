@@ -11,7 +11,6 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 /**
- * Created by hpw on 16/11/2.
  */
 
 public interface ZhiHuApi {

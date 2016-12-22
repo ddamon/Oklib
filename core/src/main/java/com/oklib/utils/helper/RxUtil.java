@@ -1,14 +1,10 @@
 package com.oklib.utils.helper;
 
 
-import com.oklib.data.entity.CoreDataResponse;
-import com.oklib.data.net.CoreApiException;
-
 import rx.Observable;
 import rx.Observable.Transformer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
@@ -26,24 +22,6 @@ public class RxUtil {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    /**
-     * 统一返回结果处理
-     *
-     * @param <T>
-     * @return
-     */
-    public static <T> Transformer<CoreDataResponse<T>, T> handleResult() {   //compose判断结果
-        return httpResponseObservable -> httpResponseObservable.flatMap(new Func1<CoreDataResponse<T>, Observable<T>>() {
-            @Override
-            public Observable<T> call(CoreDataResponse<T> tMyHttpResponse) {
-                if (tMyHttpResponse.getCode() == 200) {
-                    return createData(tMyHttpResponse.getNewslist());
-                } else {
-                    return Observable.error(new CoreApiException("服务器返回error"));
-                }
-            }
-        });
-    }
 
     /**
      * 生成Observable

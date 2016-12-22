@@ -8,7 +8,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
-import com.ebt.m.utils.imageloader.glide.CircleBorderTransformation;
+import com.oklib.widget.imageloader.glide.CircleBorderTransformation;
 
 import java.io.IOException;
 import java.io.InputStream;

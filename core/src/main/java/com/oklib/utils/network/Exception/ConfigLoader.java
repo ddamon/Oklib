@@ -14,7 +14,7 @@ public class ConfigLoader {
 
     private static Config config;
 
-    private final static String CONFIG_NAME = "novate-config.json";
+    private final static String CONFIG_NAME = "config.json";
 
     public static boolean checkSucess(Context context, int code) {
         loadConfig(context);

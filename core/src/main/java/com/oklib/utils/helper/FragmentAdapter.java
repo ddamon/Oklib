@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Created by hpw on 16/10/31.
  */
 
 public class FragmentAdapter extends FragmentStatePagerAdapter {

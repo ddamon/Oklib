@@ -1,4 +1,4 @@
-package com.oklib;
+package com.oklib.utils.rxmanager;
 
 import android.support.annotation.NonNull;
 

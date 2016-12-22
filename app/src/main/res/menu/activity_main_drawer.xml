@@ -3,17 +3,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_news"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="新闻" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_zhihu"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="知乎" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_weixin"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="微信精选" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
@@ -29,7 +29,7 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="关于" />
         </menu>
     </item>
 

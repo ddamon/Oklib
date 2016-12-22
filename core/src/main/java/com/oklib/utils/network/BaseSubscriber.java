@@ -3,7 +3,7 @@ package com.oklib.utils.network;
 import android.content.Context;
 import android.util.Log;
 
-import com.oklib.utils.network.Exception.NovateException;
+import com.oklib.utils.network.Exception.NetworkException;
 
 import rx.Subscriber;
 
@@ -26,7 +26,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
             onError((MThrowable) e);
         } else {
             Log.e("NetWorker", "e !instanceof MThrowable");
-            onError(new MThrowable(e, NovateException.ERROR.UNKNOWN));
+            onError(new MThrowable(e, NetworkException.ERROR.UNKNOWN));
         }
     }
 

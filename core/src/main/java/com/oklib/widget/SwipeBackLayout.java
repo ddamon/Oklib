@@ -14,7 +14,6 @@ import android.widget.AbsListView;
 import android.widget.ScrollView;
 
 /**
- * Created by hpw on 16/10/28.
  */
 
 public class SwipeBackLayout extends ViewGroup {

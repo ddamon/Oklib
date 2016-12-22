@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 /**
- * Created by hpw on 16/10/31.
  */
 
 public abstract class CoreBaseLazyFragment<T extends CoreBasePresenter, E extends CoreBaseModel> extends CoreBaseFragment<T, E> {

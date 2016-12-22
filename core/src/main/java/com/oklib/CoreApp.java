@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import com.oklib.utils.SpUtil;
 
 /**
- * Created by hpw on 16/10/28.
  */
 
 public abstract class CoreApp extends Application {

@@ -2,7 +2,6 @@ package com.dunkeng.news;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,7 +11,6 @@ import com.dunkeng.news.model.DailyListBean;
 import com.dunkeng.news.model.DailyModel;
 import com.dunkeng.news.presenter.DailyPresenter;
 import com.oklib.base.CoreBaseFragment;
-import com.oklib.base.CoreBaseView;
 import com.oklib.utils.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
@@ -38,12 +36,11 @@ public class FragmentDialy extends CoreBaseFragment<DailyPresenter, DailyModel> 
             @Override
             protected void convert(BaseViewHolder helper, DailyListBean.StoriesBean item) {
                 helper.setText(R.id.tv_daily_item_title, item.getTitle());
-                ImageLoaderUtil.newInstance().loadImage(mContext,
+                ImageLoaderUtil.getInstance().loadImage(mContext,
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
                                 .url(item.getImages().get(0)).build());
             }
-
         });
         return coreRecyclerView;
     }

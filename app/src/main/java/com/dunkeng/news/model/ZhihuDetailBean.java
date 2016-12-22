@@ -3,7 +3,6 @@ package com.dunkeng.news.model;
 import java.util.List;
 
 /**
- * Created by hpw on 16/11/3.
  */
 public class ZhihuDetailBean {
 

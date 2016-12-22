@@ -1,9 +1,8 @@
 package com.oklib.base;
 
-import com.oklib.RxManager;
+import com.oklib.utils.rxmanager.RxManager;
 
 /**
- * Created by hpw on 16/10/28.
  */
 
 public abstract class CoreBasePresenter<M, V> {

@@ -1,7 +1,6 @@
 package com.oklib;
 
 /**
- * Created by hpw on 16/11/4.
  */
 
 public class CoreConstants {

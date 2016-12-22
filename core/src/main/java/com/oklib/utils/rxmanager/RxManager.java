@@ -1,4 +1,4 @@
-package com.oklib;
+package com.oklib.utils.rxmanager;
 
 import java.util.HashMap;
 import java.util.Map;

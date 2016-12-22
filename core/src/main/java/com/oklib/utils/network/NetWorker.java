@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.gson.JsonParseException;
-import com.oklib.utils.network.Exception.NovateException;
+import com.oklib.utils.network.Exception.NetworkException;
 import com.oklib.utils.network.util.Utils;
 
 import java.io.File;
@@ -181,7 +181,7 @@ public final class NetWorker {
     private static class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
         @Override
         public Observable<T> call(Throwable t) {
-            return Observable.error(NovateException.handleException(t));
+            return Observable.error(NetworkException.handleException(t));
         }
     }
 

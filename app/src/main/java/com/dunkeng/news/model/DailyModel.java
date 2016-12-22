@@ -16,11 +16,13 @@ import rx.Observable;
  */
 
 public class DailyModel implements DailyContract.Model {
+
+    NetWorker netWorker = new NetWorker.Builder(App.getAppContext())
+            .baseUrl(Config.BASE_URL_ZHIHU)
+            .build();
+
     @Override
     public Observable<DailyListBean> getDailyData() {
-        NetWorker netWorker = new NetWorker.Builder(App.getAppContext())
-                .baseUrl(Config.BASE_URL_ZHIHU)
-                .build();
         return netWorker.create(ZhiHuApi.class).getDailyList().compose(RxUtil.<DailyListBean>rxSchedulerHelper());
     }
 

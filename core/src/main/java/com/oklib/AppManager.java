@@ -7,7 +7,6 @@ import android.content.Context;
 import java.util.Stack;
 
 /**
- * Created by hpw on 16/10/28.
  */
 
 public class AppManager {
