@@ -1,4 +1,4 @@
-package com.dunkeng.news.contract;
+package com.dunkeng.zhihu.contract;
 
 /**
  * Created by Damon on 2016/12/2.

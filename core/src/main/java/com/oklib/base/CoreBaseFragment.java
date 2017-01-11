@@ -178,4 +178,5 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     public void showLog(String msg) {
         LogUtil.i(TAG, msg);// TODO: 16/10/12 Log需要自己从新搞一下
     }
+
 }

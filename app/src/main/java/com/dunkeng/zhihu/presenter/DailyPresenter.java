@@ -1,7 +1,7 @@
-package com.dunkeng.news.presenter;
+package com.dunkeng.zhihu.presenter;
 
-import com.dunkeng.news.contract.DailyContract;
-import com.dunkeng.news.model.DailyListBean;
+import com.dunkeng.zhihu.contract.DailyContract;
+import com.dunkeng.zhihu.model.DailyListBean;
 
 import rx.functions.Action1;
 

@@ -1,4 +1,4 @@
-package com.dunkeng.API;
+package com.dunkeng.api;
 
 
 import com.dunkeng.meizi.model.GankBeautyResult;

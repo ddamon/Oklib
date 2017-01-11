@@ -1,9 +1,8 @@
-package com.dunkeng.news.model;
+package com.dunkeng.zhihu.model;
 
-import com.dunkeng.API.ZhiHuApi;
 import com.dunkeng.App;
 import com.dunkeng.Config;
-import com.dunkeng.news.contract.DailyContract;
+import com.dunkeng.api.ZhiHuApi;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.NetWorker;
 

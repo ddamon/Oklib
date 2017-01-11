@@ -39,6 +39,10 @@ import android.widget.TextView;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
+
+/**
+ * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+ */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     /**

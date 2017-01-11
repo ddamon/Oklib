@@ -1,4 +1,4 @@
-package com.dunkeng.news.model;
+package com.dunkeng.zhihu.model;
 
 import java.util.List;
 

@@ -8,6 +8,10 @@ import android.view.View;
 import com.oklib.R;
 import com.oklib.widget.recyclerview.BaseItemDraggableAdapter;
 
+
+/**
+ * Created by luoxw on 2016/6/20.
+ */
 public class ItemDragAndSwipeCallback extends ItemTouchHelper.Callback {
 
 //    private static final String TAG = ItemDragAndSwipeCallback.class.getSimpleName();
@@ -87,6 +91,7 @@ public class ItemDragAndSwipeCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder source, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+        super.onMoved(recyclerView, source, fromPos, target, toPos, x, y);
         mAdapter.onItemDragMoving(source, target);
     }
 

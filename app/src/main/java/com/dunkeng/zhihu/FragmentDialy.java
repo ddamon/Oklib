@@ -1,4 +1,4 @@
-package com.dunkeng.news;
+package com.dunkeng.zhihu;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,10 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.dunkeng.R;
-import com.dunkeng.news.contract.DailyContract;
-import com.dunkeng.news.model.DailyListBean;
-import com.dunkeng.news.model.DailyModel;
-import com.dunkeng.news.presenter.DailyPresenter;
+import com.dunkeng.news.presenter.NewsPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
@@ -20,9 +17,10 @@ import com.oklib.widget.recyclerview.CoreRecyclerView;
 
 /**
  * Created by Damon on 2016/12/7.
+ * 知乎日报
  */
 
-public class FragmentDialy extends CoreBaseFragment<DailyPresenter, DailyModel> implements DailyContract.View {
+public class FragmentDialy extends CoreBaseFragment<NewsPresenter, DailyModel> implements DailyContract.View {
     CoreRecyclerView coreRecyclerView;
 
     /**

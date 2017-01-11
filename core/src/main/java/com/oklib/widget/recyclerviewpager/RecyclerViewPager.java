@@ -1,4 +1,4 @@
-package com.oklib.widget.recyclerview.recyclerviewpager;
+package com.oklib.widget.recyclerviewpager;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -1,6 +1,6 @@
-package com.dunkeng.news.contract;
+package com.dunkeng.zhihu.contract;
 
-import com.dunkeng.news.model.DailyListBean;
+import com.dunkeng.zhihu.model.DailyListBean;
 import com.oklib.base.CoreBaseModel;
 import com.oklib.base.CoreBasePresenter;
 import com.oklib.base.CoreBaseView;

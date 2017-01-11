@@ -1,4 +1,4 @@
-package com.oklib.widget.recyclerview.recyclerviewpager;
+package com.oklib.widget.recyclerviewpager;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

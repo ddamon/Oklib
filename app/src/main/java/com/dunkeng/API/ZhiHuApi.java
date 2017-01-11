@@ -1,10 +1,5 @@
-package com.dunkeng.API;
+package com.dunkeng.api;
 
-
-import com.dunkeng.news.model.DailyListBean;
-import com.dunkeng.news.model.SectionChildListBean;
-import com.dunkeng.news.model.SectionListBean;
-import com.dunkeng.news.model.ZhihuDetailBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
