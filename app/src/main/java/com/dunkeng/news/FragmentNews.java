@@ -1,4 +1,4 @@
-package com.dunkeng.zhihu;
+package com.dunkeng.news;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.dunkeng.R;
-import com.dunkeng.zhihu.contract.DailyContract;
-import com.dunkeng.zhihu.model.DailyListBean;
-import com.dunkeng.zhihu.model.DailyModel;
-import com.dunkeng.zhihu.presenter.DailyPresenter;
+import com.dunkeng.news.contract.NewsContract;
+import com.dunkeng.news.model.News;
+import com.dunkeng.news.model.NewsModel;
+import com.dunkeng.news.presenter.NewsPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
@@ -18,13 +18,10 @@ import com.oklib.widget.recyclerview.BaseQuickAdapter;
 import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 
-/**
- * Created by Damon on 2016/12/7.
- * 知乎日报
- */
 
-public class FragmentDialy extends CoreBaseFragment<DailyPresenter, DailyModel> implements DailyContract.View {
+public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> implements NewsContract.View {
     CoreRecyclerView coreRecyclerView;
+    private int num = 20;
 
     /**
      * 初始化view
@@ -33,27 +30,27 @@ public class FragmentDialy extends CoreBaseFragment<DailyPresenter, DailyModel> 
      */
     @Override
     public View getLayoutView() {
-        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<DailyListBean.StoriesBean, BaseViewHolder>(R.layout.item_daily) {
+        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<News.NewslistBean, BaseViewHolder>(R.layout.item_daily) {
             @Override
-            protected void convert(BaseViewHolder helper, DailyListBean.StoriesBean item) {
+            protected void convert(BaseViewHolder helper, News.NewslistBean item) {
                 helper.setText(R.id.tv_daily_item_title, item.getTitle());
                 ImageLoaderUtil.getInstance().loadImage(mContext,
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
-                                .url(item.getImages().get(0)).build());
+                                .url(item.getPicUrl()).build());
             }
-        });
+        }).openRefresh(num -> mPresenter.getNewsData(10));
         return coreRecyclerView;
     }
 
     @Override
     public void initData() {
-        mPresenter.getDailyData();
+        mPresenter.getNewsData(10);
     }
 
     @Override
-    public void showContent(DailyListBean info) {
-        coreRecyclerView.getAdapter().addData(info.getStories());
+    public void showContent(News info) {
+        coreRecyclerView.getAdapter().addData(info.getNewslist());
     }
 
     @Override

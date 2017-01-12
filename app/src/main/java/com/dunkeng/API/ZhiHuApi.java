@@ -1,6 +1,11 @@
 package com.dunkeng.api;
 
 
+import com.dunkeng.zhihu.model.DailyListBean;
+import com.dunkeng.zhihu.model.SectionChildListBean;
+import com.dunkeng.zhihu.model.SectionListBean;
+import com.dunkeng.zhihu.model.ZhihuDetailBean;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;

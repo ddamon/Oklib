@@ -1,6 +1,6 @@
 package com.dunkeng.news.contract;
 
-import com.dunkeng.news.model.NewsGson;
+import com.dunkeng.news.model.News;
 import com.oklib.base.CoreBaseModel;
 import com.oklib.base.CoreBasePresenter;
 import com.oklib.base.CoreBaseView;
@@ -15,17 +15,17 @@ import rx.Observable;
 
 public interface NewsContract {
     interface Model extends CoreBaseModel {
-        Observable<NewsGson> getNewsData();
+        Observable<News> getNewsData(int num);
     }
 
     interface View extends CoreBaseView {
-        void showContent(NewsGson info);
+        void showContent(News info);
 
         void doInterval(int i);
     }
 
     abstract class Presenter extends CoreBasePresenter<NewsContract.Model, NewsContract.View> {
-        public abstract void getDailyData();
+        public abstract void getNewsData(int page);
 
         public abstract void startInterval();
     }

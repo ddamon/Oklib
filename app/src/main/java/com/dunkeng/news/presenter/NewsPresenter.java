@@ -1,7 +1,7 @@
 package com.dunkeng.news.presenter;
 
 import com.dunkeng.news.contract.NewsContract;
-import com.dunkeng.news.model.NewsGson;
+import com.dunkeng.news.model.News;
 
 import rx.functions.Action1;
 
@@ -13,12 +13,12 @@ import rx.functions.Action1;
 
 public class NewsPresenter extends NewsContract.Presenter {
     @Override
-    public void getDailyData() {
-        mRxManager.add(mModel.getNewsData()
+    public void getNewsData(int num) {
+        mRxManager.add(mModel.getNewsData(num)
                 .subscribe(
-                        new Action1<NewsGson>() {
+                        new Action1<News>() {
                             @Override
-                            public void call(NewsGson newsGson) {
+                            public void call(News newsGson) {
                                 mView.showContent(newsGson);
                             }
                         }, new Action1<Throwable>() {

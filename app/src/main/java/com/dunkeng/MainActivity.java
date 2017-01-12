@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.dunkeng.news.FragmentNews;
 import com.dunkeng.zhihu.FragmentDialy;
 
 import me.yokeyword.fragmentation.SupportActivity;
@@ -90,6 +91,7 @@ public class MainActivity extends SupportActivity
             repaceFragment(R.id.frg_main, new FragmentDialy());
             // Handle the camera action
         } else if (id == R.id.nav_zhihu) {
+            repaceFragment(R.id.frg_main, new FragmentNews());
 
         } else if (id == R.id.nav_manage) {
 
