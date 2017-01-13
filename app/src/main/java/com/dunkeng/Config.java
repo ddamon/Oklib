@@ -20,4 +20,40 @@ public class Config {
      * zhihu
      */
     public static final String BASE_URL_ZHIHU = "http://news-at.zhihu.com/api/4/";
+
+
+    public static final String ARG_POSITION = "arg_position";
+
+    public static String getApiType(int position) {
+        String type = "guonei";
+        switch (position) {
+            case 0:
+                type = "guonei";
+                break;
+            case 1:
+                type = "world";
+                break;
+            case 2:
+                type = "huabian";
+                break;
+            case 3:
+                type = "tiyu";
+                break;
+            case 4:
+                type = "nba";
+                break;
+            case 5:
+                type = "keji";
+            case 6:
+                type = "startup";
+                break;
+            case 7:
+                type = "it";
+                break;
+            default:
+                type = "guonei";
+                break;
+        }
+        return type;
+    }
 }

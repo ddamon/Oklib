@@ -4,6 +4,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+
     <!-- margin -->
     <dimen name="margin_tiny">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
@@ -11,6 +12,7 @@
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_huge">64dp</dimen>
     <dimen name="margin_only_txt">48dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
     <!-- txtsize -->
     <dimen name="txtsize_display1">34sp</dimen>

@@ -11,10 +11,12 @@ import rx.functions.Action1;
  * @author Damon
  */
 
-public class NewsPresenter extends NewsContract.Presenter {
+public class NewsPresenter extends NewsContract.PresenterNews {
+
+
     @Override
-    public void getNewsData(int num) {
-        mRxManager.add(mModel.getNewsData(num)
+    public void getNewsData(String type,int num) {
+        mRxManager.add(mModel.getNewsData(type,num)
                 .subscribe(
                         new Action1<News>() {
                             @Override
@@ -27,11 +29,6 @@ public class NewsPresenter extends NewsContract.Presenter {
                                 mView.showError("数据加载失败");
                             }
                         }));
-    }
-
-    @Override
-    public void startInterval() {
-
     }
 
     @Override

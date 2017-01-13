@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.dunkeng.news.FragmentNews;
+import com.dunkeng.news.FragmentNewsMain;
 import com.dunkeng.zhihu.FragmentDialy;
 
 import me.yokeyword.fragmentation.SupportActivity;
@@ -47,6 +47,8 @@ public class MainActivity extends SupportActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        repaceFragment(R.id.frg_main, new FragmentDialy());
     }
 
     @Override
@@ -81,17 +83,16 @@ public class MainActivity extends SupportActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_news) {
+        if (id == R.id.nav_zhihu) {
             repaceFragment(R.id.frg_main, new FragmentDialy());
             // Handle the camera action
-        } else if (id == R.id.nav_zhihu) {
-            repaceFragment(R.id.frg_main, new FragmentNews());
+        } else if (id == R.id.nav_news) {
+            FragmentNewsMain fragmentNewsMain = FragmentNewsMain.newInstance();
+            repaceFragment(R.id.frg_main, fragmentNewsMain);
 
         } else if (id == R.id.nav_manage) {
 

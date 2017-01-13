@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.oklib.R;
-import com.oklib.utils.logger.Logger;
 import com.oklib.widget.recyclerview.animation.BaseAnimation;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
@@ -92,7 +91,6 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
 
     @Override
     public void onRefresh() {
-        Logger.e("onRefresh");
         page = 0;
         mQuickAdapter.getData().clear();
         mQuickAdapter.notifyDataSetChanged();

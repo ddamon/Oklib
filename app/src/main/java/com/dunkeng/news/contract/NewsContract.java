@@ -15,18 +15,28 @@ import rx.Observable;
 
 public interface NewsContract {
     interface Model extends CoreBaseModel {
-        Observable<News> getNewsData(int num);
+        Observable<News> getNewsData(String type, int num);
+
+        String[] getTabs();
     }
 
-    interface View extends CoreBaseView {
+    interface ViewNews extends CoreBaseView {
         void showContent(News info);
-
-        void doInterval(int i);
     }
 
-    abstract class Presenter extends CoreBasePresenter<NewsContract.Model, NewsContract.View> {
-        public abstract void getNewsData(int page);
 
-        public abstract void startInterval();
+    abstract class PresenterNews extends CoreBasePresenter<NewsContract.Model, ViewNews> {
+        public abstract void getNewsData(String type, int num);
     }
+
+    ///////////////新闻主界面view//////////////
+    interface ViewNewsMain extends CoreBaseView {
+
+        void showTabList(String[] mTabs);
+    }
+
+    abstract class PresenterNewsMain extends CoreBasePresenter<NewsContract.Model, ViewNewsMain> {
+        public abstract void getTabList();
+    }
+
 }

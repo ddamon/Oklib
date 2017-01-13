@@ -13,14 +13,14 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="TextViewTitle" parent="TextAppearance.AppCompat.Title">
+    <style name="TextViewTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/txt_black</item>
     </style>
 
-    <style name="TextViewSubhead" parent="TextAppearance.AppCompat.Subhead">
+    <style name="TextViewSubhead">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/txt_black</item>

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.dunkeng.Config;
 import com.dunkeng.R;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.News;
@@ -19,9 +20,19 @@ import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 
 
-public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> implements NewsContract.View {
+public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> implements NewsContract.ViewNews {
     CoreRecyclerView coreRecyclerView;
-    private int num = 20;
+    private int pageNum = 20;
+    private static String type;
+
+    public static FragmentNews newInstance(int position) {
+        FragmentNews fragment = new FragmentNews();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Config.ARG_POSITION, position);
+        fragment.setArguments(bundle);
+        type = Config.getApiType(position);
+        return fragment;
+    }
 
     /**
      * 初始化view
@@ -39,23 +50,18 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
                                 .url(item.getPicUrl()).build());
             }
-        }).openRefresh(num -> mPresenter.getNewsData(10));
+        }).openRefresh(num -> mPresenter.getNewsData(type, pageNum));
         return coreRecyclerView;
     }
 
     @Override
     public void initData() {
-        mPresenter.getNewsData(10);
+        mPresenter.getNewsData(type, pageNum);
     }
 
     @Override
     public void showContent(News info) {
         coreRecyclerView.getAdapter().addData(info.getNewslist());
-    }
-
-    @Override
-    public void doInterval(int i) {
-
     }
 
     @Override
