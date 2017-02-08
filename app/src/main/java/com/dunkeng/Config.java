@@ -44,6 +44,7 @@ public class Config {
                 break;
             case 5:
                 type = "keji";
+                break;
             case 6:
                 type = "startup";
                 break;

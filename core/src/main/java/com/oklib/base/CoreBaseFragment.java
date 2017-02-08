@@ -36,6 +36,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     protected Context mContext;
     protected Activity mActivity;
     Unbinder binder;
+    protected View mainView;
 
     @Override
     public void onAttach(Context context) {
@@ -50,9 +51,10 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (getLayoutView() != null) {
-            return getLayoutView();
+            mainView = getLayoutView();
+            return mainView;
         } else {
-            return inflater.inflate(getLayoutId(), null);
+            return mainView = inflater.inflate(getLayoutId(), null);
         }
     }
 
