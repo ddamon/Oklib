@@ -85,6 +85,7 @@
         android:clickable="true"
         android:onClick="checkin"
         android:src="@drawable/ic_whilte_send"
+        android:visibility="gone"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|right|end" />
 
