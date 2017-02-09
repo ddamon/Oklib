@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.oklib.R;
-import com.oklib.utils.LogUtil;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.TitleBuilder;
 import com.oklib.utils.ToastUtils;
+import com.oklib.utils.logger.Logger;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -178,7 +178,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     }
 
     public void showLog(String msg) {
-        LogUtil.i(TAG, msg);// TODO: 16/10/12 Log需要自己从新搞一下
+        Logger.i(TAG, msg);// TODO: 16/10/12 Log需要自己从新搞一下
     }
 
 }

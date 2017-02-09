@@ -1,6 +1,6 @@
 package com.dunkeng.zhihu.presenter;
 
-import com.dunkeng.zhihu.contract.DailyContract;
+import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.dunkeng.zhihu.model.DailyListBean;
 
 import rx.functions.Action1;
@@ -11,7 +11,7 @@ import rx.functions.Action1;
  * @author Damon
  */
 
-public class DailyPresenter extends DailyContract.Presenter {
+public class ZhihuPresenter extends ZhihuContract.Presenter {
     @Override
     public void getDailyData() {
         mRxManager.add(mModel.getDailyData()
@@ -23,10 +23,6 @@ public class DailyPresenter extends DailyContract.Presenter {
                 }));
     }
 
-    @Override
-    public void startInterval() {
-
-    }
 
     @Override
     public void onStart() {

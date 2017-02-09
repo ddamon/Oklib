@@ -20,7 +20,7 @@ public class SpUtil {
 
     public static int getThemeIndex(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getInt("ThemeIndex", 9);
+        return prefs.getInt("ThemeIndex", 5);
     }
 
     public static void setThemeIndex(Context context, int index) {

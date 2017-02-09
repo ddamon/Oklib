@@ -20,6 +20,7 @@ public interface NewsContract {
         String[] getTabs();
     }
 
+    ///////////////新闻列表页view//////////////
     interface ViewNews extends CoreBaseView {
         void showContent(News info);
     }
@@ -37,6 +38,15 @@ public interface NewsContract {
 
     abstract class PresenterNewsMain extends CoreBasePresenter<NewsContract.Model, ViewNewsMain> {
         public abstract void getTabList();
+    }
+
+    ///////////////新闻详情页view//////////////
+    interface ViewNewsDetail extends CoreBaseView {
+        void showContent();
+    }
+
+    abstract class PresenterNewsDetail extends CoreBasePresenter<NewsContract.Model, ViewNewsDetail> {
+        public abstract void getDetail();
     }
 
 }

@@ -10,6 +10,7 @@ import com.dunkeng.R;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.News;
 import com.dunkeng.news.model.NewsModel;
+import com.dunkeng.news.model.NewslistBean;
 import com.dunkeng.news.presenter.NewsPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
@@ -18,19 +19,18 @@ import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;
 import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
+import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 
 public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> implements NewsContract.ViewNews {
     CoreRecyclerView coreRecyclerView;
     private int pageNum = 20;
-    private static String type;
 
     public static FragmentNews newInstance(int position) {
         FragmentNews fragment = new FragmentNews();
         Bundle bundle = new Bundle();
-        bundle.putInt(Config.ARG_POSITION, position);
+        bundle.putInt(Config.ArgumentKey.ARG_POSITION, position);
         fragment.setArguments(bundle);
-        type = Config.getApiType(position);
         return fragment;
     }
 
@@ -41,21 +41,29 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
      */
     @Override
     public View getLayoutView() {
-        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<News.NewslistBean, BaseViewHolder>(R.layout.item_daily) {
+        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<NewslistBean, BaseViewHolder>(R.layout.item_daily) {
             @Override
-            protected void convert(BaseViewHolder helper, News.NewslistBean item) {
+            protected void convert(BaseViewHolder helper, NewslistBean item) {
                 helper.setText(R.id.tv_daily_item_title, item.getTitle());
                 ImageLoaderUtil.getInstance().loadImage(mContext,
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
                                 .url(item.getPicUrl()).build());
             }
-        }).openRefresh(num -> mPresenter.getNewsData(type, pageNum));
+        });
+        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ActNewsDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((NewslistBean) adapter.getData().get(position)));
+            }
+        });
         return coreRecyclerView;
     }
 
     @Override
     public void initData() {
+        int position = getArguments().getInt(Config.ArgumentKey.ARG_POSITION, 0);
+        String type = Config.getApiType(position);
         mPresenter.getNewsData(type, pageNum);
     }
 

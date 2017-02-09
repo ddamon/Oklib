@@ -4,6 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_zhihu"
+            android:checked="true"
             android:icon="@drawable/ic_menu_camera"
             android:title="知乎" />
         <item
@@ -20,12 +21,12 @@
             android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="其它">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="分享" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"

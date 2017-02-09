@@ -15,13 +15,13 @@ import android.widget.Toast;
 
 import com.oklib.AppManager;
 import com.oklib.R;
-import com.oklib.utils.LogUtil;
 import com.oklib.utils.SpUtil;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ThemeUtil;
 import com.oklib.utils.TitleBuilder;
 import com.oklib.utils.ToastUtils;
+import com.oklib.utils.logger.Logger;
 import com.oklib.widget.SwipeBackLayout;
 
 import butterknife.ButterKnife;
@@ -31,6 +31,7 @@ import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
+ * Base Activity
  */
 
 public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity {
@@ -200,6 +201,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     }
 
     public void showLog(String msg) {
-        LogUtil.i(TAG, msg);// TODO: 16/10/12 Log需要自己从新搞一下
+        Logger.i(TAG, msg);
     }
 }

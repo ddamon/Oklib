@@ -21,8 +21,11 @@ public class Config {
      */
     public static final String BASE_URL_ZHIHU = "http://news-at.zhihu.com/api/4/";
 
-
-    public static final String ARG_POSITION = "arg_position";
+    public static class ArgumentKey {
+        public static final String ARG_POSITION = "arg_position";
+        public static final String ARG_ZHIHU_ID = "arg_zhihu_id";
+        public static final String ARG_NEWS_BEAN = "arg_news_bean";
+    }
 
     public static String getApiType(int position) {
         String type = "guonei";

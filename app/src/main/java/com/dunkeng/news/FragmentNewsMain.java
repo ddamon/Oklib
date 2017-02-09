@@ -60,7 +60,7 @@ public class FragmentNewsMain extends CoreBaseFragment<NewsPresenterMain, NewsMo
     public static FragmentNewsMain newInstance(int position) {
         FragmentNewsMain fragment = new FragmentNewsMain();
         Bundle bundle = new Bundle();
-        bundle.putInt(Config.ARG_POSITION, position);
+        bundle.putInt(Config.ArgumentKey.ARG_POSITION, position);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,7 +72,7 @@ public class FragmentNewsMain extends CoreBaseFragment<NewsPresenterMain, NewsMo
             FragmentNews fragmentNews = FragmentNews.newInstance(i);
             fragments.add(fragmentNews);
         }
-        int position = getArguments().getInt(Config.ARG_POSITION, 0);
+        int position = getArguments().getInt(Config.ArgumentKey.ARG_POSITION, 0);
         viewpager.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
         viewpager.setCurrentItem(position);//要设置到viewpager.setAdapter后才起作用
         tabs.setupWithViewPager(viewpager);
@@ -97,7 +97,6 @@ public class FragmentNewsMain extends CoreBaseFragment<NewsPresenterMain, NewsMo
             }
         });
         fab.setOnClickListener(v -> Snackbar.make(v, "Snackbar comes out", Snackbar.LENGTH_LONG).setAction("action", vi -> {
-            showToast("ZhihuMainFragment");
         }));
     }
 
