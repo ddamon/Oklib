@@ -10,6 +10,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.dunkeng.common.OnFragmentOpenDrawerListener;
+import com.dunkeng.meizi.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
 import com.dunkeng.zhihu.FragmentZhihu;
 import com.oklib.AppManager;
@@ -36,7 +38,7 @@ public class MainActivity extends CoreBaseActivity
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.act_main;
     }
 
     @Override
@@ -68,12 +70,11 @@ public class MainActivity extends CoreBaseActivity
         int id = item.getItemId();
         if (id == R.id.nav_zhihu) {
             loadRootFragment(R.id.main_container, new FragmentZhihu());
-            // Handle the camera action
         } else if (id == R.id.nav_news) {
             FragmentNewsMain fragmentNewsMain = FragmentNewsMain.newInstance(0);
             loadRootFragment(R.id.main_container, fragmentNewsMain);
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.meizi) {
+            loadRootFragment(R.id.main_container, new FragmentMeizi());
 
         } else if (id == R.id.nav_share) {
 

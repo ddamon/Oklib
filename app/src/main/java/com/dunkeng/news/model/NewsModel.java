@@ -1,8 +1,8 @@
 package com.dunkeng.news.model;
 
 import com.dunkeng.App;
-import com.dunkeng.Config;
-import com.dunkeng.api.TianxingApi;
+import com.dunkeng.common.Config;
+import com.dunkeng.common.api.TianxingApi;
 import com.dunkeng.news.contract.NewsContract;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.NetWorker;

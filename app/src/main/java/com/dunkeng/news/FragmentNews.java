@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.dunkeng.Config;
+import com.dunkeng.common.Config;
 import com.dunkeng.R;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.News;
@@ -41,7 +41,7 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
      */
     @Override
     public View getLayoutView() {
-        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<NewslistBean, BaseViewHolder>(R.layout.item_daily) {
+        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<NewslistBean, BaseViewHolder>(R.layout.item_news) {
             @Override
             protected void convert(BaseViewHolder helper, NewslistBean item) {
                 helper.setText(R.id.tv_daily_item_title, item.getTitle());

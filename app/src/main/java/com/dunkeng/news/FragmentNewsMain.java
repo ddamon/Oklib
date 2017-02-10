@@ -11,8 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.dunkeng.Config;
-import com.dunkeng.OnFragmentOpenDrawerListener;
+import com.dunkeng.common.Config;
+import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.R;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.NewsModel;

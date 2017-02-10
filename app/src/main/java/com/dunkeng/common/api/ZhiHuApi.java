@@ -1,4 +1,4 @@
-package com.dunkeng.api;
+package com.dunkeng.common.api;
 
 
 import com.dunkeng.zhihu.model.DailyListBean;

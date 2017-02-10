@@ -27,12 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".zhihu.ActZhihuDetail"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".news.ActNewsDetail"
-            android:launchMode="singleTask" />
+        <activity android:name=".zhihu.ActZhihuDetail" />
+        <activity android:name=".news.ActNewsDetail" />
+        <activity android:name=".picture.ActPictureDesc" />
     </application>
 
 </manifest>

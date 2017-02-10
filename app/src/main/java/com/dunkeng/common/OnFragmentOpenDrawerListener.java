@@ -1,4 +1,4 @@
-package com.dunkeng;
+package com.dunkeng.common;
 
 /**
  * Created by Damon.Han on 2017/2/8 0008.

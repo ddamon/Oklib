@@ -16,9 +16,9 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="微信精选" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/meizi"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="养眼" />
     </group>
 
     <item android:title="其它">

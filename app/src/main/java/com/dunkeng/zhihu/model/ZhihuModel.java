@@ -1,8 +1,8 @@
 package com.dunkeng.zhihu.model;
 
 import com.dunkeng.App;
-import com.dunkeng.Config;
-import com.dunkeng.api.ZhiHuApi;
+import com.dunkeng.common.Config;
+import com.dunkeng.common.api.ZhiHuApi;
 import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.NetWorker;

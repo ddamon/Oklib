@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dunkeng.Config;
+import com.dunkeng.common.Config;
 import com.dunkeng.R;
 import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.dunkeng.zhihu.model.ZhihuDetailBean;
