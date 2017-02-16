@@ -9,7 +9,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -20,8 +19,8 @@ import com.dunkeng.picture.model.PictureBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  *
@@ -38,15 +37,14 @@ public class ActPictureDesc extends AppCompatActivity {
         //新页面接收数据
         Bundle bundle = this.getIntent().getExtras();
         //接收name值
-        final PictureBean data = (PictureBean) bundle.getSerializable(Config.ArgumentKey.ARG_PICTURE_BEAN);
-        final DisplayMetrics dm = getResources().getDisplayMetrics();
+        PictureBean data = (PictureBean) bundle.getSerializable(Config.ArgumentKey.ARG_PICTURE_BEAN);
         Glide.with(this).load(data.url).into(imgPicture);
         imgPicture.setDrawingCacheEnabled(true);
         imgPicture.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 new AlertDialog.Builder(ActPictureDesc.this)
-                        .setMessage("保存图片")
+                        .setMessage("保存图片 \n " + Config.APP_CARD_PATH_PICTURE)
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface anInterface, int i) {
@@ -64,17 +62,17 @@ public class ActPictureDesc extends AppCompatActivity {
                 return true;
             }
         });
-
+        imgPicture.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(View view, float x, float y) {
+                finish();
+            }
+        });
     }
 
     public static void start(Context context, View view, PictureBean pictureBean) {
         Intent intent = new Intent(context, ActPictureDesc.class);
         intent.putExtra(Config.ArgumentKey.ARG_PICTURE_BEAN, pictureBean);
         ActivityCompat.startActivity(context, intent, ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, view, "translate_view").toBundle());
-    }
-
-    @OnClick(R.id.image)
-    public void onClick() {
-        finish();
     }
 }

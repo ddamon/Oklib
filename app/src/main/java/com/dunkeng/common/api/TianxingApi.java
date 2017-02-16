@@ -12,7 +12,7 @@ import rx.Observable;
  */
 
 public interface TianxingApi {
-
+    //news
     @GET("/guonei")
     Observable<News> getGuoneiNews(@Query("key") String key, @Query("num") int num);
     @GET("/world")
@@ -29,5 +29,9 @@ public interface TianxingApi {
     Observable<News> getStratupNews(@Query("key") String key, @Query("num") int num);
     @GET("/it")
     Observable<News> getItNews(@Query("key") String key, @Query("num") int num);
+    //微信精选
+    @GET("/wxnew")
+    Observable<News> getWeixinNews(@Query("key") String key, @Query("num") int num);
+
 
 }

@@ -1,5 +1,6 @@
 package com.dunkeng;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,14 +9,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.meizi.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
+import com.dunkeng.news.FragmentWx;
 import com.dunkeng.zhihu.FragmentZhihu;
 import com.oklib.AppManager;
 import com.oklib.base.CoreBaseActivity;
+import com.oklib.utils.IntentUtils;
 
 import butterknife.BindView;
 
@@ -27,6 +32,7 @@ public class MainActivity extends CoreBaseActivity
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
+    //https://www.baidu.com/s?wd=%E7%97%94%E7%96%AE
     @Override
     protected void onResume() {
         super.onResume();
@@ -52,6 +58,14 @@ public class MainActivity extends CoreBaseActivity
         if (savedInstanceState == null) {
             loadRootFragment(R.id.main_container, new FragmentZhihu());
         }
+        View view = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        ((TextView) view.findViewById(R.id.textView)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = IntentUtils.getUrlIntent("https://www.baidu.com/s?wd=%E7%97%94%E7%96%AE");
+                startActivity(intent);
+            }
+        });
 //        navigationView.setCheckedItem(R.id.nav_zhihu);
     }
 
@@ -76,10 +90,13 @@ public class MainActivity extends CoreBaseActivity
         } else if (id == R.id.meizi) {
             loadRootFragment(R.id.main_container, new FragmentMeizi());
 
+        } else if (id == R.id.nav_weixin) {
+            loadRootFragment(R.id.main_container, new FragmentWx());
+
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            showToast(getString(R.string.app_name));
+        } else if (id == R.id.nav_about) {
+            showToast(getString(R.string.app_name));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

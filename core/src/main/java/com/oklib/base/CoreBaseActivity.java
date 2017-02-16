@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.oklib.AppManager;
 import com.oklib.R;
+import com.oklib.utils.JumpUtil;
 import com.oklib.utils.SpUtil;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
@@ -194,6 +197,16 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     public void startActivity(Class<? extends Activity> tarActivity) {
         Intent intent = new Intent(this, tarActivity);
         startActivity(intent);
+    }
+
+    public void startActivity(Class<? extends Activity> tarActivity, Context context, View view) {
+        Intent intent = new Intent(context, tarActivity);
+        JumpUtil.startActivityTranslate(intent, context, view);
+    }
+
+    public void startActivity(Class<? extends Activity> tarActivity, Context context) {
+        Intent intent = new Intent(context, tarActivity);
+        ActivityCompat.startActivity(this, intent, ActivityOptionsCompat.makeBasic().toBundle());
     }
 
     public void showToast(String msg) {

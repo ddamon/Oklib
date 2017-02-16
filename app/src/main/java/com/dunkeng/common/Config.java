@@ -67,6 +67,9 @@ public class Config {
             case 7:
                 type = "it";
                 break;
+            case 8:
+                type = "wxnew";
+                break;
             default:
                 type = "guonei";
                 break;
