@@ -868,7 +868,7 @@ public final class NetWorker {
             }
             retrofitBuilder.addCallAdapterFactory(callAdapterFactory);
             if (isLog) {
-                new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+                addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
             }
             if (sslSocketFactory != null) {
                 okhttpBuilder.sslSocketFactory(sslSocketFactory);
