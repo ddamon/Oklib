@@ -8,8 +8,6 @@ import com.oklib.utils.logger.Logger;
 
 
 /**
- * <!-- 解锁 --> require <uses-permission
- * android:name="android.permission.DISABLE_KEYGUARD"/>
  *
  * @author MaTianyu
  * @date 2014-12-12

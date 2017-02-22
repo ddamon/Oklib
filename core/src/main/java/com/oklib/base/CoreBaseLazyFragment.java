@@ -27,10 +27,8 @@ public abstract class CoreBaseLazyFragment<T extends CoreBasePresenter, E extend
             }
         } else {
             // isSupportHidden()仅在saveIns tanceState!=null时有意义,是库帮助记录Fragment状态的方法
-            if (!isSupportHidden()) {
-                mInited = true;
-                initLazyView(savedInstanceState);
-            }
+            mInited = true;
+            initLazyView(savedInstanceState);
         }
     }
 

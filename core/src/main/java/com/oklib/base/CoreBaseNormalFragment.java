@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
+import com.oklib.widget.LoadingView;
 
-public class CoreBaseNormalFragment extends Fragment {
-    protected LayoutInflater inflater;
-    protected View contentView;
+import butterknife.ButterKnife;
+
+public abstract class CoreBaseNormalFragment extends Fragment {
+    protected View rootView;
+    private LoadingView mLoginView;
     private Context context;
-    private ViewGroup container;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,62 +28,31 @@ public class CoreBaseNormalFragment extends Fragment {
     }
 
     @Override
-    public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.inflater = inflater;
-        this.container = container;
-        onCreateView(savedInstanceState);
-        if (contentView == null)
-            return super.onCreateView(inflater, container, savedInstanceState);
-        return contentView;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(getLayoutId(), container, false);
+        ButterKnife.bind(this, rootView);
+        mLoginView = new LoadingView(getActivity());
+        onInit();
+        return rootView;
     }
 
-    protected void onCreateView(Bundle savedInstanceState) {
+    protected abstract int getLayoutId();
 
+    protected abstract void onInit();
+
+    public void showLoadingView() {
+        mLoginView.show();
     }
+
+    public void hideLoadingView() {
+        mLoginView.hide();
+    }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        contentView = null;
-        container = null;
-        inflater = null;
-    }
-
-    public Context getApplicationContext() {
-        return context;
-    }
-
-    public void setContentView(int layoutResID) {
-        setContentView((ViewGroup) inflater.inflate(layoutResID, container, false));
-    }
-
-    public void setContentView(View view) {
-        contentView = view;
-    }
-
-    public View getContentView() {
-        return contentView;
-    }
-
-    public View findViewById(int id) {
-        if (contentView != null)
-            return contentView.findViewById(id);
-        return null;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        try {
-            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-            childFragmentManager.setAccessible(true);
-            childFragmentManager.set(this, null);
-
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private ProgressDialog progressBar;
@@ -156,7 +126,7 @@ public class CoreBaseNormalFragment extends Fragment {
      */
     public void gotoActivity(Class<?> cls) {
         Intent intent;
-        intent = new Intent(getApplicationContext(), cls);
+        intent = new Intent(context, cls);
         startActivity(intent);
     }
 
@@ -166,7 +136,7 @@ public class CoreBaseNormalFragment extends Fragment {
      * @param cls
      */
     public void gotoActivity(Class<?> cls, Bundle bundle) {
-        Intent intent = new Intent(getApplicationContext(), cls);
+        Intent intent = new Intent(context, cls);
         intent.putExtras(bundle);
         startActivity(intent);
     }

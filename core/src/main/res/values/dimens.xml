@@ -44,4 +44,32 @@
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_16">16sp</dimen>
 
+    <dimen name="text_size_32">32.0dp</dimen>
+    <dimen name="text_size_31">31.0dp</dimen>
+    <dimen name="text_size_30">30.0dp</dimen>
+    <dimen name="text_size_29">29.0dp</dimen>
+    <dimen name="text_size_28">28.0dp</dimen>
+    <dimen name="text_size_27">27.0dp</dimen>
+    <dimen name="text_size_26">26.0dp</dimen>
+    <dimen name="text_size_25">25.0dp</dimen>
+    <dimen name="text_size_24">24.0dp</dimen>
+    <dimen name="text_size_23">23.0dp</dimen>
+    <dimen name="text_size_22">22.0dp</dimen>
+    <dimen name="text_size_21">21.0dp</dimen>
+    <dimen name="text_size_20">20.0dp</dimen>
+    <dimen name="text_size_19">19.0dp</dimen>
+    <dimen name="text_size_18">18.0dp</dimen>
+    <dimen name="text_size_17">17.0dp</dimen>
+    <dimen name="text_size_16">16.0dp</dimen>
+    <dimen name="text_size_15">15.0dp</dimen>
+    <dimen name="text_size_14">14.0dp</dimen>
+    <dimen name="text_size_13">13.0dp</dimen>
+    <dimen name="text_size_12">12.0dp</dimen>
+    <dimen name="text_size_11">11.0dp</dimen>
+    <dimen name="text_size_10">10.0dp</dimen>
+    <dimen name="text_size_9">9.0dp</dimen>
+    <dimen name="text_size_8">8.0dp</dimen>
+    <dimen name="text_size_7">7.0dp</dimen>
+    <dimen name="text_smallsize">16.0dp</dimen>
+    <dimen name="text_middlesize">18.0dp</dimen>
 </resources>
