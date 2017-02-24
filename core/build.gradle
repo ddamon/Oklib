@@ -26,15 +26,6 @@ android {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-
-    // Resolve conflicts between main and test APK:
-    androidTestCompile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
-    androidTestCompile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
-    androidTestCompile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
 
     // Android support
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
@@ -126,11 +117,9 @@ task generateJavadocsJar(type: Jar, dependsOn: generateJavadocs) {
 }
 generateJavadocs {
     options {
+        options.addStringOption('Xdoclint:none', '-quiet')
         encoding "UTF-8"
         charSet 'UTF-8'
-        author true
-        version true
-        links "http://docs.oracle.com/javase/8/docs/api"
     }
 }
 artifacts {
@@ -147,9 +136,15 @@ bintray {
     pkg {
         repo = 'maven'
         name = 'oklib'
+        version {
+            name = '1.0.1-release'
+            desc = "oklib"
+            vcsTag = '1.0.1'
+        }
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
         publish = true  //是否发布
+        configurations = ['archives']
     }
 }

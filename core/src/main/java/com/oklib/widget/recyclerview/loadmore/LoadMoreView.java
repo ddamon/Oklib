@@ -6,9 +6,6 @@ import android.support.annotation.LayoutRes;
 import com.oklib.widget.recyclerview.BaseViewHolder;
 
 
-/**
- * Created by BlingBling on 2016/11/11.
- */
 
 public abstract class LoadMoreView {
 
