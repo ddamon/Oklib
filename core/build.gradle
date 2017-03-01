@@ -65,6 +65,8 @@ dependencies {
     compile 'me.immortalz:transitionhelper:1.0.6'
 
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    //轮播图
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }
 def siteUrl = "https://github.com/ddamon/Oklib"
 def gitUrl = "https://github.com/ddamon/Oklib.git"
