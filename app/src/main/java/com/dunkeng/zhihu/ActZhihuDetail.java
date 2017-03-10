@@ -118,7 +118,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     }
 
     @Override
-    public void showError(String msg) {
+    public void showMsg(String msg) {
         SnackbarUtil.showShort(getWindow().getDecorView(), msg);
     }
 }

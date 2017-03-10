@@ -105,7 +105,7 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
     }
 
     @Override
-    public void showError(String msg) {
+    public void showMsg(String msg) {
         ToastUtils.showToast(mContext, msg);
         coreRecyclerView.showLoadMoreFailedView();
     }

@@ -11,7 +11,7 @@ public class ZhihuDetailsPresenter extends ZhihuContract.AbsZhihuDetailsPresente
                 .getZhihuDetails(anInt)
                 .subscribe(
                         bean -> mView.showContent(bean),
-                        e -> mView.showError("数据加载失败")
+                        e -> mView.showMsg("数据加载失败")
                 ));
     }
 

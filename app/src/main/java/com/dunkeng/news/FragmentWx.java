@@ -98,7 +98,7 @@ public class FragmentWx extends CoreBaseFragment<NewsPresenter, NewsModel> imple
     }
 
     @Override
-    public void showError(String msg) {
+    public void showMsg(String msg) {
         ToastUtils.showToast(mContext, msg);
     }
 }

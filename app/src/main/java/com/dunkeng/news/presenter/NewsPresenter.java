@@ -26,7 +26,7 @@ public class NewsPresenter extends NewsContract.PresenterNews {
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                mView.showError("数据加载失败");
+                                mView.showMsg("数据加载失败");
                             }
                         }));
     }

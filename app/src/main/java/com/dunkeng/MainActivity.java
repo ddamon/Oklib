@@ -48,11 +48,6 @@ public class MainActivity extends CoreBaseActivity
     }
 
     @Override
-    public boolean isOpen() {
-        return true;
-    }
-
-    @Override
     public void initView(Bundle savedInstanceState) {
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {

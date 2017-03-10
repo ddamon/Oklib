@@ -83,7 +83,7 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
     }
 
     @Override
-    public void showError(String msg) {
+    public void showMsg(String msg) {
         ToastUtils.showToast(mContext, msg);
     }
 }

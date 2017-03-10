@@ -94,7 +94,7 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
     }
 
     @Override
-    public void showError(String msg) {
+    public void showMsg(String msg) {
         ToastUtils.showToast(mContext, msg);
     }
 }

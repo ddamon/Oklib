@@ -101,7 +101,7 @@ public class FragmentNewsMain extends CoreBaseFragment<NewsPresenterMain, NewsMo
     }
 
     @Override
-    public void showError(String msg) {
+    public void showMsg(String msg) {
 
     }
 

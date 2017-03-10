@@ -3,7 +3,6 @@ package com.oklib.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -48,20 +47,19 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
-    private boolean isOpen = false;
+    private boolean isSwapBackOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置状态栏透明
-        setStatusBarColor();
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        setStatusBarColor();
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         init(savedInstanceState);
     }
 
     private void init(Bundle savedInstanceState) {
         TAG = getClass().getSimpleName();
-
         setTheme(ThemeUtil.themeArr[SpUtil.getThemeIndex(this)][
                 SpUtil.getNightModel(this) ? 1 : 0]);
         this.setContentView(this.getLayoutId());
@@ -98,13 +96,13 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     @Override
     public void setContentView(int layoutResID) {
-        if (isOpen()) {
-            super.setContentView(layoutResID);
-        } else {
+        if (isSwapBackOpen()) {
             super.setContentView(getContainer());
             View view = LayoutInflater.from(this).inflate(layoutResID, null);
 //            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             swipeBackLayout.addView(view);
+        } else {
+            super.setContentView(layoutResID);
         }
     }
 
@@ -121,8 +119,8 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         return container;
     }
 
-    public boolean isOpen() {
-        return isOpen;
+    public boolean isSwapBackOpen() {
+        return isSwapBackOpen;
     }
 
     public abstract int getLayoutId();
