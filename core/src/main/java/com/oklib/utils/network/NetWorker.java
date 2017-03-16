@@ -47,6 +47,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public final class NetWorker {
+    private static Context mContext;
     private static Map<String, String> headers;
     private static Map<String, String> parameters;
     private static Retrofit.Builder retrofitBuilder;
@@ -54,7 +55,6 @@ public final class NetWorker {
     private static OkHttpClient.Builder okhttpBuilder;
     public static BaseApiService apiManager;
     private static OkHttpClient okHttpClient;
-    private static Context mContext;
     private final okhttp3.Call.Factory callFactory;
     private final String baseUrl;
     private final List<Converter.Factory> converterFactories;

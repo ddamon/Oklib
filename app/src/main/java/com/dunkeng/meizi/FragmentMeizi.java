@@ -109,4 +109,5 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
         ToastUtils.showToast(mContext, msg);
         coreRecyclerView.showLoadMoreFailedView();
     }
+
 }
