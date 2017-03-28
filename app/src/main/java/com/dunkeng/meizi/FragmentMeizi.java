@@ -20,6 +20,7 @@ import com.dunkeng.picture.ActPictureDesc;
 import com.dunkeng.picture.model.PictureBean;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
+import com.oklib.utils.logger.Logger;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;
@@ -59,15 +60,6 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
     @Override
     public void showContent(MeiziResult info) {
         coreRecyclerView.getAdapter().addData(info.beauties);
-        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PictureBean pictureBean = new PictureBean();
-                pictureBean.url = ((Meizi) adapter.getData().get(position)).getUrl();
-                pictureBean.desc = ((Meizi) adapter.getData().get(position)).getDesc();
-                ActPictureDesc.start(mActivity, view.findViewById(R.id.image), pictureBean);
-            }
-        });
     }
 
 
@@ -102,6 +94,16 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
                 mPresenter.getMeizi(page);
             }
         }).openRefresh();
+        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Logger.e("点击图片");
+                PictureBean pictureBean = new PictureBean();
+                pictureBean.url = ((Meizi) adapter.getData().get(position)).getUrl();
+                pictureBean.desc = ((Meizi) adapter.getData().get(position)).getDesc();
+                ActPictureDesc.start(mActivity, view.findViewById(R.id.image), pictureBean);
+            }
+        });
     }
 
     @Override
