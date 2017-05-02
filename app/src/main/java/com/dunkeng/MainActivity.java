@@ -21,6 +21,7 @@ import com.dunkeng.zhihu.FragmentZhihu;
 import com.oklib.AppManager;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.IntentUtils;
+import com.oklib.utils.ShareUtils;
 
 import butterknife.BindView;
 
@@ -89,7 +90,9 @@ public class MainActivity extends CoreBaseActivity
             loadRootFragment(R.id.main_container, new FragmentWx());
 
         } else if (id == R.id.nav_share) {
-            showToast(getString(R.string.app_name));
+            String txt = "蹲坑中...勿扰\n--来自蹲坑APP";
+            ShareUtils shareUtils = new ShareUtils(mContext);
+            shareUtils.shareText(txt);
         } else if (id == R.id.nav_about) {
             showToast(getString(R.string.app_name));
         }

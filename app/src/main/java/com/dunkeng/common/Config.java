@@ -26,6 +26,13 @@ public class Config {
      */
     public static final String BASE_URL_ZHIHU = "http://news-at.zhihu.com/api/4/";
 
+    /*
+    * mob
+    * */
+    public static final String APP_KEY_MOB = "1c83c05bca61d";
+    public static final String APP_KEY_SECRET = "eb43dbc0404396dc870d5d26df3848db";
+
+
     public static class Data {
         public static final int pageSize = 20;
     }

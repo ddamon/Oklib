@@ -5,20 +5,24 @@
         <item
             android:id="@+id/nav_zhihu"
             android:checked="true"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="知乎精编" />
+            android:icon="@drawable/ic_menu_compass"
+            android:title="@string/menu_name_zhihu" />
         <item
             android:id="@+id/nav_news"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="看看新闻" />
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/menu_name_news" />
         <item
             android:id="@+id/nav_weixin"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="微信精选" />
+            android:title="@string/menu_name_weixin" />
         <item
             android:id="@+id/meizi"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_name_girls" />
+        <item
+            android:id="@+id/tools"
             android:icon="@drawable/ic_menu_manage"
-            android:title="养养眼" />
+            android:title="@string/menu_name_tools" />
     </group>
 
     <item android:title="其它">
@@ -26,11 +30,11 @@
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
+                android:title="@string/menu_name_share" />
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_send"
-                android:title="关于" />
+                android:title="@string/menu_name_about" />
         </menu>
     </item>
 

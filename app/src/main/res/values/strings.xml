@@ -6,4 +6,13 @@
 
     <string name="action_settings">Settings</string>
     <string name="slogan">时间太长，会得痔疮</string>
+
+    <string name="menu_name_zhihu">知乎精编</string>
+    <string name="menu_name_news">热门新闻</string>
+    <string name="menu_name_weixin">微信精选</string>
+    <string name="menu_name_girls">养养眼</string>
+    <string name="menu_name_tools">实用工具</string>
+    <string name="menu_name_share">分享</string>
+    <string name="menu_name_about">关于</string>
+
 </resources>
