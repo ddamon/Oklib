@@ -2,11 +2,11 @@ package com.oklib.utils.pref;
 
 import android.text.TextUtils;
 
-import net.nashlegend.anypref.annotations.PrefArrayList;
-import net.nashlegend.anypref.annotations.PrefField;
-import net.nashlegend.anypref.annotations.PrefIgnore;
-import net.nashlegend.anypref.annotations.PrefModel;
-import net.nashlegend.anypref.annotations.PrefSub;
+import com.oklib.utils.pref.annotations.PrefArrayList;
+import com.oklib.utils.pref.annotations.PrefField;
+import com.oklib.utils.pref.annotations.PrefIgnore;
+import com.oklib.utils.pref.annotations.PrefModel;
+import com.oklib.utils.pref.annotations.PrefSub;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

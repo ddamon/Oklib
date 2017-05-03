@@ -23,7 +23,7 @@ public class ShareUtils {
         Intent intent1 = new Intent(Intent.ACTION_SEND);
         intent1.putExtra(Intent.EXTRA_TEXT, text);
         intent1.setType("text/plain");
-        context.startActivity(Intent.createChooser(intent1, "share"));
+        context.startActivity(Intent.createChooser(intent1, "分享到"));
     }
 
     public void shareImageFile(File file) {
@@ -31,7 +31,7 @@ public class ShareUtils {
         Uri uri = Uri.fromFile(file);
         intent2.putExtra(Intent.EXTRA_STREAM, uri);
         intent2.setType("image/*");
-        context.startActivity(Intent.createChooser(intent2, "share"));
+        context.startActivity(Intent.createChooser(intent2, "分享到"));
     }
 
 }
