@@ -20,6 +20,11 @@ public class ZhihuPresenter extends ZhihuContract.Presenter {
                     public void call(DailyListBean dailyListBean) {
                         mView.showContent(dailyListBean);
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
                 }));
     }
 
