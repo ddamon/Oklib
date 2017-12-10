@@ -10,7 +10,6 @@ import com.oklib.widget.recyclerview.BaseItemDraggableAdapter;
 
 
 /**
- * Created by luoxw on 2016/6/20.
  */
 public class ItemDragAndSwipeCallback extends ItemTouchHelper.Callback {
 

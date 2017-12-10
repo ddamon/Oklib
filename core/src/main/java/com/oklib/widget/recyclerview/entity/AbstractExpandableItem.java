@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * <p>A helper to implement expandable item.</p>
  * <p>if you don't want to extent a class, you can also implement the interface IExpandable</p>
- * Created by luoxw on 2016/8/9.
  */
 public abstract class AbstractExpandableItem<T> implements IExpandable<T> {
     protected boolean mExpandable = false;

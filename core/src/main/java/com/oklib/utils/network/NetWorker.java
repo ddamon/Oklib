@@ -46,6 +46,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+/**
+ * 网络请求类
+ */
 public final class NetWorker {
     private static Context mContext;
     private static Map<String, String> headers;
@@ -191,10 +194,9 @@ public final class NetWorker {
             if (response == null || (response.getData() == null && response.getResult() == null)) {
                 throw new JsonParseException("后端数据不对");
             }
-            /*if (!response.isOk()) {
+            if (!response.isOk(mContext)) {
                 throw new RuntimeException(response.getCode() + "" + response.getMsg() != null ? response.getMsg() : "");
             }
-*/
             return response.getData();
         }
     }
@@ -783,9 +785,12 @@ public final class NetWorker {
          * <p>If unset, {@linkplain CookieManger#NO_COOKIES no cookies} will be accepted nor provided.
          */
         public Builder addSSL(String[] hosts, int[] certificates) {
-            if (hosts == null) throw new NullPointerException("hosts == null");
-            if (certificates == null) throw new NullPointerException("ids == null");
-
+            if (hosts == null) {
+                throw new NullPointerException("hosts == null");
+            }
+            if (certificates == null) {
+                throw new NullPointerException("ids == null");
+            }
 
             addSSLSocketFactory(HttpsFactroy.getSSLSocketFactory(context, certificates));
             addHostnameVerifier(HttpsFactroy.getHostnameVerifier(hosts));

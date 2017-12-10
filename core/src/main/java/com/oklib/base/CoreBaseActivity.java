@@ -67,7 +67,9 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        if (this instanceof CoreBaseView) mPresenter.attachVM(this, mModel);
+        if (this instanceof CoreBaseView) {
+            mPresenter.attachVM(this, mModel);
+        }
         this.initView(savedInstanceState);
         AppManager.getAppManager().addActivity(this);
     }
@@ -76,8 +78,12 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
-        if (binder != null) binder.unbind();
-        if (mPresenter != null) mPresenter.detachVM();
+        if (binder != null) {
+            binder.unbind();
+        }
+        if (mPresenter != null) {
+            mPresenter.detachVM();
+        }
     }
 
     @Override

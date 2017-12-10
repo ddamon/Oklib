@@ -66,7 +66,9 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
         initUI(view, savedInstanceState);
-        if (this instanceof CoreBaseView) mPresenter.attachVM(this, mModel);
+        if (this instanceof CoreBaseView) {
+            mPresenter.attachVM(this, mModel);
+        }
         getBundle(getArguments());
         initData();
         super.onViewCreated(view, savedInstanceState);
@@ -75,7 +77,9 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (binder != null) binder.unbind();
+        if (binder != null) {
+            binder.unbind();
+        }
     }
 
     @Override
@@ -87,7 +91,9 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.detachVM();
+        if (mPresenter != null) {
+            mPresenter.detachVM();
+        }
     }
 
     @Override

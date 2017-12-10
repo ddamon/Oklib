@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.oklib.utils.assist;
+package com.oklib.utils.crypt;
 
 import java.io.UnsupportedEncodingException;
 
