@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.oklib.AppManager;
+import com.oklib.CoreApp;
 import com.oklib.R;
 import com.oklib.utils.JumpUtil;
-import com.oklib.utils.SpUtil;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ThemeUtil;
@@ -26,8 +26,6 @@ import com.oklib.utils.ToastUtils;
 import com.oklib.utils.logger.Logger;
 import com.oklib.widget.SwipeBackLayout;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -43,7 +41,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     public P mPresenter;
     public M mModel;
     protected Context mContext;
-    Unbinder binder;
 
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
@@ -60,10 +57,9 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     private void init(Bundle savedInstanceState) {
         TAG = getClass().getSimpleName();
-        setTheme(ThemeUtil.themeArr[SpUtil.getThemeIndex(this)][
-                SpUtil.getNightModel(this) ? 1 : 0]);
+        setTheme(ThemeUtil.themeArr[CoreApp.getThemeIndex(this)][
+                CoreApp.getNightModel(this) ? 1 : 0]);
         this.setContentView(this.getLayoutId());
-        binder = ButterKnife.bind(this);
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
@@ -78,9 +74,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
-        if (binder != null) {
-            binder.unbind();
-        }
         if (mPresenter != null) {
             mPresenter.detachVM();
         }
@@ -160,7 +153,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+        toolbar.setNavigationIcon(R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

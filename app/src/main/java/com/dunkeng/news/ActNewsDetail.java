@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dunkeng.App;
 import com.dunkeng.common.Config;
 import com.dunkeng.R;
 import com.dunkeng.news.contract.NewsContract;
@@ -24,7 +25,6 @@ import com.dunkeng.news.presenter.NewsDetailPresenter;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.SnackbarUtil;
-import com.oklib.utils.SpUtil;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.tencent.smtt.sdk.WebSettings;
@@ -68,10 +68,10 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
     public void initView(Bundle savedInstanceState) {
         setToolBar(toolbar, "");
         WebSettings settings = wvDetailContent.getSettings();
-        if (SpUtil.getNoImageState()) {
+        if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);
         }
-        if (SpUtil.getAutoCacheState()) {
+        if (App.getAutoCacheState()) {
             settings.setAppCacheEnabled(true);
             settings.setDomStorageEnabled(true);
             settings.setDatabaseEnabled(true);

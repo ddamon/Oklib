@@ -18,8 +18,6 @@ import com.oklib.utils.TitleBuilder;
 import com.oklib.utils.ToastUtils;
 import com.oklib.utils.logger.Logger;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
@@ -35,7 +33,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     public M mModel;
     protected Context mContext;
     protected Activity mActivity;
-    Unbinder binder;
     protected View mainView;
 
     @Override
@@ -62,7 +59,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         TAG = getClass().getSimpleName();
-        binder = ButterKnife.bind(this, view);
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
         initUI(view, savedInstanceState);
@@ -77,9 +73,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (binder != null) {
-            binder.unbind();
-        }
     }
 
     @Override
@@ -135,7 +128,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
 
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
-        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+        toolbar.setNavigationIcon(R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
     }
 

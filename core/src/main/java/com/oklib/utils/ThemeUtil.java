@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 
+import com.oklib.CoreApp;
 import com.oklib.R;
 
 /**
@@ -56,7 +57,7 @@ public class ThemeUtil {
 
     public static int getTheme(Context mContext) {
         return mContext.getResources()
-                .getColor(themeColorArr[SpUtil.getThemeIndex(mContext)][0]);
+                .getColor(themeColorArr[CoreApp.getThemeIndex(mContext)][0]);
     }
 
     public static int getThemeColor(@NonNull Context context) {

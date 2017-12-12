@@ -2,16 +2,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,6 +21,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '26.0.2'
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -51,8 +50,6 @@ dependencies {
     //photoview
     compile "com.commit451:PhotoView:$rootProject.photoviewVersion"
 
-    //Butterknife
-    compile 'com.jakewharton:butterknife:8.2.1'
     //fragmentation
     compile 'me.yokeyword:fragmentation:0.10.1'
     //permissions
@@ -139,9 +136,9 @@ bintray {
         repo = 'maven'
         name = 'oklib'
         version {
-            name = '1.0.4-release'
+            name = '1.0.5-release'
             desc = "oklib"
-            vcsTag = '1.0.4'
+            vcsTag = '1.0.5'
         }
         websiteUrl = siteUrl
         vcsUrl = gitUrl
