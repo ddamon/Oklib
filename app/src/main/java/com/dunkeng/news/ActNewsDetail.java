@@ -32,6 +32,7 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Damon.Han on 2017/2/9 0009.
@@ -66,6 +67,7 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        ButterKnife.bind(this);
         setToolBar(toolbar, "");
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {

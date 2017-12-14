@@ -53,7 +53,7 @@ dependencies {
     //fragmentation
     compile 'me.yokeyword:fragmentation:0.10.1'
     //permissions
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.8.0@aar'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
 
     //log
     compile 'com.orhanobut:logger:1.15'
@@ -68,7 +68,7 @@ dependencies {
 def siteUrl = "https://github.com/ddamon/Oklib"
 def gitUrl = "https://github.com/ddamon/Oklib.git"
 group = "com.oklib"
-version = '1.0.5'
+version = '1.0.6'
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -136,9 +136,9 @@ bintray {
         repo = 'maven'
         name = 'oklib'
         version {
-            name = '1.0.5-release'
+            name = '1.0.6-release'
             desc = "oklib"
-            vcsTag = '1.0.5'
+            vcsTag = '1.0.6'
         }
         websiteUrl = siteUrl
         vcsUrl = gitUrl

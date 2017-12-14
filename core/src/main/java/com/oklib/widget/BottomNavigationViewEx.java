@@ -28,6 +28,35 @@ import java.lang.reflect.Field;
 
 /**
  * 底部导航条扩展
+ * enableAnimation	开启或关闭点击动画(文字放大效果和图片移动效果)。 默认为 true.
+ * enableItemShiftingMode	开始或关闭子菜单位移模式。 如果为 true，除了当前选中项，其他项的文本将会隐藏。 当菜单数大于3时，默认为 true。
+ * enableShiftingMode	开始或关闭导航条位移模式。如果为 true，选中项和其他项的宽度不一样。当菜单数大于3时，默认为 true。
+ * getBottomNavigationItemView	获取位于 position 的私有成员变量 mButton。
+ * getBottomNavigationItemViews	获取私有成员变量 mButtons。
+ * getCurrentItem	获取当前选中项的索引。
+ * getIconAt	获取位于 position 的图片。
+ * getItemCount	获取子项个数。
+ * getItemHeight	获取菜单高度。
+ * getLargeLabelAt	获取位于 position 的大标签. 每个子项包含两个标签，一个大的，一个小的。
+ * getSmallLabelAt	获取位于 position 的小标签. 每个子项包含两个标签，一个大的，一个小的。
+ * getMenuItemPosition	获取子菜单的索引。如果找不到，返回 -1。
+ * getOnNavigationItemSelectedListener	获取 OnNavigationItemSelectedListener。
+ * setCurrentItem	设置当前选中项。
+ * setIconMarginTop	设置 icon 的 MarginTop，用于调节图标垂直位置。
+ * setIconSize	设置所有的子项图标大小。
+ * setIconSizeAt	设置位于 position 的图标的大小。
+ * setIconsMarginTop	设置所有 icon 的 MarginTop，用于调节图标垂直位置。
+ * setIconTintList	设置图片的渲染颜色列表(Selector)
+ * setIconVisibility	设置图片可见性。
+ * setItemBackground	设置子项的背景。
+ * setItemHeight	设置子项高度。
+ * setLargeTextSize	设置所有子项的大标签文本大小。每个子项有两个标签，一个大的，一个小的。当子项未选中时，显示小标签；选中时，显示大标签。
+ * setSmallTextSize	设置所有子项的小标签文本大小。每个子项有两个标签，一个大的，一个小的。当子项未选中时，显示小标签；选中时，显示大标签。
+ * setTextSize	设置所有子项的大和小标签文本大小。
+ * setTextTintList	设置子项 TextView 的颜色。
+ * setTextVisibility	设置文本可见性。
+ * setTypeface	设置所有子项的 TextView 字体
+ * setupWithViewPager	和 ViewPager 绑定，当 任何一个选中项改变时，都会自动改变另一项。
  * https://github.com/ittianyu/BottomNavigationViewEx
  */
 public class BottomNavigationViewEx extends BottomNavigationView {

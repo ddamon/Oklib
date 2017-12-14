@@ -133,13 +133,9 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     @Override
     protected FragmentAnimator onCreateFragmentAnimator() {
-        // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
-        // 设置无动画
 //        return new DefaultNoAnimator();
-        // 设置自定义动画
         // return new FragmentAnimator(enter,exit,popEnter,popExit);
-        // 默认竖向(和安卓5.0以上的动画相同)
 //        return super.onCreateFragmentAnimator();
     }
 
@@ -163,10 +159,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     }
 
     /**
-     * 左侧有返回键的标题栏
-     * <p>如果在此基础上还要加其他内容,比如右侧有文字按钮,可以获取该方法返回值继续设置其他内容
-     *
-     * @param title 标题
+     * @param title
      */
     protected TitleBuilder initBackTitle(String title) {
         return new TitleBuilder(this)
@@ -178,9 +171,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     }
 
     /**
-     * 跳转页面,无extra简易型
-     *
-     * @param tarActivity 目标页面
+     * @param tarActivity
      */
     public void startActivity(Class<? extends Activity> tarActivity, Bundle options) {
         Intent intent = new Intent(this, tarActivity);
