@@ -24,7 +24,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
- *
+ * Fragment 基类
  */
 
 public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment {
