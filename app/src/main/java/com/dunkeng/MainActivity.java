@@ -24,6 +24,7 @@ import com.oklib.utils.IntentUtils;
 import com.oklib.utils.ShareUtils;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends CoreBaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnFragmentOpenDrawerListener {
@@ -50,6 +51,7 @@ public class MainActivity extends CoreBaseActivity
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        ButterKnife.bind(this);
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
             loadRootFragment(R.id.main_container, new FragmentZhihu());

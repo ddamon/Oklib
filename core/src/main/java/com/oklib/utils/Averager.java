@@ -1,4 +1,4 @@
-package com.oklib.utils.assist;
+package com.oklib.utils;
 
 import com.oklib.utils.logger.Logger;
 

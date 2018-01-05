@@ -29,6 +29,7 @@ import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> implements MeiziContract.View {
@@ -87,6 +88,7 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
 
     @Override
     public void initUI(View view, @Nullable Bundle savedInstanceState) {
+        ButterKnife.bind(this, mainView);
         toolbar.setTitle("福利");
         toolbar.setNavigationIcon(R.mipmap.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(v -> {

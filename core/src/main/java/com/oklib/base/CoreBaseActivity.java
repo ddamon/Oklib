@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.oklib.AppManager;
+import com.oklib.CoreApp;
 import com.oklib.R;
 import com.oklib.utils.JumpUtil;
-import com.oklib.utils.SpUtil;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ThemeUtil;
@@ -26,8 +26,6 @@ import com.oklib.utils.ToastUtils;
 import com.oklib.utils.logger.Logger;
 import com.oklib.widget.SwipeBackLayout;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -43,7 +41,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     public P mPresenter;
     public M mModel;
     protected Context mContext;
-    Unbinder binder;
 
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
@@ -60,13 +57,15 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     private void init(Bundle savedInstanceState) {
         TAG = getClass().getSimpleName();
-        setTheme(ThemeUtil.themeArr[SpUtil.getThemeIndex(this)][SpUtil.getNightModel(this) ? 1 : 0]);
+        setTheme(ThemeUtil.themeArr[CoreApp.getThemeIndex(this)][
+                CoreApp.getNightModel(this) ? 1 : 0]);
         this.setContentView(this.getLayoutId());
-        binder = ButterKnife.bind(this);
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        if (this instanceof CoreBaseView) mPresenter.attachVM(this, mModel);
+        if (this instanceof CoreBaseView) {
+            mPresenter.attachVM(this, mModel);
+        }
         this.initView(savedInstanceState);
         AppManager.getAppManager().addActivity(this);
     }
@@ -75,8 +74,9 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
-        if (binder != null) binder.unbind();
-        if (mPresenter != null) mPresenter.detachVM();
+        if (mPresenter != null) {
+            mPresenter.detachVM();
+        }
     }
 
     @Override
@@ -133,13 +133,9 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     @Override
     protected FragmentAnimator onCreateFragmentAnimator() {
-        // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
-        // 设置无动画
 //        return new DefaultNoAnimator();
-        // 设置自定义动画
         // return new FragmentAnimator(enter,exit,popEnter,popExit);
-        // 默认竖向(和安卓5.0以上的动画相同)
 //        return super.onCreateFragmentAnimator();
     }
 
@@ -153,7 +149,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+        toolbar.setNavigationIcon(R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,10 +159,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     }
 
     /**
-     * 左侧有返回键的标题栏
-     * <p>如果在此基础上还要加其他内容,比如右侧有文字按钮,可以获取该方法返回值继续设置其他内容
-     *
-     * @param title 标题
+     * @param title
      */
     protected TitleBuilder initBackTitle(String title) {
         return new TitleBuilder(this)
@@ -178,9 +171,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     }
 
     /**
-     * 跳转页面,无extra简易型
-     *
-     * @param tarActivity 目标页面
+     * @param tarActivity
      */
     public void startActivity(Class<? extends Activity> tarActivity, Bundle options) {
         Intent intent = new Intent(this, tarActivity);

@@ -15,17 +15,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dunkeng.App;
 import com.dunkeng.common.Config;
 import com.dunkeng.R;
 import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.dunkeng.zhihu.model.ZhihuDetailBean;
 import com.dunkeng.zhihu.model.ZhihuModel;
 import com.dunkeng.zhihu.presenter.ZhihuDetailsPresenter;
+import com.oklib.CoreApp;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.HtmlUtil;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.SnackbarUtil;
-import com.oklib.utils.SpUtil;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.tencent.smtt.sdk.WebSettings;
@@ -69,10 +70,10 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     public void initView(Bundle savedInstanceState) {
         setToolBar(toolbar, "");
         WebSettings settings = wvDetailContent.getSettings();
-        if (SpUtil.getNoImageState()) {
+        if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);
         }
-        if (SpUtil.getAutoCacheState()) {
+        if (App.getAutoCacheState()) {
             settings.setAppCacheEnabled(true);
             settings.setDomStorageEnabled(true);
             settings.setDatabaseEnabled(true);

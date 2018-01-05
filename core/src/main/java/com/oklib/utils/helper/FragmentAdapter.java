@@ -29,6 +29,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
         return fragments.size();
     }
 
+    @Override
     public int getItemPosition(Object object) {
         return PagerAdapter.POSITION_NONE;
     }

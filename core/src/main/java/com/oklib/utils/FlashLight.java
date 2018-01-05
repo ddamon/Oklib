@@ -1,4 +1,4 @@
-package com.oklib.utils.assist;
+package com.oklib.utils;
 
 import android.hardware.Camera;
 import android.os.Build;
