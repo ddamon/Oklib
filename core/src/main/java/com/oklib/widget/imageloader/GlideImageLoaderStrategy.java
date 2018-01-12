@@ -9,6 +9,7 @@ import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import com.oklib.widget.imageloader.glide.CircleBorderTransformation;
+import com.oklib.widget.imageloader.glide.RoundedCornersTransformation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,11 +22,6 @@ public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
 
     @Override
     public void loadImage(Context ctx, ImageLoader img) {
-        //if currently not under wifi
-        if (!ImageLoaderUtil.wifiFlag) {
-            loadNormal(ctx, img);
-            return;
-        }
 
         int strategy = img.getWifiStrategy();
         if (strategy == ImageLoaderUtil.LOAD_STRATEGY_ONLY_WIFI) {
@@ -46,13 +42,26 @@ public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
     public void loadNormal(Context context, ImageLoader imageLoader) {
         DrawableRequestBuilder drawableRequestBuilder =
                 Glide.with(context).load(imageLoader.getUrl())
-                .crossFade()
-                .placeholder(imageLoader.getPlaceHolder());
+                        .crossFade()
+                        .thumbnail(imageLoader.getThumbnailSize())
+                        .placeholder(imageLoader.getPlaceHolder());
+        loadImg(context, imageLoader, drawableRequestBuilder);
+    }
+
+    private void loadImg(Context context, ImageLoader imageLoader, DrawableRequestBuilder drawableRequestBuilder) {
         if (imageLoader.isCircle()) {
             //圆形图片
-            drawableRequestBuilder.bitmapTransform(new CircleBorderTransformation(context, imageLoader.getBorder())).into(imageLoader.getImgView());
+            drawableRequestBuilder.bitmapTransform(
+                    new CircleBorderTransformation(context, imageLoader.getBorder())).into(imageLoader.getImgView()
+            );
+            //FIXME默认是四个方向的圆角
+        } else if (imageLoader.getRoundRadius() > 0) {
+            drawableRequestBuilder.bitmapTransform(
+                    new RoundedCornersTransformation(context, imageLoader.getRoundRadius(), 0, RoundedCornersTransformation.CornerType.ALL)).into(imageLoader.getImgView()
+            );
         } else {
             drawableRequestBuilder.into(imageLoader.getImgView());
+
         }
     }
 
@@ -92,11 +101,6 @@ public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
                 .crossFade()
                 .placeholder(imageLoader.getPlaceHolder())
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
-        if (imageLoader.isCircle()) {
-            //圆形图片
-            drawableRequestBuilder.bitmapTransform(new CircleBorderTransformation(context, imageLoader.getBorder())).into(imageLoader.getImgView());
-        } else {
-            drawableRequestBuilder.into(imageLoader.getImgView());
-        }
+        loadImg(context, imageLoader, drawableRequestBuilder);
     }
 }

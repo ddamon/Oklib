@@ -20,6 +20,7 @@ public class ImageLoader {
     private boolean isCircle;
     private int border;//
     private int roundRadius;//
+    private float thumbnailSize;//
 
     private ImageLoader(Builder builder) {
         this.type = builder.type;
@@ -30,6 +31,11 @@ public class ImageLoader {
         this.isCircle = builder.isCircle;
         this.border = builder.border;
         this.roundRadius = builder.roundRadius;
+        this.thumbnailSize = builder.thumbnailSize;
+    }
+
+    public float getThumbnailSize() {
+        return thumbnailSize;
     }
 
     public int getType() {
@@ -73,16 +79,18 @@ public class ImageLoader {
         private boolean isCircle;
         private int border;//
         private int roundRadius;//
+        private float thumbnailSize;//
 
         public Builder() {
             this.type = ImageLoaderUtil.PIC_SMALL;
             this.url = "";
-            this.placeHolder = R.mipmap.lib_img_default;
+            this.placeHolder = R.drawable.lib_img_default;
             this.imgView = null;
             this.wifiStrategy = ImageLoaderUtil.LOAD_STRATEGY_NORMAL;
             this.isCircle = false;
             this.border = 0;
             this.roundRadius = 0;
+            this.thumbnailSize = 1;
         }
 
         public Builder type(int type) {
@@ -122,6 +130,11 @@ public class ImageLoader {
 
         public Builder roundRadius(int roundRadius) {
             this.roundRadius = roundRadius;
+            return this;
+        }
+
+        public Builder thumb(float thumnailSize) {
+            this.thumbnailSize = thumnailSize;
             return this;
         }
 

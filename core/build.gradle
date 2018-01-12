@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'me.tatarka.retrolambda'
@@ -51,7 +50,7 @@ dependencies {
     compile "com.commit451:PhotoView:$rootProject.photoviewVersion"
 
     //fragmentation
-    compile 'me.yokeyword:fragmentation:0.10.1'
+    compile 'me.yokeyword:fragmentation:1.1.10'
     //permissions
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
 
@@ -68,7 +67,7 @@ dependencies {
 def siteUrl = "https://github.com/ddamon/Oklib"
 def gitUrl = "https://github.com/ddamon/Oklib.git"
 group = "com.oklib"
-version = '1.0.6'
+version = '1.0.7'
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -136,9 +135,9 @@ bintray {
         repo = 'maven'
         name = 'oklib'
         version {
-            name = '1.0.6-release'
+            name = '1.0.7-release'
             desc = "oklib"
-            vcsTag = '1.0.6'
+            vcsTag = '1.0.7'
         }
         websiteUrl = siteUrl
         vcsUrl = gitUrl

@@ -68,7 +68,7 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
     @Override
     public void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        setToolBar(toolbar, "");
+        hideToolbar();
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);

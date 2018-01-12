@@ -41,9 +41,6 @@ public class ImageLoaderUtil {
     public static final int NETWORKTYPE_WIFI = 4;
 
 
-    // set wifi through SettingUtil.getOnlyWifiLoadImg(ctx);
-    public static boolean wifiFlag = false;
-
     private ImageLoaderStrategy mStrategy;
 
     private static ImageLoaderUtil mInstance;

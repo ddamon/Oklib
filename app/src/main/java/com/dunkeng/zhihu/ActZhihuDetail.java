@@ -16,13 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dunkeng.App;
-import com.dunkeng.common.Config;
 import com.dunkeng.R;
+import com.dunkeng.common.Config;
 import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.dunkeng.zhihu.model.ZhihuDetailBean;
 import com.dunkeng.zhihu.model.ZhihuModel;
 import com.dunkeng.zhihu.presenter.ZhihuDetailsPresenter;
-import com.oklib.CoreApp;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.HtmlUtil;
 import com.oklib.utils.NetUtils;
@@ -34,6 +33,7 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Damon.Han on 2017/2/9 0009.
@@ -68,7 +68,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setToolBar(toolbar, "");
+        ButterKnife.bind(this);
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);

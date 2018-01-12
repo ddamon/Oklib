@@ -197,4 +197,10 @@
     <color name="darkblue">#00008B</color><!--暗蓝色 -->
     <color name="navy">#000080</color><!--海军色 -->
     <color name="black">#000000</color><!--黑色 -->
+
+
+    <color name="button_bg_normal">#ffffffff</color>
+    <color name="button_bg_disable">#ffdddddd</color>
+    <color name="button_bg_pressed">#ffdddddd</color>
+    <color name="full_transparent">#00000000</color>
 </resources>

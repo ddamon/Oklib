@@ -1,29 +1,23 @@
 package com.oklib.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.oklib.AppManager;
 import com.oklib.CoreApp;
 import com.oklib.R;
-import com.oklib.utils.JumpUtil;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ThemeUtil;
-import com.oklib.utils.TitleBuilder;
-import com.oklib.utils.ToastUtils;
-import com.oklib.utils.logger.Logger;
 import com.oklib.widget.SwipeBackLayout;
 
 import me.yokeyword.fragmentation.SupportActivity;
@@ -44,7 +38,12 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
-    private boolean isSwapBackOpen = false;
+    public boolean isSwapBackOpen = false;
+
+    protected RelativeLayout container;
+    protected FrameLayout content;
+    protected Toolbar toolbar;
+    private TextView mTitleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +69,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         AppManager.getAppManager().addActivity(this);
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -93,20 +93,34 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         startActivity(intent);
     }
 
+
     @Override
     public void setContentView(int layoutResID) {
-        if (isSwapBackOpen()) {
+        super.setContentView(R.layout.activity_basetoolbar);
+        toolbar = (Toolbar) findViewById(R.id.core_toolbar);
+        mTitleView = (TextView) findViewById(R.id.core_title);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        content = (FrameLayout) findViewById(R.id.core_content);
+        toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
+        if (isSwapBackOpen) {
             super.setContentView(getContainer());
-            View view = LayoutInflater.from(this).inflate(layoutResID, null);
-//            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            swipeBackLayout.addView(view);
+            swipeBackLayout.addView(container);
         } else {
-            super.setContentView(layoutResID);
+            content.removeAllViews();
+            getLayoutInflater().inflate(layoutResID, content);
         }
     }
 
+    @Override
+    public final void setContentView(View view) {
+    }
+
+    @Override
+    public final void setContentView(View view, ViewGroup.LayoutParams params) {
+    }
+
     private View getContainer() {
-        RelativeLayout container = new RelativeLayout(this);
         swipeBackLayout = new SwipeBackLayout(this);
         swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ivShadow = new ImageView(this);
@@ -118,21 +132,41 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         return container;
     }
 
-    public boolean isSwapBackOpen() {
-        return isSwapBackOpen;
-    }
-
     public abstract int getLayoutId();
 
     public abstract void initView(Bundle savedInstanceState);
 
-    @Override
-    public void onBackPressedSupport() {
-        supportFinishAfterTransition();
+    protected void hideToolbar() {
+        getSupportActionBar().hide();
+    }
+
+    /**
+     * change back icon
+     *
+     * @param id
+     */
+    protected void setNaviIcon(int id) {
+        toolbar.setNavigationIcon(id);
     }
 
     @Override
-    protected FragmentAnimator onCreateFragmentAnimator() {
+    public void setTitle(CharSequence title) {
+        mTitleView.setVisibility(View.VISIBLE);
+        mTitleView.setText(title);
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        mTitleView.setVisibility(View.VISIBLE);
+        mTitleView.setText(titleId);
+    }
+
+    public String getBaseTitle() {
+        return mTitleView.getText().toString();
+    }
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
         return new DefaultHorizontalAnimator();
 //        return new DefaultNoAnimator();
         // return new FragmentAnimator(enter,exit,popEnter,popExit);
@@ -144,64 +178,8 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 //        StatusBarUtil.setTranslucent(this);
     }
 
-    protected void setToolBar(Toolbar toolbar, String title) {
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(R.mipmap.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressedSupport();
-            }
-        });
+    public String getStr(@StringRes int resId) {
+        return getResources().getString(resId);
     }
 
-    /**
-     * @param title
-     */
-    protected TitleBuilder initBackTitle(String title) {
-        return new TitleBuilder(this)
-                .setTitleText(title)
-                .setLeftImage(R.mipmap.ic_back)
-                .setLeftOnClickListener(v -> {
-                    finish();
-                });
-    }
-
-    /**
-     * @param tarActivity
-     */
-    public void startActivity(Class<? extends Activity> tarActivity, Bundle options) {
-        Intent intent = new Intent(this, tarActivity);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            startActivity(intent, options);
-        } else {
-            startActivity(intent);
-        }
-    }
-
-    public void startActivity(Class<? extends Activity> tarActivity) {
-        Intent intent = new Intent(this, tarActivity);
-        startActivity(intent);
-    }
-
-    public void startActivity(Class<? extends Activity> tarActivity, Context context, View view) {
-        Intent intent = new Intent(context, tarActivity);
-        JumpUtil.startActivityTranslate(intent, context, view);
-    }
-
-    public void startActivity(Class<? extends Activity> tarActivity, Context context) {
-        Intent intent = new Intent(context, tarActivity);
-        ActivityCompat.startActivity(this, intent, ActivityOptionsCompat.makeBasic().toBundle());
-    }
-
-    public void showToast(String msg) {
-        ToastUtils.showToast(this, msg, Toast.LENGTH_SHORT);
-    }
-
-    public void showLog(String msg) {
-        Logger.i(TAG, msg);
-    }
 }

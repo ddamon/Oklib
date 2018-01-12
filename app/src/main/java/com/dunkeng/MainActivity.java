@@ -22,6 +22,7 @@ import com.oklib.AppManager;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.IntentUtils;
 import com.oklib.utils.ShareUtils;
+import com.oklib.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +53,7 @@ public class MainActivity extends CoreBaseActivity
     @Override
     public void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        hideToolbar();
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
             loadRootFragment(R.id.main_container, new FragmentZhihu());
@@ -96,7 +98,7 @@ public class MainActivity extends CoreBaseActivity
             ShareUtils shareUtils = new ShareUtils(mContext);
             shareUtils.shareText(txt);
         } else if (id == R.id.nav_about) {
-            showToast(getString(R.string.app_name));
+            ToastUtils.showToast(this, getString(R.string.app_name));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

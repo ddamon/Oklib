@@ -14,20 +14,17 @@ import android.widget.Toast;
 import com.oklib.R;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
-import com.oklib.utils.TitleBuilder;
 import com.oklib.utils.ToastUtils;
 import com.oklib.utils.logger.Logger;
 
 import me.yokeyword.fragmentation.SupportFragment;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
- * Fragment 基类
+ *
  */
 
 public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment {
     protected String TAG;
-    protected OnBackToFirstListener _mBackToFirstListener;
 
     public P mPresenter;
     public M mModel;
@@ -40,9 +37,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         mActivity = (Activity) context;
         mContext = context;
         super.onAttach(context);
-        if (context instanceof OnBackToFirstListener) {
-            _mBackToFirstListener = (OnBackToFirstListener) context;
-        }
     }
 
     @Override
@@ -78,7 +72,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     @Override
     public void onDetach() {
         super.onDetach();
-        _mBackToFirstListener = null;
     }
 
     @Override
@@ -89,13 +82,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         }
     }
 
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimator() {
-        FragmentAnimator fragmentAnimator = _mActivity.getFragmentAnimator();
-        fragmentAnimator.setEnter(0);
-        fragmentAnimator.setExit(0);
-        return fragmentAnimator;
-    }
 
     public abstract int getLayoutId();
 
@@ -130,44 +116,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         toolbar.setTitle(title);
         toolbar.setNavigationIcon(R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
-    }
-
-    /**
-     * 左侧有返回键的标题栏
-     * <p>如果在此基础上还要加其他内容,比如右侧有文字按钮,可以获取该方法返回值继续设置其他内容
-     *
-     * @param title 标题
-     */
-    protected TitleBuilder initTitleBar(String title) {
-        return new TitleBuilder(mActivity)
-                .setTitleText(title)
-                .setLeftImage(R.mipmap.ic_back)
-                .setLeftOnClickListener(v -> {
-                    _mActivity.onBackPressed();
-                });
-    }
-
-    /**
-     * 处理回退事件
-     * 如果是孩子fragment需要重写onBackPressedSupport(){_mBackToFirstListener.onBackToFirstFragment();return true;}
-     *
-     * @return
-     */
-    @Override
-    public boolean onBackPressedSupport() {
-        if (getChildFragmentManager().getBackStackEntryCount() > 1) {
-            popChild();
-        } else {
-            if (_mBackToFirstListener != null) {
-                _mBackToFirstListener.onBackToFirstFragment();
-            }
-            _mActivity.finish();
-        }
-        return true;
-    }
-
-    public interface OnBackToFirstListener {
-        void onBackToFirstFragment();
     }
 
     public void showToast(String msg) {
