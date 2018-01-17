@@ -1,6 +1,7 @@
 package com.oklib.widget.imageloader;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
@@ -8,8 +9,14 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.oklib.widget.imageloader.glide.CircleBorderTransformation;
 import com.oklib.widget.imageloader.glide.RoundedCornersTransformation;
+import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
+import com.oklib.widget.imageloader.glide.listener.ProgressModelLoader;
+import com.oklib.widget.imageloader.glide.listener.ProgressUIListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,16 +25,16 @@ import java.io.InputStream;
  * @author Damon
  */
 
-public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
+public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadImage(Context ctx, ImageLoader img) {
 
         int strategy = img.getWifiStrategy();
         if (strategy == ImageLoaderUtil.LOAD_STRATEGY_ONLY_WIFI) {
-            int netType = ImageLoaderUtil.getNetWorkType(ctx);
+            int netType = NetworkStatusUtil.getNetWorkType(ctx);
             //if wifi ,load pic
-            if (netType == ImageLoaderUtil.NETWORKTYPE_WIFI) {
+            if (netType == NetworkStatusUtil.NETWORKTYPE_WIFI) {
                 loadNormal(ctx, img);
             } else {
                 //if not wifi ,load cache
@@ -38,6 +45,35 @@ public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
             loadNormal(ctx, img);
         }
     }
+
+    @Override
+    public void loadImageWithProgress(String url, final ImageView imageView, final ProgressLoadListener listener) {
+        Glide.with(imageView.getContext()).using(new ProgressModelLoader(new ProgressUIListener() {
+            @Override
+            public void update(final int bytesRead, final int contentLength) {
+                imageView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.update(bytesRead, contentLength);
+                    }
+                });
+            }
+        })).load(url).skipMemoryCache(true).dontAnimate().diskCacheStrategy(DiskCacheStrategy.SOURCE).
+                listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        listener.onException();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        listener.onResourceReady();
+                        return false;
+                    }
+                }).into(imageView);
+    }
+
 
     public void loadNormal(Context context, ImageLoader imageLoader) {
         DrawableRequestBuilder drawableRequestBuilder =

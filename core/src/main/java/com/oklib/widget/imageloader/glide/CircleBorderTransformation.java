@@ -27,8 +27,8 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 public class CircleBorderTransformation extends BitmapTransformation {
-    private static int borderWidth;
-    private static int borderColor;
+    private int borderWidth;
+    private int borderColor;
 
     public CircleBorderTransformation(Context context, int borderWidth) {
         super(context);
@@ -51,8 +51,10 @@ public class CircleBorderTransformation extends BitmapTransformation {
         return circleCrop(pool, toTransform);
     }
 
-    private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
-        if (source == null) return null;
+    private Bitmap circleCrop(BitmapPool pool, Bitmap source) {
+        if (source == null) {
+            return null;
+        }
         int borderRadius = 3;
         int size = Math.min(source.getWidth(), source.getHeight());
         int x = (source.getWidth() - size) / 2;
