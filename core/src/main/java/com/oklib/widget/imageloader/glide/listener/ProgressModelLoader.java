@@ -12,14 +12,14 @@ import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import java.io.InputStream;
 
 /**
- * modified by soulrelay
+ * @author Damon.Han
  */
 public class ProgressModelLoader implements StreamModelLoader<String> {
 
     private final ModelCache<String, String> modelCache;
-    private ProgressUIListener proListener;
+    private ProgressLoadListener proListener;
 
-    public ProgressModelLoader(ProgressUIListener listener) {
+    public ProgressModelLoader(ProgressLoadListener listener) {
         this(null, listener);
     }
 
@@ -28,7 +28,7 @@ public class ProgressModelLoader implements StreamModelLoader<String> {
     }
 
 
-    public ProgressModelLoader(ModelCache<String, String> modelCache, ProgressUIListener listener) {
+    public ProgressModelLoader(ModelCache<String, String> modelCache, ProgressLoadListener listener) {
         this.modelCache = modelCache;
         this.proListener = listener;
     }

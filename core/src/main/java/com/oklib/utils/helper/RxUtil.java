@@ -16,7 +16,7 @@ public class RxUtil {
      * @param <T>
      * @return
      */
-    public static <T> Transformer<T, T> rxSchedulerHelper() {    //compose简化线程
+    public static <T> Transformer<T, T> rxSchedulerHelper() {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread());

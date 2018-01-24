@@ -21,9 +21,9 @@ public class ProgressDataFetcher implements DataFetcher<InputStream> {
     private Call progressCall;
     private InputStream stream;
     private volatile boolean isCancelled;
-    private ProgressUIListener proListener;
+    private ProgressLoadListener proListener;
 
-    public ProgressDataFetcher(String url, ProgressUIListener listener) {
+    public ProgressDataFetcher(String url, ProgressLoadListener listener) {
         this.url = url;
         this.proListener = listener;
     }
@@ -33,15 +33,6 @@ public class ProgressDataFetcher implements DataFetcher<InputStream> {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        final ProgressListener progressListener = new ProgressListener() {
-
-            @Override
-            public void update(long bytesRead, long contentLength, boolean done) {
-                if (proListener != null) {
-                    proListener.update((int) bytesRead, (int) contentLength);
-                }
-            }
-        };
         OkHttpClient client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new Interceptor() {
 
@@ -49,7 +40,7 @@ public class ProgressDataFetcher implements DataFetcher<InputStream> {
                     public Response intercept(Chain chain) throws IOException {
                         Response originalResponse = chain.proceed(chain.request());
                         return originalResponse.newBuilder()
-                                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                                .body(new ProgressResponseBody(originalResponse.body(), proListener))
                                 .build();
                     }
                 })
@@ -76,7 +67,7 @@ public class ProgressDataFetcher implements DataFetcher<InputStream> {
             try {
                 stream.close();
             } catch (IOException e) {
-                // Ignore
+                e.printStackTrace();
             }
         }
         if (progressCall != null) {

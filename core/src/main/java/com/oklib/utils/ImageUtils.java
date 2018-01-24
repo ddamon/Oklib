@@ -2,29 +2,21 @@ package com.oklib.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.Date;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -243,8 +235,9 @@ public class ImageUtils {
      * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
      */
     public static String getImageAbsolutePath19(Context context, Uri imageUri) {
-        if (context == null || imageUri == null)
+        if (context == null || imageUri == null) {
             return null;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && DocumentsContract.isDocumentUri(context, imageUri)) {
             if (isExternalStorageDocument(imageUri)) {
@@ -279,8 +272,9 @@ public class ImageUtils {
         // MediaStore (and general)
         if ("content".equalsIgnoreCase(imageUri.getScheme())) {
             // Return the remote address
-            if (isGooglePhotosUri(imageUri))
+            if (isGooglePhotosUri(imageUri)) {
                 return imageUri.getLastPathSegment();
+            }
             return getDataColumn(context, imageUri, null, null);
         }
         // File
@@ -301,8 +295,9 @@ public class ImageUtils {
                 return cursor.getString(index);
             }
         } finally {
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
         }
         return null;
     }

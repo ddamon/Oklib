@@ -11,16 +11,15 @@ import okio.Okio;
 import okio.Source;
 
 /**
- * @author  "https://github.com/square/okhttp/blob/master/samples/guide/src/main/java/okhttp3/recipes/Progress.java"
- * @see <a href="https://github.com/square/okhttp/blob/master/samples/guide/src/main/java/okhttp3/recipes/Progress.java">OkHttp sample</a>
+ * @author Damon.Han
  */
-class ProgressResponseBody extends ResponseBody {
+public class ProgressResponseBody extends ResponseBody {
 
     private final ResponseBody responseBody;
-    private final ProgressListener progressListener;
+    private final ProgressLoadListener progressListener;
     private BufferedSource bufferedSource;
 
-    public ProgressResponseBody(ResponseBody responseBody, ProgressListener progressListener) {
+    public ProgressResponseBody(ResponseBody responseBody, ProgressLoadListener progressListener) {
         this.responseBody = responseBody;
         this.progressListener = progressListener;
     }
@@ -52,7 +51,7 @@ class ProgressResponseBody extends ResponseBody {
                 long bytesRead = super.read(sink, byteCount);
                 // read() returns the number of bytes read, or -1 if this source is exhausted.
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
-                progressListener.update(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
+                progressListener.update(totalBytesRead, responseBody.contentLength());
                 return bytesRead;
             }
         };

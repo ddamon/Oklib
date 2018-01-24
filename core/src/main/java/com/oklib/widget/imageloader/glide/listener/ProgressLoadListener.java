@@ -8,9 +8,9 @@ package com.oklib.widget.imageloader.glide.listener;
 
 public interface ProgressLoadListener {
 
-    void update(int bytesRead, int contentLength);
+    void update(long bytesRead, long contentLength);
 
-    void onException();
+    void onException(Exception e);
 
     void onResourceReady();
 }

@@ -18,7 +18,6 @@ import com.oklib.R;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ThemeUtil;
-import com.oklib.widget.SwipeBackLayout;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
@@ -36,9 +35,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     public M mModel;
     protected Context mContext;
 
-    private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
-    public boolean isSwapBackOpen = false;
 
     protected RelativeLayout container;
     protected FrameLayout content;
@@ -48,9 +45,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置状态栏透明
-//        setStatusBarColor();
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         init(savedInstanceState);
     }
 
@@ -84,15 +78,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         super.onResume();
     }
 
-    public void reload() {
-        Intent intent = getIntent();
-        overridePendingTransition(0, 0);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-    }
-
 
     @Override
     public void setContentView(int layoutResID) {
@@ -103,13 +88,8 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         setSupportActionBar(toolbar);
         content = (FrameLayout) findViewById(R.id.core_content);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
-        if (isSwapBackOpen) {
-            super.setContentView(getContainer());
-            swipeBackLayout.addView(container);
-        } else {
-            content.removeAllViews();
-            getLayoutInflater().inflate(layoutResID, content);
-        }
+        content.removeAllViews();
+        getLayoutInflater().inflate(layoutResID, content);
     }
 
     @Override
@@ -120,18 +100,9 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     public final void setContentView(View view, ViewGroup.LayoutParams params) {
     }
 
-    private View getContainer() {
-        swipeBackLayout = new SwipeBackLayout(this);
-        swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
-        ivShadow = new ImageView(this);
-        ivShadow.setBackgroundColor(getResources().getColor(R.color.theme_black_7f));
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        container.addView(ivShadow, params);
-        container.addView(swipeBackLayout);
-        swipeBackLayout.setOnSwipeBackListener((fa, fs) -> ivShadow.setAlpha(1 - fs));
-        return container;
-    }
-
+    /**
+     * @return
+     */
     public abstract int getLayoutId();
 
     public abstract void initView(Bundle savedInstanceState);
@@ -168,18 +139,23 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         return new DefaultHorizontalAnimator();
-//        return new DefaultNoAnimator();
-        // return new FragmentAnimator(enter,exit,popEnter,popExit);
-//        return super.onCreateFragmentAnimator();
     }
 
     public void setStatusBarColor() {
         StatusBarUtil.setTransparent(this);
-//        StatusBarUtil.setTranslucent(this);
     }
 
     public String getStr(@StringRes int resId) {
         return getResources().getString(resId);
+    }
+
+    public void reload() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 
 }
