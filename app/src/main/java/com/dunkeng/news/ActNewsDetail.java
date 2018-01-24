@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.NestedScrollView;
@@ -16,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dunkeng.App;
-import com.dunkeng.common.Config;
 import com.dunkeng.R;
+import com.dunkeng.common.Config;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.NewsModel;
 import com.dunkeng.news.model.NewslistBean;
@@ -25,8 +24,10 @@ import com.dunkeng.news.presenter.NewsDetailPresenter;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.SnackbarUtil;
+import com.oklib.utils.logger.Logger;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
+import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -56,9 +57,6 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
     WebView wvDetailContent;
     @BindView(R.id.nsv_scroller)
     NestedScrollView nsvScroller;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-
 
     @Override
     public int getLayoutId() {
@@ -110,7 +108,22 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
         if (info == null) {
             return;
         }
-        ImageLoaderUtil.getInstance().loadImage(mContext, new ImageLoader.Builder().imgView(detailBarImage).url(info.getPicUrl()).build());
+        ImageLoaderUtil.getInstance().loadImageWithProgress(info.getPicUrl(), new ImageLoader.Builder().imgView(detailBarImage).url(info.getPicUrl()).build(), new ProgressLoadListener() {
+            @Override
+            public void update(long bytesRead, long contentLength) {
+                Logger.e(bytesRead + "/" + contentLength);
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+            }
+
+            @Override
+            public void onResourceReady() {
+
+            }
+        });
         collapsingToolbar.setTitle(info.getTitle());
         detailBarCopyright.setText(info.getDescription());
         wvDetailContent.loadUrl(info.getUrl());

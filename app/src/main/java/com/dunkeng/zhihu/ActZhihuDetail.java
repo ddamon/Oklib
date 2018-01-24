@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.NestedScrollView;
@@ -57,8 +56,6 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     WebView wvDetailContent;
     @BindView(R.id.nsv_scroller)
     NestedScrollView nsvScroller;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
 
 
     @Override
@@ -69,6 +66,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     @Override
     public void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        hideToolbar();
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);
