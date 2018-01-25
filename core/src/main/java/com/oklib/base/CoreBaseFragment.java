@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.oklib.R;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ToastUtils;
@@ -22,6 +21,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 /**
  *
  */
+
 
 public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment {
     protected String TAG;
@@ -43,25 +43,25 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (getLayoutView() != null) {
             mainView = getLayoutView();
-            return mainView;
         } else {
-            return mainView = inflater.inflate(getLayoutId(), null);
+            mainView = inflater.inflate(getLayoutId(), container, false);
         }
+        initUI(mainView, savedInstanceState);
+        return mainView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         TAG = getClass().getSimpleName();
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        initUI(view, savedInstanceState);
         if (this instanceof CoreBaseView) {
             mPresenter.attachVM(this, mModel);
         }
         getBundle(getArguments());
         initData();
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -114,7 +114,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
 
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
-        toolbar.setNavigationIcon(R.mipmap.ic_back);
+        toolbar.setNavigationIcon(com.oklib.R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
     }
 
@@ -123,7 +123,8 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     }
 
     public void showLog(String msg) {
-        Logger.i(TAG, msg);// TODO: 16/10/12 Log需要自己从新搞一下
+        Logger.i(TAG, msg);
     }
+
 
 }
