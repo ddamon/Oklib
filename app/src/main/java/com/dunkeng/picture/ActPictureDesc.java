@@ -67,6 +67,11 @@ public class ActPictureDesc extends AppCompatActivity {
             public void onPhotoTap(View view, float x, float y) {
                 finish();
             }
+
+            @Override
+            public void onOutsidePhotoTap() {
+                finish();
+            }
         });
     }
 

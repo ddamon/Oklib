@@ -29,12 +29,11 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity {
 
-    protected String TAG;
-
     public P mPresenter;
     public M mModel;
-    protected Context mContext;
 
+    protected Context mContext;
+    protected String TAG;
     private ImageView ivShadow;
 
     protected RelativeLayout container;
@@ -56,7 +55,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        if (this instanceof CoreBaseView) {
+        if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {
             mPresenter.attachVM(this, mModel);
         }
         this.initView(savedInstanceState);

@@ -1,6 +1,7 @@
 package com.oklib.utils;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  */
@@ -8,9 +9,18 @@ import java.lang.reflect.ParameterizedType;
 public class TUtil {
     public static <T> T getT(Object o, int i) {
         try {
-            return ((Class<T>) ((ParameterizedType) (o.getClass()
-                    .getGenericSuperclass())).getActualTypeArguments()[i])
-                    .newInstance();
+            Type genType = o.getClass().getGenericSuperclass();
+            if (!(genType instanceof ParameterizedType)) {
+                return null;
+            }
+            Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+            if (i >= params.length || i < 0) {
+                return null;
+            }
+            if (!(params[i] instanceof Class)) {
+                return null;
+            }
+            return ((Class<T>) ((ParameterizedType) (o.getClass().getGenericSuperclass())).getActualTypeArguments()[i]).newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -29,5 +39,6 @@ public class TUtil {
         }
         return null;
     }
+
 }
 

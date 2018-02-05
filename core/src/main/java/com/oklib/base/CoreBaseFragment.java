@@ -24,13 +24,12 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 
 public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment {
-    protected String TAG;
-
     public P mPresenter;
     public M mModel;
     protected Context mContext;
     protected Activity mActivity;
     protected View mainView;
+    protected String TAG;
 
     @Override
     public void onAttach(Context context) {
@@ -57,7 +56,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         TAG = getClass().getSimpleName();
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        if (this instanceof CoreBaseView) {
+        if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {
             mPresenter.attachVM(this, mModel);
         }
         getBundle(getArguments());
