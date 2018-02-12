@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.oklib.utils.logger.Logger;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * DownSubscriber
  */
@@ -22,15 +24,15 @@ public class DownSubscriber<ResponseBody extends okhttp3.ResponseBody> extends B
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onSubscribe(Disposable disposable) {
+        super.onSubscribe(disposable);
         if (callBack != null) {
             callBack.onStart();
         }
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         if (callBack != null) {
             callBack.onCompleted();
         }

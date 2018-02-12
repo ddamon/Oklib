@@ -18,8 +18,9 @@ import android.provider.MediaStore;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+
 
 /**
  * 图片工具类
@@ -140,9 +141,9 @@ public class ImageUtils {
                                                    final int reqH) {
         // 先从本地获取图片,利用Glide压缩图片后获取byte[]
         return Observable.just(uri)
-                .flatMap(new Func1<Uri, Observable<byte[]>>() {
+                .flatMap(new Function<Uri, Observable<byte[]>>() {
                     @Override
-                    public Observable<byte[]> call(Uri uri) {
+                    public Observable<byte[]> apply(Uri uri) throws Exception {
                         // 在work线程中，同步压缩图片，然后Observable返回
                         // 即将Glide的回调封装成RxJava的Observable
                         FutureTarget<byte[]> future = Glide.with(context)
@@ -161,6 +162,7 @@ public class ImageUtils {
                         }
                         return Observable.just(bytes);
                     }
+
                 });
     }
 

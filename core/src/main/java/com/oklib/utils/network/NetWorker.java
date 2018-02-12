@@ -23,6 +23,13 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CertificatePinner;
 import okhttp3.ConnectionPool;
@@ -37,14 +44,9 @@ import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.FieldMap;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * 网络请求类
@@ -67,7 +69,7 @@ public final class NetWorker {
     private Observable<ResponseBody> downObservable;
     private Map<String, Observable<ResponseBody>> downMaps = new HashMap<String, Observable<ResponseBody>>() {
     };
-    private Observable.Transformer exceptTransformer = null;
+    private ObservableTransformer exceptTransformer = null;
     public static final String TAG = "NetWorker";
 
     NetWorker(okhttp3.Call.Factory callFactory, String baseUrl, Map<String, String> headers,
@@ -96,7 +98,7 @@ public final class NetWorker {
     /**
      * @param subscriber
      */
-    public <T> T call(Observable<T> observable, Subscriber<T> subscriber) {
+    public <T> T call(Observable<T> observable, Consumer<T> subscriber) {
         return (T) observable.compose(schedulersTransformer)
                 .compose(handleErrTransformer())
                 .subscribe(subscriber);
@@ -147,18 +149,19 @@ public final class NetWorker {
         return needtypes;
     }
 
-    final Observable.Transformer schedulersTransformer = new Observable.Transformer() {
+    final ObservableTransformer schedulersTransformer = new ObservableTransformer() {
         @Override
-        public Object call(Object observable) {
+        public ObservableSource apply(Observable observable) {
             return ((Observable) observable).subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         }
+
     };
 
-    final Observable.Transformer schedulersTransformerDown = new Observable.Transformer() {
+    final ObservableTransformer schedulersTransformerDown = new ObservableTransformer() {
         @Override
-        public Object call(Object observable) {
+        public ObservableSource apply(Observable observable) {
             return ((Observable) observable).subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io());
@@ -169,28 +172,33 @@ public final class NetWorker {
      * @param <T>
      * @return
      */
-    public <T> Observable.Transformer<Response<T>, T> handleErrTransformer() {
+    public <T> ObservableTransformer<Response<T>, T> handleErrTransformer() {
 
-        if (exceptTransformer != null) return exceptTransformer;
+        if (exceptTransformer != null) {
+            return exceptTransformer;
+        } else {
+            return exceptTransformer = new ObservableTransformer() {
+                @Override
+                public ObservableSource apply(Observable upstream) {
+                    return ((Observable) upstream)/*.map(new HandleFuc<T>())*/.onErrorResumeNext(new HttpResponseFunc<T>());
+                }
 
-        else return exceptTransformer = new Observable.Transformer() {
-            @Override
-            public Object call(Object observable) {
-                return ((Observable) observable)/*.map(new HandleFuc<T>())*/.onErrorResumeNext(new HttpResponseFunc<T>());
-            }
-        };
-    }
-
-    private static class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
-        @Override
-        public Observable<T> call(Throwable t) {
-            return Observable.error(NetworkException.handleException(t));
+            };
         }
     }
 
-    private class HandleFuc<T> implements Func1<Response<T>, T> {
+    private static class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
+
         @Override
-        public T call(Response<T> response) {
+        public Observable<T> apply(Throwable throwable) throws Exception {
+            return Observable.error(NetworkException.handleException(throwable));
+        }
+    }
+
+    private class HandleFuc<T> implements Function<Response<T>, T> {
+
+        @Override
+        public T apply(Response<T> response) throws Exception {
             if (response == null || (response.getData() == null && response.getResult() == null)) {
                 throw new JsonParseException("后端数据不对");
             }
@@ -213,8 +221,7 @@ public final class NetWorker {
     public <T> T get(String url, Map<String, String> maps, BaseSubscriber<ResponseBody> subscriber) {
         return (T) apiManager.executeGet(url, maps)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+                .compose(handleErrTransformer());
     }
 
     /**
@@ -655,7 +662,9 @@ public final class NetWorker {
          * <p>If unset, a new connection pool will be used.
          */
         public Builder connectionPool(ConnectionPool connectionPool) {
-            if (connectionPool == null) throw new NullPointerException("connectionPool == null");
+            if (connectionPool == null) {
+                throw new NullPointerException("connectionPool == null");
+            }
             this.connectionPool = connectionPool;
             return this;
         }
@@ -869,7 +878,7 @@ public final class NetWorker {
             }
             retrofitBuilder.addConverterFactory(converterFactory);
             if (callAdapterFactory == null) {
-                callAdapterFactory = RxJavaCallAdapterFactory.create();
+                callAdapterFactory = RxJava2CallAdapterFactory.create();
             }
             retrofitBuilder.addCallAdapterFactory(callAdapterFactory);
             if (isLog) {

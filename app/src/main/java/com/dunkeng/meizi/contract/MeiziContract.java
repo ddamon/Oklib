@@ -5,7 +5,8 @@ import com.oklib.base.CoreBaseModel;
 import com.oklib.base.CoreBasePresenter;
 import com.oklib.base.CoreBaseView;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Damon.Han on 2016/12/2 0002.

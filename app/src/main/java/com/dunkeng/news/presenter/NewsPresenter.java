@@ -3,7 +3,8 @@ package com.dunkeng.news.presenter;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.News;
 
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * Created by Damon.Han on 2016/12/5 0005.
@@ -15,17 +16,17 @@ public class NewsPresenter extends NewsContract.PresenterNews {
 
 
     @Override
-    public void getNewsData(String type,int num) {
-        mRxManager.add(mModel.getNewsData(type,num)
+    public void getNewsData(String type, int num) {
+        mRxManager.add(mModel.getNewsData(type, num)
                 .subscribe(
-                        new Action1<News>() {
+                        new Consumer<News>() {
                             @Override
-                            public void call(News newsGson) {
-                                mView.showContent(newsGson);
+                            public void accept(News news) throws Exception {
+                                mView.showContent(news);
                             }
-                        }, new Action1<Throwable>() {
+                        }, new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
+                            public void accept(Throwable throwable) throws Exception {
                                 mView.showMsg("数据加载失败");
                             }
                         }));

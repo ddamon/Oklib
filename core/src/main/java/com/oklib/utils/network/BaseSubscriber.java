@@ -9,12 +9,13 @@ import com.oklib.utils.network.Exception.NetworkException;
 import com.oklib.utils.network.util.NetworkUtil;
 import com.oklib.utils.network.util.ProgressDialogUtil;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * BaseSubscriber
  */
-public abstract class BaseSubscriber<T> extends Subscriber<T> {
+public abstract class BaseSubscriber<T> implements Observer<T> {
 
     private Context context;
     private ProgressDialogUtil progressDialogUtil;
@@ -38,14 +39,13 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onSubscribe(Disposable disposable) {
         Log.e("NetWorker", "-->http is start");
         // todo some common as show loadding  and check netWork is NetworkAvailable
         // if  NetworkAvailable no !   must to call onCompleted
         if (!NetworkUtil.isNetworkAvailable(context)) {
             Toast.makeText(context, "当前网络不可用，请检查网络情况", Toast.LENGTH_SHORT).show();
-            onCompleted();
+            onComplete();
             return;
         }
         if (progressDialogUtil != null) {
@@ -55,7 +55,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         Log.e("NetWorker", "-->http is Complete");
         // todo some common as  dismiss loadding
         if (progressDialogUtil != null) {

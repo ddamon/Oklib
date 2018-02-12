@@ -6,9 +6,9 @@ import com.dunkeng.zhihu.model.SectionChildListBean;
 import com.dunkeng.zhihu.model.SectionListBean;
 import com.dunkeng.zhihu.model.ZhihuDetailBean;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  */

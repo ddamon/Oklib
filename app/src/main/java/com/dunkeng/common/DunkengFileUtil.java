@@ -11,7 +11,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.Date;
 
 /**
  * Created by Damon.Han on 2017/2/10 0010.
@@ -32,7 +31,7 @@ public class DunkengFileUtil {
         }
         Bitmap drawingCache = shot.getDrawingCache();
         try {
-            File file = new File(directory, new Date().getTime() + ".jpg");
+            File file = new File(directory, System.currentTimeMillis() + ".jpg");
             FileOutputStream fos = new FileOutputStream(file);
             drawingCache.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);

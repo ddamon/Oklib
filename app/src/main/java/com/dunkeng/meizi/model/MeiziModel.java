@@ -7,7 +7,8 @@ import com.dunkeng.meizi.contract.MeiziContract;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.NetWorker;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Damon on 2016/12/02

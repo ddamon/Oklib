@@ -3,9 +3,9 @@ package com.dunkeng.common.api;
 
 import com.dunkeng.news.model.News;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * Created by Damon.Han on 2016/11/4 0004.

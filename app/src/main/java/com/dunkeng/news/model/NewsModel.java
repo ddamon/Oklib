@@ -7,7 +7,8 @@ import com.dunkeng.news.contract.NewsContract;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.NetWorker;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Damon.Han on 2017/1/12 0012.

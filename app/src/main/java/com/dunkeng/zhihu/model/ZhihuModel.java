@@ -7,7 +7,8 @@ import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.NetWorker;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Damon.Han on 2016/12/5 0005.

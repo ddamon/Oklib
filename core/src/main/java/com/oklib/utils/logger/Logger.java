@@ -3,9 +3,6 @@ package com.oklib.utils.logger;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.oklib.CoreConstants;
-import com.orhanobut.logger.LogLevel;
-
 /**
  * Description: 通用的Log管理工具类
  * 开发阶段LOGLEVEL = 6
@@ -22,16 +19,6 @@ public class Logger {
     private static int WARN = 4;
     private static int ERROR = 5;
 
-    static {
-        com.orhanobut.logger.Logger
-                .init(mTag)                       // default PRETTYLOGGER or use just init()
-                .methodCount(1)                // default 2
-                .methodOffset(1)
-                .hideThreadInfo()                 // default shown
-                .logLevel(CoreConstants.ISDEBUG ? LogLevel.FULL : LogLevel.NONE);      // default LogLevel.FULL
-
-
-    }
 
     public static void v(@NonNull String tag, String msg) {
         if (LOGLEVEL > VERBOSE && !TextUtils.isEmpty(msg)) {
