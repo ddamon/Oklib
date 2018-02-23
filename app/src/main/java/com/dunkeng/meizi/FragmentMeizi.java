@@ -61,23 +61,6 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
     @Override
     public void showContent(MeiziResult info) {
         coreRecyclerView.getAdapter().addData(info.beauties);
-        coreRecyclerView.openLoadMore(Config.Data.pageSize, new CoreRecyclerView.addDataListener() {
-            @Override
-            public void addData(int page) {
-                page++;
-                mPresenter.getMeizi(page);
-            }
-        }).openRefresh();
-        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Logger.e("点击图片");
-                PictureBean pictureBean = new PictureBean();
-                pictureBean.url = ((Meizi) adapter.getData().get(position)).getUrl();
-                pictureBean.desc = ((Meizi) adapter.getData().get(position)).getDesc();
-                ActPictureDesc.start(mActivity, view.findViewById(R.id.image), pictureBean);
-            }
-        });
     }
 
 
@@ -104,6 +87,23 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.image))
                                 .url(item.getUrl()).build());
+            }
+        });
+        coreRecyclerView.openLoadMore(Config.Data.pageSize, new CoreRecyclerView.addDataListener() {
+            @Override
+            public void addData(int page) {
+                page++;
+                mPresenter.getMeizi(page);
+            }
+        }).openRefresh();
+        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Logger.e("点击图片");
+                PictureBean pictureBean = new PictureBean();
+                pictureBean.url = ((Meizi) adapter.getData().get(position)).getUrl();
+                pictureBean.desc = ((Meizi) adapter.getData().get(position)).getDesc();
+                ActPictureDesc.start(mActivity, view.findViewById(R.id.image), pictureBean);
             }
         });
     }

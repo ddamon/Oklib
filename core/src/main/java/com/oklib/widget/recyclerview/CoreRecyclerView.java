@@ -81,6 +81,7 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
     }
 
     public CoreRecyclerView addOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mRecyclerView.removeOnItemTouchListener(onItemClickListener);
         mRecyclerView.addOnItemTouchListener(onItemClickListener);
         return this;
     }
