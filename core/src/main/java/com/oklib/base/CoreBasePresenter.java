@@ -3,6 +3,7 @@ package com.oklib.base;
 import com.oklib.utils.rxmanager.RxManager;
 
 /**
+ * @author Damon
  */
 
 public abstract class CoreBasePresenter<M, V> {

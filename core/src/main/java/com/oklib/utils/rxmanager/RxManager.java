@@ -12,6 +12,7 @@ import io.reactivex.functions.Consumer;
 /**
  * 用于管理RxBus的事件和Rxjava相关代码的生命周期处理
  *
+ * @author Damon
  */
 
 public class RxManager {

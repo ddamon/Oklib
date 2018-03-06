@@ -40,6 +40,7 @@ import com.oklib.widget.recyclerview.animation.SlideInBottomAnimation;
 import com.oklib.widget.recyclerview.animation.SlideInLeftAnimation;
 import com.oklib.widget.recyclerview.animation.SlideInRightAnimation;
 import com.oklib.widget.recyclerview.entity.IExpandable;
+import com.orhanobut.logger.Logger;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

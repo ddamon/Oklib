@@ -51,6 +51,7 @@ import retrofit2.http.FieldMap;
 
 /**
  * 网络请求类
+ * @author Damon
  */
 public final class NetWorker {
     private static Context mContext;
@@ -79,9 +80,9 @@ public final class NetWorker {
               Executor callbackExecutor, boolean validateEagerly) {
         this.callFactory = callFactory;
         this.baseUrl = baseUrl;
-        this.headers = headers;
-        this.parameters = parameters;
-        this.apiManager = apiManager;
+        NetWorker.headers = headers;
+        NetWorker.parameters = parameters;
+        NetWorker.apiManager = apiManager;
         this.converterFactories = converterFactories;
         this.adapterFactories = adapterFactories;
         this.callbackExecutor = callbackExecutor;
@@ -128,20 +129,20 @@ public final class NetWorker {
      * MethodHandler
      */
     private List<Type> MethodHandler(Type[] types) {
-        Log.d(TAG, "types size: " + types.length);
+        Logger.d(TAG, "types size: " + types.length);
         List<Type> needtypes = new ArrayList<>();
         for (Type paramType : types) {
             if (paramType instanceof ParameterizedType) {
                 Type[] parentypes = ((ParameterizedType) paramType).getActualTypeArguments();
-                Log.d(TAG, "TypeArgument: ");
+                Logger.d(TAG, "TypeArgument: ");
                 for (Type childtype : parentypes) {
-                    Log.d(TAG, "childtype:" + childtype);
+                    Logger.d(TAG, "childtype:" + childtype);
                     needtypes.add(childtype);
                     if (childtype instanceof ParameterizedType) {
                         Type[] childtypes = ((ParameterizedType) childtype).getActualTypeArguments();
                         for (Type type : childtypes) {
                             needtypes.add(type);
-                            Log.d(TAG, "type:" + childtype);
+                            Logger.d(TAG, "type:" + childtype);
                         }
                     }
                 }

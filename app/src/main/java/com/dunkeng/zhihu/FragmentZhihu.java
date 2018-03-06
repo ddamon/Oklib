@@ -93,6 +93,13 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
                                 .url(item.getImages().get(0)).build());
             }
         });
+        //单独使用refresh需要使用带参数的
+        coreRecyclerView.openRefresh(new CoreRecyclerView.addDataListener() {
+            @Override
+            public void addData(int page) {
+                initData();
+            }
+        });
     }
 
     @Override

@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
 public class LoopRecyclerViewPager extends RecyclerViewPager {
 
     public LoopRecyclerViewPager(Context context) {

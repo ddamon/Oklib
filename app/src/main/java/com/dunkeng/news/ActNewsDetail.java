@@ -21,6 +21,7 @@ import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.NewsModel;
 import com.dunkeng.news.model.NewslistBean;
 import com.dunkeng.news.presenter.NewsDetailPresenter;
+import com.dunkeng.wx.model.WxBean;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.SnackbarUtil;
@@ -97,6 +98,11 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
     }
 
     public static void start(Context context, View view, NewslistBean newslistBean) {
+        Intent intent = new Intent(context, ActNewsDetail.class);
+        intent.putExtra(Config.ArgumentKey.ARG_NEWS_BEAN, newslistBean);
+        ActivityCompat.startActivity(context, intent, ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, view, "translate_view").toBundle());
+    }
+    public static void start(Context context, View view, WxBean newslistBean) {
         Intent intent = new Intent(context, ActNewsDetail.class);
         intent.putExtra(Config.ArgumentKey.ARG_NEWS_BEAN, newslistBean);
         ActivityCompat.startActivity(context, intent, ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, view, "translate_view").toBundle());

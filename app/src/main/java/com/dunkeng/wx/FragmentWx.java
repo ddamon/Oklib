@@ -1,4 +1,4 @@
-package com.dunkeng.news;
+package com.dunkeng.wx;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,11 +10,12 @@ import android.widget.ImageView;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
-import com.dunkeng.news.contract.NewsContract;
-import com.dunkeng.news.model.News;
-import com.dunkeng.news.model.NewsModel;
-import com.dunkeng.news.model.NewslistBean;
-import com.dunkeng.news.presenter.NewsPresenter;
+import com.dunkeng.news.ActNewsDetail;
+import com.dunkeng.wx.contract.WxContract;
+import com.dunkeng.wx.model.Wx;
+import com.dunkeng.wx.model.WxBean;
+import com.dunkeng.wx.model.WxModel;
+import com.dunkeng.wx.presenter.WxPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
@@ -32,7 +33,7 @@ import butterknife.ButterKnife;
  * 知乎日报
  */
 
-public class FragmentWx extends CoreBaseFragment<NewsPresenter, NewsModel> implements NewsContract.ViewNews {
+public class FragmentWx extends CoreBaseFragment<WxPresenter, WxModel> implements WxContract.WxView {
     @BindView(R.id.recycler)
     CoreRecyclerView coreRecyclerView;
     @BindView(R.id.toolbar)
@@ -61,12 +62,12 @@ public class FragmentWx extends CoreBaseFragment<NewsPresenter, NewsModel> imple
     }
 
     @Override
-    public void showContent(News info) {
+    public void showContent(Wx info) {
         coreRecyclerView.getAdapter().addData(info.getNewslist());
         coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActNewsDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((NewslistBean) adapter.getData().get(position)));
+                ActNewsDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((WxBean) adapter.getData().get(position)));
             }
         });
     }
@@ -74,7 +75,7 @@ public class FragmentWx extends CoreBaseFragment<NewsPresenter, NewsModel> imple
 
     @Override
     public int getLayoutId() {
-        return R.layout.view_recycler_with_bar;
+        return R.layout.fragment_wx;
     }
 
     @Override
@@ -87,14 +88,21 @@ public class FragmentWx extends CoreBaseFragment<NewsPresenter, NewsModel> imple
                 mOpenDraweListener.onOpenDrawer();
             }
         });
-        coreRecyclerView.init(new BaseQuickAdapter<NewslistBean, BaseViewHolder>(R.layout.item_news) {
+        coreRecyclerView.init(new BaseQuickAdapter<WxBean, BaseViewHolder>(R.layout.item_news) {
             @Override
-            protected void convert(BaseViewHolder helper, NewslistBean item) {
+            protected void convert(BaseViewHolder helper, WxBean item) {
                 helper.setText(R.id.tv_daily_item_title, item.getTitle());
                 ImageLoaderUtil.getInstance().loadImage(mContext,
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
                                 .url(item.getPicUrl()).build());
+            }
+        });
+        //单独使用refresh需要使用带参数的
+        coreRecyclerView.openRefresh(new CoreRecyclerView.addDataListener() {
+            @Override
+            public void addData(int page) {
+                initData();
             }
         });
     }

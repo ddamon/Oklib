@@ -25,6 +25,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * Base Activity
+ * @author Damon
  */
 
 public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity {

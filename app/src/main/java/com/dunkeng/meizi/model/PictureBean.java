@@ -1,4 +1,4 @@
-package com.dunkeng.picture.model;
+package com.dunkeng.meizi.model;
 
 import java.io.Serializable;
 

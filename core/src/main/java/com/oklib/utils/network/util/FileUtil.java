@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;

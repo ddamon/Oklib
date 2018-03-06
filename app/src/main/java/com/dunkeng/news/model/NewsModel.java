@@ -49,9 +49,6 @@ public class NewsModel implements NewsContract.Model {
             case "it":
                 observable = netWorker.create(TianxingApi.class).getItNews(Config.API_KEY_TIANXING, num);
                 break;
-            case "wxnew":
-                observable = netWorker.create(TianxingApi.class).getWeixinNews(Config.API_KEY_TIANXING, num);
-                break;
             default:
                 break;
         }

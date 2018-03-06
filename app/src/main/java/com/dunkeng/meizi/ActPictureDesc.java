@@ -1,4 +1,4 @@
-package com.dunkeng.picture;
+package com.dunkeng.meizi;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.DunkengFileUtil;
-import com.dunkeng.picture.model.PictureBean;
+import com.dunkeng.meizi.model.PictureBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

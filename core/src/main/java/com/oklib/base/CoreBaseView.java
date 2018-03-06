@@ -4,6 +4,7 @@ import android.content.Context;
 
 /**
  *
+ * @author Damon
  */
 
 public interface CoreBaseView {

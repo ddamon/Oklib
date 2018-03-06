@@ -1,11 +1,25 @@
 package com.oklib.utils.helper;
 
 
+import android.view.View;
+
+import com.jakewharton.rxbinding2.view.RxView;
+import com.orhanobut.logger.Logger;
+
+import org.reactivestreams.Subscriber;
+
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
+/**
+ * @author Damon
+ */
 public class RxUtil {
 
     /**
@@ -20,5 +34,37 @@ public class RxUtil {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Rx点击事件
+     *
+     * @param view
+     * @param listener
+     */
+    public static void click(View view, OnRxClickListener listener) {
+        RxView.clicks(view)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
 
+                    @Override
+                    public void onNext(Object value) {
+                        if (listener != null) {
+                            listener.onRxClick(view);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Logger.e("RxUtils.click error: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

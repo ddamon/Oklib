@@ -3,7 +3,8 @@ package com.oklib.widget.photoview;
 import android.view.MotionEvent;
 
 /**
- * Created by q2366 on 2015/10/12.
+ *
+ * @author Damon
  */
 public class RotateGestureDetector {
 
@@ -25,12 +26,14 @@ public class RotateGestureDetector {
 
     public void onTouchEvent(MotionEvent event) {
 
-        final int Action = event.getActionMasked();
+        final int action = event.getActionMasked();
 
-        switch (Action) {
+        switch (action) {
             case MotionEvent.ACTION_POINTER_DOWN:
             case MotionEvent.ACTION_POINTER_UP:
-                if (event.getPointerCount() == 2) mPrevSlope = caculateSlope(event);
+                if (event.getPointerCount() == 2) {
+                    mPrevSlope = caculateSlope(event);
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (event.getPointerCount() > 1) {
@@ -62,5 +65,11 @@ public class RotateGestureDetector {
 }
 
 interface OnRotateListener {
+    /**
+     * rotate
+     * @param degrees
+     * @param focusX
+     * @param focusY
+     */
     void onRotate(float degrees, float focusX, float focusY);
 }

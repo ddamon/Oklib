@@ -2,6 +2,7 @@ package com.dunkeng.common.api;
 
 
 import com.dunkeng.news.model.News;
+import com.dunkeng.wx.model.Wx;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -31,7 +32,7 @@ public interface TianxingApi {
     Observable<News> getItNews(@Query("key") String key, @Query("num") int num);
     //微信精选
     @GET("/wxnew")
-    Observable<News> getWeixinNews(@Query("key") String key, @Query("num") int num);
+    Observable<Wx> getWeixinNews(@Query("key") String key, @Query("num") int num);
 
 
 }

@@ -4,6 +4,7 @@ import com.oklib.data.repository.Repository;
 
 /**
  * .
+ * @author Damon
  */
 
 public class CoreBaseRepository {

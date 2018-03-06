@@ -3,6 +3,8 @@ package com.oklib.widget.recyclerviewpager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
 import java.lang.reflect.Field;
 
 public class LoopRecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder>
@@ -53,14 +55,14 @@ public class LoopRecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder>
                 mPositionField = holder.getClass().getDeclaredField("mPosition");
                 mPositionField.setAccessible(true);
             } catch (NoSuchFieldException e) {
-                Log.i(TAG, "The holder doesn't have a mPosition field.");
+                Logger.i(TAG, "The holder doesn't have a mPosition field.");
             }
         }
         if (mPositionField != null) {
             try {
                 mPositionField.set(holder, position);
             } catch (Exception e) {
-                Log.w(TAG, "Error while updating holder's mPosition field", e);
+                Logger.w(TAG, "Error while updating holder's mPosition field", e);
             }
         }
     }

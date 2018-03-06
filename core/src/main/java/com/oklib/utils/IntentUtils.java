@@ -262,8 +262,9 @@ public class IntentUtils {
      */
     public static String getAuthorityFromPermission(Context context,
                                                     String permission) {
-        if (permission == null)
+        if (permission == null) {
             return null;
+        }
         List<PackageInfo> packs = context.getPackageManager()
                 .getInstalledPackages(PackageManager.GET_PROVIDERS);
         if (packs != null) {
@@ -271,10 +272,12 @@ public class IntentUtils {
                 ProviderInfo[] providers = pack.providers;
                 if (providers != null) {
                     for (ProviderInfo provider : providers) {
-                        if (permission.equals(provider.readPermission))
+                        if (permission.equals(provider.readPermission)) {
                             return provider.authority;
-                        if (permission.equals(provider.writePermission))
+                        }
+                        if (permission.equals(provider.writePermission)) {
                             return provider.authority;
+                        }
                     }
                 }
             }

@@ -77,6 +77,7 @@ public class HttpsFactroy {
 
             HostnameVerifier TRUSTED_VERIFIER = new HostnameVerifier() {
 
+                @Override
                 public boolean verify(String hostname, SSLSession session) {
                     boolean ret = false;
                     for (String host : hostUrls) {

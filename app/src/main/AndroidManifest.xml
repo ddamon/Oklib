@@ -34,7 +34,7 @@
         </activity>
         <activity android:name=".zhihu.ActZhihuDetail" />
         <activity android:name=".news.ActNewsDetail" />
-        <activity android:name=".picture.ActPictureDesc" />
+        <activity android:name=".meizi.ActPictureDesc" />
     </application>
 
 </manifest>

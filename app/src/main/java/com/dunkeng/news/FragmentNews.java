@@ -9,8 +9,8 @@ import com.dunkeng.common.Config;
 import com.dunkeng.R;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.News;
-import com.dunkeng.news.model.NewsModel;
 import com.dunkeng.news.model.NewslistBean;
+import com.dunkeng.news.model.NewsModel;
 import com.dunkeng.news.presenter.NewsPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
@@ -22,6 +22,9 @@ import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 
+/**
+ * @author Damon
+ */
 public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> implements NewsContract.ViewNews {
     CoreRecyclerView coreRecyclerView;
     private int pageNum = 20;
@@ -55,6 +58,13 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ActNewsDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((NewslistBean) adapter.getData().get(position)));
+            }
+        });
+        //单独使用refresh需要使用带参数的
+        coreRecyclerView.openRefresh(new CoreRecyclerView.addDataListener() {
+            @Override
+            public void addData(int page) {
+                initData();
             }
         });
         return coreRecyclerView;

@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.meizi.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
-import com.dunkeng.news.FragmentWx;
+import com.dunkeng.wx.FragmentWx;
 import com.dunkeng.zhihu.FragmentZhihu;
 import com.oklib.AppManager;
 import com.oklib.base.CoreBaseActivity;
@@ -35,7 +35,6 @@ public class MainActivity extends CoreBaseActivity
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    //https://www.baidu.com/s?wd=%E7%97%94%E7%96%AE
     @Override
     protected void onResume() {
         super.onResume();
