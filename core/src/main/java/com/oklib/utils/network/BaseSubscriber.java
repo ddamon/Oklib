@@ -1,13 +1,13 @@
 package com.oklib.utils.network;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.oklib.CoreConstants;
 import com.oklib.utils.network.Exception.NetworkException;
 import com.oklib.utils.network.util.NetworkUtil;
 import com.oklib.utils.network.util.ProgressDialogUtil;
+import com.orhanobut.logger.Logger;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -29,7 +29,7 @@ public abstract class BaseSubscriber<T> implements Observer<T> {
 
     @Override
     final public void onError(Throwable e) {
-        Log.e("NetWorker", e.getMessage());
+        Logger.e("NetWorker", e.getMessage());
         progressDialogUtil.dismissProgressDialog();
         if (e instanceof MThrowable) {
             onError((MThrowable) e);
@@ -40,7 +40,7 @@ public abstract class BaseSubscriber<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable disposable) {
-        Log.e("NetWorker", "-->http is start");
+        Logger.e("NetWorker", "-->http is start");
         // todo some common as show loadding  and check netWork is NetworkAvailable
         // if  NetworkAvailable no !   must to call onCompleted
         if (!NetworkUtil.isNetworkAvailable(context)) {
@@ -56,7 +56,7 @@ public abstract class BaseSubscriber<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-        Log.e("NetWorker", "-->http is Complete");
+        Logger.e("NetWorker", "-->http is Complete");
         // todo some common as  dismiss loadding
         if (progressDialogUtil != null) {
             progressDialogUtil.dismissProgressDialog();

@@ -2,7 +2,7 @@ package com.oklib.utils.network;
 
 import android.content.Context;
 
-import com.oklib.utils.logger.Logger;
+import com.orhanobut.logger.Logger;
 
 import io.reactivex.disposables.Disposable;
 

@@ -3,7 +3,8 @@ package com.oklib.utils;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
+
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
@@ -114,7 +115,7 @@ public class SilentInstaller {
 	/**
 	 * Installation return code<br/>
 	 * the new package failed because it has specified that it is a test-only
-	 * package and the caller has not supplied the {@link #INSTALL_ALLOW_TEST}
+	 * package and the caller has not supplied the
 	 * flag.
 	 */
 	public static final int INSTALL_FAILED_TEST_ONLY = -15;
@@ -343,7 +344,7 @@ public class SilentInstaller {
 		if (commandResult.responseMsg != null && (commandResult.responseMsg.contains("Success") || commandResult.responseMsg.contains("success"))) {
 			return DELETE_SUCCEEDED;
 		}
-		Log.e(TAG, new StringBuilder().append("uninstallSilent successMsg:").append(commandResult.responseMsg).append(", ErrorMsg:").append(commandResult.errorMsg).toString());
+		Logger.e(TAG, new StringBuilder().append("uninstallSilent successMsg:").append(commandResult.responseMsg).append(", ErrorMsg:").append(commandResult.errorMsg).toString());
 		if (commandResult.errorMsg == null) {
 			return DELETE_FAILED_INTERNAL_ERROR;
 		}
@@ -404,7 +405,7 @@ public class SilentInstaller {
 			return INSTALL_SUCCEEDED;
 		}
 
-		Log.e(TAG, new StringBuilder().append("installSilent successMsg:").append(commandResult.responseMsg).append(", ErrorMsg:").append(commandResult.errorMsg).toString());
+		Logger.e(TAG, new StringBuilder().append("installSilent successMsg:").append(commandResult.responseMsg).append(", ErrorMsg:").append(commandResult.errorMsg).toString());
 		if (commandResult.errorMsg == null) {
 			return INSTALL_FAILED_OTHER;
 		}

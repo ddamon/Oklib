@@ -48,7 +48,7 @@ public class FileUtil {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return Environment.getExternalStorageDirectory().toString();
         } else {
-            Log.e("SDCard", "no sdcard found!");
+            Logger.e("SDCard", "no sdcard found!");
             return null;
         }
     }

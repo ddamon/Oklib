@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 /**
+ * @author Damon.Han
  */
 
 public abstract class CoreBaseLazyFragment<T extends CoreBasePresenter, E extends CoreBaseModel> extends CoreBaseFragment<T, E> {
@@ -26,7 +27,6 @@ public abstract class CoreBaseLazyFragment<T extends CoreBasePresenter, E extend
                 initLazyView(null);
             }
         } else {
-            // isSupportHidden()仅在saveIns tanceState!=null时有意义,是库帮助记录Fragment状态的方法
             mInited = true;
             initLazyView(savedInstanceState);
         }

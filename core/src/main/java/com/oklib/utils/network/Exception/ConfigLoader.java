@@ -2,27 +2,30 @@ package com.oklib.utils.network.Exception;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.oklib.utils.network.util.FileUtil;
+import com.orhanobut.logger.Logger;
 
 /**
+ * 配置信息加载
+ *
+ * @author Damon.Han
  */
 
 public class ConfigLoader {
 
-    private static Config config;
+    private static NetResponseConfig config;
 
     private final static String CONFIG_NAME = "config.json";
 
     public static boolean checkSucess(Context context, int code) {
         loadConfig(context);
-        Log.v("NetWorker", "web :" + code + ">>>>>>>>>>>>isOk：" + config.getSucessCode().contains(String.valueOf(code)));
+        Logger.v("NetWorker", "web :" + code + ">>>>>>>>>>>>isOk：" + config.getSucessCode().contains(String.valueOf(code)));
         return config.getSucessCode().contains(String.valueOf(code));
     }
 
-    public static Config loadConfig(Context context) {
+    public static NetResponseConfig loadConfig(Context context) {
 
         if (config != null) {
             return config;
@@ -31,7 +34,7 @@ public class ConfigLoader {
         if (jsonStr == null) {
             return null;
         }
-        return config = new Gson().fromJson(jsonStr, Config.class);
+        return config = new Gson().fromJson(jsonStr, NetResponseConfig.class);
     }
 
     public static boolean isFormat(Context context) {

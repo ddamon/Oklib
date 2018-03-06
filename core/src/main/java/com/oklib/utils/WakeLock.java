@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.PowerManager;
 
-import com.oklib.utils.logger.Logger;
+import com.orhanobut.logger.Logger;
 
 
 /**

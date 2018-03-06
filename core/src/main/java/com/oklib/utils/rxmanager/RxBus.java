@@ -2,7 +2,7 @@ package com.oklib.utils.rxmanager;
 
 import android.support.annotation.NonNull;
 
-import com.oklib.utils.logger.Logger;
+
 
 import java.util.ArrayList;
 import java.util.Collection;

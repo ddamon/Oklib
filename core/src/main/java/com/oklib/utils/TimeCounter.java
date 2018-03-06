@@ -1,7 +1,7 @@
 package com.oklib.utils;
 
 
-import com.oklib.utils.logger.Logger;
+import com.orhanobut.logger.Logger;
 
 /**
  * Time Counter.

@@ -3,7 +3,12 @@ package com.oklib.utils.network.Exception;
 
 import java.util.List;
 
-public class Config {
+/**
+ * 接口请求返回结果配置
+ *
+ * @author Damon.Han
+ */
+public class NetResponseConfig {
 
     /**
      * isFormat : false

@@ -4,7 +4,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Build;
 
-import com.oklib.utils.logger.Logger;
+import com.orhanobut.logger.Logger;
 
 
 /**

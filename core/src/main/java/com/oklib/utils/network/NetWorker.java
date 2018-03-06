@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.gson.JsonParseException;
 import com.oklib.utils.network.Exception.NetworkException;
 import com.oklib.utils.network.util.Utils;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.InputStream;
@@ -180,7 +181,7 @@ public final class NetWorker {
             return exceptTransformer = new ObservableTransformer() {
                 @Override
                 public ObservableSource apply(Observable upstream) {
-                    return ((Observable) upstream)/*.map(new HandleFuc<T>())*/.onErrorResumeNext(new HttpResponseFunc<T>());
+                    return upstream.map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
                 }
 
             };
@@ -763,7 +764,9 @@ public final class NetWorker {
          * <p>If unset, {@linkplain CookieManger#NO_COOKIES no cookies} will be accepted nor provided.
          */
         public Builder cookieManager(CookieManger cookie) {
-            if (cookie == null) throw new NullPointerException("cookieManager == null");
+            if (cookie == null) {
+                throw new NullPointerException("cookieManager == null");
+            }
             this.cookieManager = cookie;
             return this;
         }
@@ -899,7 +902,7 @@ public final class NetWorker {
                     addCache(cache);
 
                 } catch (Exception e) {
-                    Log.e("OKHttp", "Could not create http cache", e);
+                    Logger.e("OKHttp", "Could not create http cache", e);
                 }
                 if (cache == null) {
                     cache = HttpCache.getCache();

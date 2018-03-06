@@ -1,6 +1,7 @@
 package com.oklib.utils.network.Exception;
 
 /**
+ * @author Damon.Han
  */
 
 public class ServerException extends RuntimeException {

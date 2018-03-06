@@ -1,7 +1,7 @@
 package com.oklib.utils.network;
 
 /**
- * Created by Tamic on 2016-08-02.
+ * @author Damon.Han
  */
 public abstract class DownLoadCallBack {
 

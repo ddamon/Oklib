@@ -9,8 +9,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * BaseInterceptor，use set okhttp call header
- * Created by Tamic on 2016-06-30.
+ * @author Damon.Han
  */
 public class BaseInterceptor implements Interceptor {
 

@@ -1,5 +1,8 @@
 package com.oklib.utils;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -9,12 +12,17 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.orhanobut.logger.Logger;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import java.io.File;
 
+/**
+ * @author Damon.Han
+ */
 public class AppUtils {
 
     /**
@@ -31,7 +39,7 @@ public class AppUtils {
                 return "";
             }
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
+            Logger.e("VersionInfo", "Exception", e);
         }
         return versionName;
     }
@@ -47,14 +55,23 @@ public class AppUtils {
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
             versioncode = pi.versionCode;
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
+            Logger.e("VersionInfo", "Exception", e);
         }
         return versioncode;
     }
 
+    @SuppressLint("MissingPermission")
     public static String getIMEI(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return tm.getDeviceId();
+        final String[] imei = {""};
+        RxPermissions rxPermissions = new RxPermissions((Activity) context);
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
+                .subscribe(permission -> {
+                    if (permission) {
+                        imei[0] = tm.getDeviceId();
+                    }
+                });
+        return imei[0];
     }
 
     /**
@@ -80,9 +97,11 @@ public class AppUtils {
      */
     public static File getSDPath() {
         File sdDir = null;
-        boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);   //判断sd卡是否存在
+        //判断sd卡是否存在
+        boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
         if (sdCardExist) {
-            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+            //获取根目录
+            sdDir = Environment.getExternalStorageDirectory();
         }
         return sdDir;
     }

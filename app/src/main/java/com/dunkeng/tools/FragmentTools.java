@@ -20,13 +20,13 @@ import com.dunkeng.picture.ActPictureDesc;
 import com.dunkeng.picture.model.PictureBean;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
-import com.oklib.utils.logger.Logger;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;
 import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 

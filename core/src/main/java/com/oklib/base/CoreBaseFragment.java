@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ToastUtils;
-import com.oklib.utils.logger.Logger;
+import com.orhanobut.logger.Logger;
 
 import me.yokeyword.fragmentation.SupportFragment;
 

@@ -1,10 +1,10 @@
 package com.oklib.utils.network.Exception;
 
 import android.net.ParseException;
-import android.util.Log;
 
 import com.google.gson.JsonParseException;
 import com.oklib.utils.network.MThrowable;
+import com.orhanobut.logger.Logger;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -15,6 +15,7 @@ import retrofit2.HttpException;
 
 
 /**
+ * @author Damon.Han
  */
 public class NetworkException {
 
@@ -30,7 +31,7 @@ public class NetworkException {
 
     public static MThrowable handleException(Throwable e) {
 
-        Log.e("NetWorker", e.getMessage());
+        Logger.e("NetWorker", e.getMessage());
         MThrowable ex;
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;

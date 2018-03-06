@@ -51,7 +51,7 @@ public class LoopRecyclerViewPager extends RecyclerViewPager {
     public void smoothScrollToPosition(int position) {
         int transformedPosition = transformInnerPositionIfNeed(position);
         super.smoothScrollToPosition(transformedPosition);
-        Log.e("test", "transformedPosition:" + transformedPosition);
+        Logger.e("test", "transformedPosition:" + transformedPosition);
     }
 
     /**
@@ -102,7 +102,7 @@ public class LoopRecyclerViewPager extends RecyclerViewPager {
                 - actualCurrentPosition
                 + actualItemCount
                 + position % actualItemCount;
-        Log.e("test", bakPosition1 + "/" + bakPosition2 + "/" + bakPosition3 + "/" + getCurrentPosition());
+        Logger.e("test", bakPosition1 + "/" + bakPosition2 + "/" + bakPosition3 + "/" + getCurrentPosition());
         // get position which is closer to current position
         if (Math.abs(bakPosition1 - getCurrentPosition()) > Math.abs(bakPosition2 -
                 getCurrentPosition())) {

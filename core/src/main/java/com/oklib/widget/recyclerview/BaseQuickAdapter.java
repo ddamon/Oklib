@@ -560,7 +560,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
                 if (mRequestLoadMoreListener != null && pageSize == -1) {
                     RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                     int visibleItemCount = layoutManager.getChildCount();
-                    Log.e("visibleItemCount", visibleItemCount + "");
+                    Logger.e("visibleItemCount", visibleItemCount + "");
                     openLoadMore(visibleItemCount);
                 }
             }
