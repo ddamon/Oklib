@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".zhihu.ActZhihuDetail" />
-        <activity android:name=".news.ActNewsDetail" />
+        <activity android:name=".details.ActWebDetail" />
         <activity android:name=".meizi.ActPictureDesc" />
     </application>
 

@@ -1,4 +1,4 @@
-package com.dunkeng.news;
+package com.dunkeng.details;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,11 +16,10 @@ import android.widget.TextView;
 import com.dunkeng.App;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
-import com.dunkeng.news.contract.NewsContract;
-import com.dunkeng.news.model.NewsModel;
-import com.dunkeng.news.model.NewslistBean;
-import com.dunkeng.news.presenter.NewsDetailPresenter;
-import com.dunkeng.wx.model.WxBean;
+import com.dunkeng.details.contract.DetailContract;
+import com.dunkeng.details.model.DetailBean;
+import com.dunkeng.details.model.DetailModel;
+import com.dunkeng.details.presenter.DetailPresenter;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.SnackbarUtil;
@@ -42,7 +40,7 @@ import butterknife.ButterKnife;
  * @author Damon
  */
 
-public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsModel> implements NewsContract.ViewNewsDetail {
+public class ActWebDetail extends CoreBaseActivity<DetailPresenter, DetailModel> implements DetailContract.DetailView {
 
     @BindView(R.id.detail_bar_image)
     ImageView detailBarImage;
@@ -56,8 +54,6 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
     AppBarLayout appBar;
     @BindView(R.id.wv_detail_content)
     WebView wvDetailContent;
-    @BindView(R.id.nsv_scroller)
-    NestedScrollView nsvScroller;
 
     @Override
     public int getLayoutId() {
@@ -97,20 +93,15 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
         mPresenter.getDetail();
     }
 
-    public static void start(Context context, View view, NewslistBean newslistBean) {
-        Intent intent = new Intent(context, ActNewsDetail.class);
-        intent.putExtra(Config.ArgumentKey.ARG_NEWS_BEAN, newslistBean);
-        ActivityCompat.startActivity(context, intent, ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, view, "translate_view").toBundle());
-    }
-    public static void start(Context context, View view, WxBean newslistBean) {
-        Intent intent = new Intent(context, ActNewsDetail.class);
-        intent.putExtra(Config.ArgumentKey.ARG_NEWS_BEAN, newslistBean);
+    public static void start(Context context, View view, DetailBean detailBean) {
+        Intent intent = new Intent(context, ActWebDetail.class);
+        intent.putExtra(Config.ArgumentKey.ARG_DETAIL_BEAN, detailBean);
         ActivityCompat.startActivity(context, intent, ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, view, "translate_view").toBundle());
     }
 
     @Override
     public void showContent() {
-        NewslistBean info = (NewslistBean) getIntent().getSerializableExtra(Config.ArgumentKey.ARG_NEWS_BEAN);
+        DetailBean info = (DetailBean) getIntent().getSerializableExtra(Config.ArgumentKey.ARG_DETAIL_BEAN);
         if (info == null) {
             return;
         }
@@ -133,6 +124,7 @@ public class ActNewsDetail extends CoreBaseActivity<NewsDetailPresenter, NewsMod
         collapsingToolbar.setTitle(info.getTitle());
         detailBarCopyright.setText(info.getDescription());
         wvDetailContent.loadUrl(info.getUrl());
+
     }
 
     @Override

@@ -41,13 +41,5 @@ public interface NewsContract {
         public abstract void getTabList();
     }
 
-    ///////////////新闻详情页view//////////////
-    interface ViewNewsDetail extends CoreBaseView {
-        void showContent();
-    }
-
-    abstract class PresenterNewsDetail extends CoreBasePresenter<NewsContract.Model, ViewNewsDetail> {
-        public abstract void getDetail();
-    }
 
 }

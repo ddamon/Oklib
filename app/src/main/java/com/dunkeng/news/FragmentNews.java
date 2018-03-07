@@ -5,12 +5,14 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.dunkeng.common.Config;
 import com.dunkeng.R;
+import com.dunkeng.common.Config;
+import com.dunkeng.details.ActWebDetail;
+import com.dunkeng.details.model.DetailBean;
 import com.dunkeng.news.contract.NewsContract;
 import com.dunkeng.news.model.News;
-import com.dunkeng.news.model.NewslistBean;
 import com.dunkeng.news.model.NewsModel;
+import com.dunkeng.news.model.NewslistBean;
 import com.dunkeng.news.presenter.NewsPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.ToastUtils;
@@ -57,7 +59,17 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
         coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActNewsDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((NewslistBean) adapter.getData().get(position)));
+                NewslistBean newslistBean = ((NewslistBean) adapter.getData().get(position));
+                if (newslistBean == null) {
+                    return;
+                }
+                DetailBean detailBean = new DetailBean();
+                detailBean.setCtime(newslistBean.getCtime());
+                detailBean.setDescription(newslistBean.getDescription());
+                detailBean.setPicUrl(newslistBean.getPicUrl());
+                detailBean.setTitle(newslistBean.getTitle());
+                detailBean.setUrl(newslistBean.getUrl());
+                ActWebDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), detailBean);
             }
         });
         //单独使用refresh需要使用带参数的

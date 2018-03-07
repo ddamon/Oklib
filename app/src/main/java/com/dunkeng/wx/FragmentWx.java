@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
-import com.dunkeng.news.ActNewsDetail;
+import com.dunkeng.details.ActWebDetail;
+import com.dunkeng.details.model.DetailBean;
 import com.dunkeng.wx.contract.WxContract;
 import com.dunkeng.wx.model.Wx;
 import com.dunkeng.wx.model.WxBean;
@@ -67,7 +68,17 @@ public class FragmentWx extends CoreBaseFragment<WxPresenter, WxModel> implement
         coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActNewsDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((WxBean) adapter.getData().get(position)));
+                WxBean newslistBean = ((WxBean) adapter.getData().get(position));
+                if (newslistBean == null) {
+                    return;
+                }
+                DetailBean detailBean = new DetailBean();
+                detailBean.setCtime(newslistBean.getCtime());
+                detailBean.setDescription(newslistBean.getDescription());
+                detailBean.setPicUrl(newslistBean.getPicUrl());
+                detailBean.setTitle(newslistBean.getTitle());
+                detailBean.setUrl(newslistBean.getUrl());
+                ActWebDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), detailBean);
             }
         });
     }

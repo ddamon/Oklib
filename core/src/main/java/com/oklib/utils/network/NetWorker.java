@@ -2,7 +2,6 @@ package com.oklib.utils.network;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.gson.JsonParseException;
 import com.oklib.utils.network.Exception.NetworkException;
@@ -576,8 +575,7 @@ public final class NetWorker {
             apiManager = retrofit.create((Utils.checkNotNull(service, "apiManager == null")));
             //return retrofit.create(service);
             return this;
-        }*/
-
+        }
         /**
          * Specify a custom call factory for creating {@link } instances.
          * <p/>

@@ -23,10 +23,7 @@ public class WxModel implements WxContract.Model {
 
     @Override
     public Observable<Wx> getNewsData(String type, int num) {
-        Observable<Wx> observable =
-        netWorker.create(TianxingApi.class).getWeixinNews(Config.API_KEY_TIANXING, num);
-
+        Observable<Wx> observable = netWorker.create(TianxingApi.class).getWeixinNews(Config.API_KEY_TIANXING, num);
         return observable.compose(RxUtil.<Wx>rxSchedulerHelper());
     }
-
 }

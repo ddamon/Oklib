@@ -44,6 +44,7 @@ public class Config {
         public static final String ARG_POSITION = "arg_position";
         public static final String ARG_ZHIHU_ID = "arg_zhihu_id";
         public static final String ARG_NEWS_BEAN = "arg_news_bean";
+        public static final String ARG_DETAIL_BEAN = "arg_detail_bean";
         public static final String ARG_PICTURE_BEAN = "arg_picture_bean";
     }
 

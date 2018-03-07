@@ -1,5 +1,6 @@
 package com.dunkeng.zhihu;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import com.oklib.utils.NetUtils;
 import com.oklib.utils.SnackbarUtil;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -57,6 +59,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     @BindView(R.id.nsv_scroller)
     NestedScrollView nsvScroller;
 
+    private RxPermissions rxPermissions;
 
     @Override
     public int getLayoutId() {
@@ -93,7 +96,20 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
                 return true;
             }
         });
-        mPresenter.getZhihuDetails(getIntent().getIntExtra(Config.ArgumentKey.ARG_ZHIHU_ID, -1));
+        rxPermissions = new RxPermissions(this);
+        requestPermission();
+    }
+
+    private void requestPermission() {
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
+                .subscribe(permission -> {
+                    if (permission) {
+                        mPresenter.getZhihuDetails(getIntent().getIntExtra(Config.ArgumentKey.ARG_ZHIHU_ID, -1));
+                    } else {
+                        showMsg("请授予权限");
+                        requestPermission();
+                    }
+                });
     }
 
     public static void start(Context context, View view, int id) {
