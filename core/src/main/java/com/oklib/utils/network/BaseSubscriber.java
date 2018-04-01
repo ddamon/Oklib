@@ -40,7 +40,6 @@ public abstract class BaseSubscriber<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable disposable) {
-        Logger.e("NetWorker", "-->http is start");
         // todo some common as show loadding  and check netWork is NetworkAvailable
         // if  NetworkAvailable no !   must to call onCompleted
         if (!NetworkUtil.isNetworkAvailable(context)) {
@@ -56,7 +55,6 @@ public abstract class BaseSubscriber<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-        Logger.e("NetWorker", "-->http is Complete");
         // todo some common as  dismiss loadding
         if (progressDialogUtil != null) {
             progressDialogUtil.dismissProgressDialog();
