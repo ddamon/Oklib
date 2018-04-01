@@ -91,7 +91,6 @@ public class FragmentWx extends CoreBaseFragment<WxPresenter, WxModel> implement
 
     @Override
     public void initUI(View view, @Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this, mainView);
         toolbar.setTitle("微信精选");
         toolbar.setNavigationIcon(R.mipmap.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(v -> {

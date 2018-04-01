@@ -69,7 +69,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     @Override
     public void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        hideToolbar();
+        setSwipeBackEnable(true);
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);

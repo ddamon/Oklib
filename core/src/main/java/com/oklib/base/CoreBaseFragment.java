@@ -4,22 +4,25 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.oklib.R;
+import com.oklib.base.swipeback.SwipeBackLayout;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
-import com.oklib.utils.ToastUtils;
-import com.orhanobut.logger.Logger;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- *
  * @author Damon
  */
 
@@ -31,6 +34,14 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     protected Activity mActivity;
     protected View mainView;
     protected String TAG;
+    Unbinder binder;
+
+
+    private SwipeBackLayout swipeBackLayout;
+    private ImageView ivShadow;
+
+
+    private boolean swipeBackEnable = false;
 
     @Override
     public void onAttach(Context context) {
@@ -40,14 +51,52 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public void setSwipeBackEnable(boolean swipeBackEnable) {
+        this.swipeBackEnable = swipeBackEnable;
+    }
+
+    public boolean isSwipeBackEnable() {
+        return swipeBackEnable;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (getLayoutView() != null) {
-            mainView = getLayoutView();
+        if (isSwipeBackEnable()) {
+            mainView = getContainer();
+            View childView = getLayoutView();
+            if (childView == null) {
+                childView = inflater.inflate(getLayoutId(), container, false);
+                childView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+            swipeBackLayout.addView(childView);
         } else {
-            mainView = inflater.inflate(getLayoutId(), container, false);
+            mainView = getLayoutView();
+            if (mainView == null) {
+                mainView = inflater.inflate(getLayoutId(), container, false);
+            }
         }
-        initUI(mainView, savedInstanceState);
         return mainView;
+    }
+
+    public View getLayoutView() {
+        return null;
+    }
+
+    private View getContainer() {
+        RelativeLayout container = new RelativeLayout(mContext);
+        swipeBackLayout = new SwipeBackLayout(mContext);
+        swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
+        ivShadow = new ImageView(mContext);
+        ivShadow.setBackgroundColor(getResources().getColor(R.color.theme_black_7f));
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        container.addView(ivShadow, params);
+        container.addView(swipeBackLayout);
+        swipeBackLayout.setOnSwipeBackListener((fa, fs) -> ivShadow.setAlpha(1 - fs));
+        return container;
     }
 
     @Override
@@ -55,8 +104,10 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         super.onViewCreated(view, savedInstanceState);
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         TAG = getClass().getSimpleName();
+        binder = ButterKnife.bind(this, view);
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
+        initUI(mainView, savedInstanceState);
         if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {
             mPresenter.attachVM(this, mModel);
         }
@@ -67,6 +118,9 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (binder != null) {
+            binder.unbind();
+        }
     }
 
     @Override
@@ -84,10 +138,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
 
 
     public abstract int getLayoutId();
-
-    public View getLayoutView() {
-        return null;
-    }
 
     /**
      * 得到Activity传进来的值
@@ -116,14 +166,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         toolbar.setTitle(title);
         toolbar.setNavigationIcon(com.oklib.R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
-    }
-
-    public void showToast(String msg) {
-        ToastUtils.showToast(mContext, msg, Toast.LENGTH_SHORT);
-    }
-
-    public void showLog(String msg) {
-        Logger.i(TAG, msg);
     }
 
 

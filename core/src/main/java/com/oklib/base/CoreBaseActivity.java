@@ -1,153 +1,98 @@
 package com.oklib.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oklib.AppManager;
 import com.oklib.CoreApp;
 import com.oklib.R;
+import com.oklib.base.swipeback.SwipeBackLayout;
 import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ThemeUtil;
+import com.oklib.utils.ToastUtils;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * Base Activity
+ *
  * @author Damon
  */
 
 public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity {
+    protected String TAG;
 
     public P mPresenter;
     public M mModel;
-
     protected Context mContext;
-    protected String TAG;
+    Unbinder binder;
+
+
+    private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
 
-    protected RelativeLayout container;
-    protected FrameLayout content;
-    protected Toolbar toolbar;
-    private TextView mTitleView;
+
+    private boolean swipeBackEnable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置状态栏透明
+        try {
+            setStatusBarColor();
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } catch (Exception e) {
+
+        }
         init(savedInstanceState);
     }
 
     private void init(Bundle savedInstanceState) {
         TAG = getClass().getSimpleName();
+
         setTheme(ThemeUtil.themeArr[CoreApp.getThemeIndex(this)][
                 CoreApp.getNightModel(this) ? 1 : 0]);
         this.setContentView(this.getLayoutId());
+        binder = ButterKnife.bind(this);
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {
+        if (this instanceof CoreBaseView) {
             mPresenter.attachVM(this, mModel);
         }
         this.initView(savedInstanceState);
         AppManager.getAppManager().addActivity(this);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
+        if (binder != null) {
+            binder.unbind();
+        }
         if (mPresenter != null) {
             mPresenter.detachVM();
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(R.layout.activity_basetoolbar);
-        toolbar = (Toolbar) findViewById(R.id.core_toolbar);
-        mTitleView = (TextView) findViewById(R.id.core_title);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        content = (FrameLayout) findViewById(R.id.core_content);
-        toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
-        content.removeAllViews();
-        getLayoutInflater().inflate(layoutResID, content);
-    }
-
-    @Override
-    public final void setContentView(View view) {
-    }
-
-    @Override
-    public final void setContentView(View view, ViewGroup.LayoutParams params) {
-    }
-
-    /**
-     * @return
-     */
-    public abstract int getLayoutId();
-
-    public abstract void initView(Bundle savedInstanceState);
-
-    protected void hideToolbar() {
-        getSupportActionBar().hide();
-    }
-
-    /**
-     * change back icon
-     *
-     * @param id
-     */
-    protected void setNaviIcon(int id) {
-        toolbar.setNavigationIcon(id);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitleView.setVisibility(View.VISIBLE);
-        mTitleView.setText(title);
-    }
-
-    @Override
-    public void setTitle(int titleId) {
-        mTitleView.setVisibility(View.VISIBLE);
-        mTitleView.setText(titleId);
-    }
-
-    public String getBaseTitle() {
-        return mTitleView.getText().toString();
-    }
-
-    @Override
-    public FragmentAnimator onCreateFragmentAnimator() {
-        return new DefaultHorizontalAnimator();
-    }
-
-    public void setStatusBarColor() {
-        StatusBarUtil.setTransparent(this);
-    }
-
-    public String getStr(@StringRes int resId) {
-        return getResources().getString(resId);
-    }
 
     public void reload() {
         Intent intent = getIntent();
@@ -158,4 +103,89 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         startActivity(intent);
     }
 
+    @Override
+    public void setContentView(int layoutResID) {
+        if (isSwipeBackEnable()) {
+            super.setContentView(getContainer());
+            View view = LayoutInflater.from(this).inflate(layoutResID, null);
+            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            swipeBackLayout.addView(view);
+        } else {
+            super.setContentView(layoutResID);
+        }
+    }
+
+    private View getContainer() {
+        RelativeLayout container = new RelativeLayout(this);
+        swipeBackLayout = new SwipeBackLayout(this);
+        swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
+        ivShadow = new ImageView(this);
+        ivShadow.setBackgroundColor(getResources().getColor(R.color.theme_black_7f));
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        container.addView(ivShadow, params);
+        container.addView(swipeBackLayout);
+        swipeBackLayout.setOnSwipeBackListener((fa, fs) -> ivShadow.setAlpha(1 - fs));
+        return container;
+    }
+
+    public abstract int getLayoutId();
+
+    public abstract void initView(Bundle savedInstanceState);
+
+    @Override
+    public void onBackPressedSupport() {
+        supportFinishAfterTransition();
+    }
+
+
+    public void setStatusBarColor() {
+        StatusBarUtil.setTransparent(this);
+//        StatusBarUtil.setTranslucent(this);
+    }
+
+    protected void setToolBar(Toolbar toolbar, String title) {
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(R.mipmap.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressedSupport();
+            }
+        });
+    }
+
+
+    /**
+     * 跳转页面,无extra简易型
+     *
+     * @param tarActivity 目标页面
+     */
+    public void startActivity(Class<? extends Activity> tarActivity, Bundle options) {
+        Intent intent = new Intent(this, tarActivity);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            startActivity(intent, options);
+        } else {
+            startActivity(intent);
+        }
+    }
+
+    public void startActivity(Class<? extends Activity> tarActivity) {
+        Intent intent = new Intent(this, tarActivity);
+        startActivity(intent);
+    }
+
+    public void showToast(String msg) {
+        ToastUtils.showToast(this, msg, Toast.LENGTH_SHORT);
+    }
+
+    public void setSwipeBackEnable(boolean swipeBackEnable) {
+        this.swipeBackEnable = swipeBackEnable;
+    }
+
+    public boolean isSwipeBackEnable() {
+        return swipeBackEnable;
+    }
 }

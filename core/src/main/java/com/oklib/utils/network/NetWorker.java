@@ -222,7 +222,7 @@ public final class NetWorker {
     public <T> T get(String url, Map<String, String> maps, BaseSubscriber<ResponseBody> subscriber) {
         return (T) apiManager.executeGet(url, maps)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer());
+                .compose(handleErrTransformer()).subscribeWith(subscriber);
     }
 
     /**

@@ -85,12 +85,11 @@ public class FragmentNewsMain extends CoreBaseFragment<NewsPresenterMain, NewsMo
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_news;
+        return R.layout.fragment_news_main;
     }
 
     @Override
     public void initUI(View view, @Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this, mainView);
         toolbar.setTitle("新闻");
         toolbar.setNavigationIcon(R.mipmap.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(v -> {

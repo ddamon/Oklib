@@ -62,8 +62,6 @@ public class ActWebDetail extends CoreBaseActivity<DetailPresenter, DetailModel>
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        ButterKnife.bind(this);
-        hideToolbar();
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);

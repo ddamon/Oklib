@@ -27,8 +27,7 @@ import com.oklib.utils.ToastUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends CoreBaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnFragmentOpenDrawerListener {
+public class MainActivity extends CoreBaseActivity implements NavigationView.OnNavigationItemSelectedListener, OnFragmentOpenDrawerListener {
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
@@ -51,8 +50,6 @@ public class MainActivity extends CoreBaseActivity
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        ButterKnife.bind(this);
-        hideToolbar();
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
             loadRootFragment(R.id.main_container, new FragmentZhihu());
