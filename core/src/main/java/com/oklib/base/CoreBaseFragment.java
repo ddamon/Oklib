@@ -164,7 +164,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
 
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
-        toolbar.setNavigationIcon(com.oklib.R.mipmap.ic_back);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_36dp);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
     }
 
