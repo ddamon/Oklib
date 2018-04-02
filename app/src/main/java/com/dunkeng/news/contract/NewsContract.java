@@ -27,7 +27,7 @@ public interface NewsContract {
     }
 
 
-    abstract class PresenterNews extends CoreBasePresenter<NewsContract.Model, ViewNews> {
+    abstract class PresenterNews extends CoreBasePresenter<Model, ViewNews> {
         public abstract void getNewsData(String type, int num);
     }
 
@@ -37,7 +37,7 @@ public interface NewsContract {
         void showTabList(String[] mTabs);
     }
 
-    abstract class PresenterNewsMain extends CoreBasePresenter<NewsContract.Model, ViewNewsMain> {
+    abstract class PresenterNewsMain extends CoreBasePresenter<Model, ViewNewsMain> {
         public abstract void getTabList();
     }
 

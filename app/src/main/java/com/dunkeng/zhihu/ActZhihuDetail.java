@@ -67,7 +67,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     }
 
     @Override
-    public void initView(Bundle savedInstanceState) {
+    public void initUI(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         setSwipeBackEnable(true);
         WebSettings settings = wvDetailContent.getSettings();
@@ -136,4 +136,5 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
     public void showMsg(String msg) {
         SnackbarUtil.showShort(getWindow().getDecorView(), msg);
     }
+
 }

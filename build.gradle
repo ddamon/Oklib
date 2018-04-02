@@ -24,7 +24,6 @@ allprojects {
     }
 }
 
-// Define versions in a single place
 ext {
     // App dependencies
     supportLibraryVersion = '26.0.2'

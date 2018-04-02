@@ -3,28 +3,20 @@ package com.oklib.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.oklib.AppManager;
 import com.oklib.CoreApp;
 import com.oklib.R;
 import com.oklib.base.swipeback.SwipeBackLayout;
-import com.oklib.utils.StatusBarUtil;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.ThemeUtil;
-import com.oklib.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -36,7 +28,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * @author Damon
  */
 
-public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity {
+public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity implements IBaseActivity {
     protected String TAG;
 
     public P mPresenter;
@@ -44,29 +36,22 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     protected Context mContext;
     Unbinder binder;
 
-
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
 
-
     private boolean swipeBackEnable = false;
+
+    final BaseActivityDelegate baseActivityDelegate = new BaseActivityDelegate(this);
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置状态栏透明
-        try {
-            setStatusBarColor();
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } catch (Exception e) {
-
-        }
         init(savedInstanceState);
     }
 
     private void init(Bundle savedInstanceState) {
         TAG = getClass().getSimpleName();
-
         setTheme(ThemeUtil.themeArr[CoreApp.getThemeIndex(this)][
                 CoreApp.getNightModel(this) ? 1 : 0]);
         this.setContentView(this.getLayoutId());
@@ -77,7 +62,8 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         if (this instanceof CoreBaseView) {
             mPresenter.attachVM(this, mModel);
         }
-        this.initView(savedInstanceState);
+        this.initUI(savedInstanceState);
+        initData();
         AppManager.getAppManager().addActivity(this);
     }
 
@@ -130,18 +116,18 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     public abstract int getLayoutId();
 
-    public abstract void initView(Bundle savedInstanceState);
+    public abstract void initUI(Bundle savedInstanceState);
+    /**
+     * 在监听器之前把数据准备好
+     */
+    public void initData() {
 
+    }
     @Override
     public void onBackPressedSupport() {
         supportFinishAfterTransition();
     }
 
-
-    public void setStatusBarColor() {
-        StatusBarUtil.setTransparent(this);
-//        StatusBarUtil.setTranslucent(this);
-    }
 
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
@@ -177,8 +163,14 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         startActivity(intent);
     }
 
+    @Override
     public void showToast(String msg) {
-        ToastUtils.showToast(this, msg, Toast.LENGTH_SHORT);
+        baseActivityDelegate.showToast(msg);
+    }
+
+    @Override
+    public void showLog(String string) {
+        baseActivityDelegate.showToast(string);
     }
 
     public void setSwipeBackEnable(boolean swipeBackEnable) {

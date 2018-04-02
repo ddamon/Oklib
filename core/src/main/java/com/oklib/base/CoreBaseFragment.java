@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,7 +26,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 
 
-public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment {
+public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment implements IBaseFragment {
     public P mPresenter;
     public M mModel;
     protected Context mContext;
@@ -35,11 +34,9 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     protected View mainView;
     protected String TAG;
     Unbinder binder;
-
-
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
-
+    final BaseFragmentDelegate baseFragmentDelegate = new BaseFragmentDelegate(this);
 
     private boolean swipeBackEnable = false;
 
@@ -111,7 +108,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {
             mPresenter.attachVM(this, mModel);
         }
-        getBundle(getArguments());
         initData();
     }
 
@@ -136,15 +132,13 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         }
     }
 
-
+    /**
+     * 获取设置布局id
+     *
+     * @return
+     */
     public abstract int getLayoutId();
 
-    /**
-     * 得到Activity传进来的值
-     */
-    public void getBundle(Bundle bundle) {
-
-    }
 
     /**
      * 初始化控件
@@ -168,5 +162,13 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
     }
 
+    @Override
+    public void showToast(String string) {
+        baseFragmentDelegate.showToast(string);
+    }
 
+    @Override
+    public void showLog(String string) {
+        baseFragmentDelegate.showLog(string);
+    }
 }

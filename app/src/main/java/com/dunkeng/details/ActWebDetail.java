@@ -32,7 +32,6 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Damon.Han on 2017/2/9 0009.
@@ -61,7 +60,7 @@ public class ActWebDetail extends CoreBaseActivity<DetailPresenter, DetailModel>
     }
 
     @Override
-    public void initView(Bundle savedInstanceState) {
+    public void initUI(Bundle savedInstanceState) {
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);
@@ -133,5 +132,10 @@ public class ActWebDetail extends CoreBaseActivity<DetailPresenter, DetailModel>
     @Override
     public void showMsg(String msg) {
         SnackbarUtil.showShort(getWindow().getDecorView(), msg);
+    }
+
+    @Override
+    public void showLog(String string) {
+
     }
 }

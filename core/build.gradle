@@ -69,7 +69,7 @@ dependencies {
 }
 
 group = "com.oklib"
-version = '1.1.6'
+version = '1.1.9'
 def siteUrl = "https://github.com/ddamon/Oklib"
 def gitUrl = "https://github.com/ddamon/Oklib.git"
 install {
@@ -139,9 +139,9 @@ bintray {
         repo = 'maven'
         name = 'oklib'
         version {
-            name = '1.1.6-release'
+            name = '1.1.9-release'
             desc = "oklib"
-            vcsTag = '1.1.6'
+            vcsTag = '1.1.9'
         }
         websiteUrl = siteUrl
         vcsUrl = gitUrl
