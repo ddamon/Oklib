@@ -50,6 +50,7 @@ import retrofit2.http.FieldMap;
 
 /**
  * 网络请求类
+ *
  * @author Damon
  */
 public final class NetWorker {
@@ -121,7 +122,7 @@ public final class NetWorker {
 
         return (T) apiManager.executeGet(url, maps)
                 .compose(schedulersTransformer)
-                .compose(handleErrTransformer());
+                .compose(handleErrTransformer()).subscribe();
     }
 
     /**
@@ -227,10 +228,9 @@ public final class NetWorker {
 
     /**
      * @param url
-     * @param parameters
      */
-    public void post(String url, @FieldMap(encoded = true) Map<String, String> parameters) {
-        apiManager.executePost(url, parameters)
+    public <T> T post(String url, @FieldMap(encoded = true) Map<String, String> parameter) {
+        return (T) apiManager.executePost(url, (Map<String, String>) parameters)
                 .compose(schedulersTransformer)
                 .compose(handleErrTransformer());
     }
@@ -604,6 +604,23 @@ public final class NetWorker {
             return writeTimeout(timeout, TimeUnit.SECONDS);
         }
 
+
+        /**
+         * Sets the default read timeout for new connections. A value of 0 means no timeout, otherwise
+         * values must be between 1 and {@link Integer#MAX_VALUE} when converted to milliseconds.
+         */
+        public Builder readTimeout(int timeout) {
+            return readTimeout(timeout, TimeUnit.SECONDS);
+        }
+
+        /**
+         * Attaches {@code tag} to the request. It can be used later to cancel the request. If the tag
+         * is unspecified or null, the request is canceled by using the request itself as the tag.
+         */
+        public Builder tag(Object tag) {
+            return this;
+        }
+
         /**
          * open default logcat
          *
@@ -626,6 +643,19 @@ public final class NetWorker {
             return this;
         }
 
+
+        /**
+         * set Cache MaxSize
+         *
+         * @param size MaxSize unit kb
+         *             def  10 * 1024 * 1024
+         * @return
+         */
+        public Builder addCacheMaxSize(int size) {
+            addCacheMaxSize(size);
+            return this;
+        }
+
         /**
          * open default Cache
          *
@@ -638,6 +668,7 @@ public final class NetWorker {
         }
 
         public Builder proxy(Proxy proxy) {
+            this.proxy = proxy;
             okhttpBuilder.proxy(Utils.checkNotNull(proxy, "proxy == null"));
             return this;
         }
@@ -646,12 +677,24 @@ public final class NetWorker {
          * Sets the default write timeout for new connections. A value of 0 means no timeout,
          * otherwise values must be between 1 and {@link TimeUnit #MAX_VALUE} when converted to
          * milliseconds.
+         * TimeUnit {@link TimeUnit}
          */
         public Builder writeTimeout(int timeout, TimeUnit unit) {
-            if (timeout != -1) {
+            if (timeout >= 0) {
                 okhttpBuilder.writeTimeout(timeout, unit);
-            } else {
-                okhttpBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+            }
+            return this;
+        }
+
+
+        /**
+         * Sets the default read timeout for new connections. A value of 0 means no timeout, otherwise
+         * values must be between 1 and {@link Integer#MAX_VALUE} when converted to milliseconds.
+         * TimeUnit {@link TimeUnit}
+         */
+        public Builder readTimeout(int timeout, TimeUnit unit) {
+            if (timeout > 0) {
+                okhttpBuilder.readTimeout(timeout, unit);
             }
             return this;
         }
@@ -710,18 +753,36 @@ public final class NetWorker {
         }
 
         /**
+         * update Header for serialization and deserialization of objects.
+         */
+        public <T> Builder header(Map<String, T> headers) {
+            okhttpBuilder.addInterceptor(new BaseHeaderInterceptor(Utils.checkNotNull(headers, "header == null"), AbsRequestInterceptor.Type.UPDATE));
+            return this;
+        }
+
+
+        /**
          * Add Header for serialization and deserialization of objects.
          */
-        public Builder addHeader(Map<String, String> headers) {
-            okhttpBuilder.addInterceptor(new BaseInterceptor((Utils.checkNotNull(headers, "header == null"))));
+        public <T> Builder addHeader(Map<String, T> headers) {
+            okhttpBuilder.addInterceptor(new BaseHeaderInterceptor(Utils.checkNotNull(headers, "header == null")));
             return this;
         }
 
         /**
+         * update parameters for serialization and deserialization of objects.
+         */
+        public <T> Builder parameters(Map<String, T> parameters) {
+            okhttpBuilder.addInterceptor(new BaseParameters(Utils.checkNotNull(parameters, "parameters == null"), AbsRequestInterceptor.Type.UPDATE));
+            return this;
+        }
+
+
+        /**
          * Add parameters for serialization and deserialization of objects.
          */
-        public Builder addParameters(Map<String, String> parameters) {
-            okhttpBuilder.addInterceptor(new BaseInterceptor((Utils.checkNotNull(parameters, "parameters == null"))));
+        public <T> Builder addParameters(Map<String, T> parameters) {
+            okhttpBuilder.addInterceptor(new BaseParameters(Utils.checkNotNull(parameters, "parameters == null")));
             return this;
         }
 
@@ -771,18 +832,37 @@ public final class NetWorker {
         }
 
         /**
-         *
+         * skipSSLSocketFactory
+         */
+        public Builder skipSSLSocketFactory(boolean isSkip) {
+            return this;
+        }
+
+        /**
+         * addSSLSocketFactory
          */
         public Builder addSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
+            if (sslSocketFactory == null) {
+                throw new NullPointerException("sslSocketFactory == null");
+            }
             this.sslSocketFactory = sslSocketFactory;
             return this;
         }
 
+        /**
+         * HostnameVerifier
+         *
+         * @param hostnameVerifier
+         * @return Builder
+         */
         public Builder addHostnameVerifier(HostnameVerifier hostnameVerifier) {
             this.hostnameVerifier = hostnameVerifier;
             return this;
         }
 
+        /**
+         * addCertificatePinner
+         */
         public Builder addCertificatePinner(CertificatePinner certificatePinner) {
             this.certificatePinner = certificatePinner;
             return this;
@@ -842,7 +922,6 @@ public final class NetWorker {
         private Builder addCache(Cache cache, final String cacheControlValue) {
             REWRITE_CACHE_CONTROL_INTERCEPTOR = new CacheInterceptor(mContext, cacheControlValue);
             addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-            addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
             this.cache = cache;
             return this;
         }
@@ -976,6 +1055,27 @@ public final class NetWorker {
         }
     }
 
+
+
+    /**
+     * ResponseCallBack <T> Support your custom data model
+     * 兼容1.3.3.2以下版本 更高以上版本已过时
+     */
+    @Deprecated
+    public interface ResponseCallBack<T> {
+
+        void onStart();
+
+        void onCompleted();
+
+        void onError(Throwable e);
+
+        @Deprecated
+        void onSuccee(Response<T> response);
+
+        void onsuccess(int code, String msg, T response, String originalResponse);
+
+    }
 
 }
 
