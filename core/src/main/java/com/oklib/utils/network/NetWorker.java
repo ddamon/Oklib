@@ -97,33 +97,6 @@ public final class NetWorker {
         return retrofit.create(service);
     }
 
-    /**
-     * @param subscriber
-     */
-    public <T> T call(Observable<T> observable, Consumer<T> subscriber) {
-        return (T) observable.compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
-    }
-
-    public <T> T call(Observable<T> observable) {
-        return (T) observable.compose(schedulersTransformer)
-                .compose(handleErrTransformer());
-    }
-
-    /**
-     * Retroift execute get
-     * <p>
-     * return parsed data
-     * <p>
-     * you don't need to parse ResponseBody
-     */
-    public <T> T executeGet(final String url, final Map<String, String> maps) {
-
-        return (T) apiManager.executeGet(url, maps)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer()).subscribe();
-    }
 
     /**
      * MethodHandler
@@ -209,6 +182,33 @@ public final class NetWorker {
             }
             return response.getData();
         }
+    }
+    /**
+     * @param subscriber
+     */
+    public <T> T call(Observable<T> observable, Consumer<T> subscriber) {
+        return (T) observable.compose(schedulersTransformer)
+                .compose(handleErrTransformer())
+                .subscribe(subscriber);
+    }
+
+    public <T> T call(Observable<T> observable) {
+        return (T) observable.compose(schedulersTransformer)
+                .compose(handleErrTransformer());
+    }
+
+    /**
+     * Retroift execute get
+     * <p>
+     * return parsed data
+     * <p>
+     * you don't need to parse ResponseBody
+     */
+    public <T> T executeGet(final String url, final Map<String, String> maps) {
+
+        return (T) apiManager.executeGet(url, maps)
+                .compose(schedulersTransformer)
+                .compose(handleErrTransformer());
     }
 
     /**

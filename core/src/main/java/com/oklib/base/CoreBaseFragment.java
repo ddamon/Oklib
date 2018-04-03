@@ -104,10 +104,10 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         binder = ButterKnife.bind(this, view);
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        initUI(mainView, savedInstanceState);
         if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {
             mPresenter.attachVM(this, mModel);
         }
+        this.initUI(mainView, savedInstanceState);
         initData();
     }
 
