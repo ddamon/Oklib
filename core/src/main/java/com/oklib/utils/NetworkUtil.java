@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.orhanobut.logger.Logger;
+import com.oklib.utils.Logger.Logger;
 
 import java.lang.reflect.Method;
 

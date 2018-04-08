@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.oklib.utils.pref.AnyPref;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
 
 import static com.oklib.CoreConstants.DEFAULT_AUTO_SAVE;
 import static com.oklib.CoreConstants.DEFAULT_NO_IMAGE;
@@ -23,7 +21,6 @@ public abstract class CoreApp extends Application {
         super.onCreate();
         mApp = this;
         AnyPref.init(this);
-        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
     public static synchronized CoreApp getInstance() {

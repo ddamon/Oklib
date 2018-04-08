@@ -1,9 +1,8 @@
 package com.oklib.widget.recyclerviewpager;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import com.orhanobut.logger.Logger;
+import com.oklib.utils.Logger.Logger;
 
 import java.lang.reflect.Field;
 

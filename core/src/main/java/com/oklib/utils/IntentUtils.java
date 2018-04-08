@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.oklib.utils.assist.StringUtils;
+
 import java.io.File;
 import java.util.List;
 

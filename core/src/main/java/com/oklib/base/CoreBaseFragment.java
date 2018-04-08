@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.oklib.R;
 import com.oklib.base.swipeback.SwipeBackLayout;
-import com.oklib.utils.StatusBarUtil;
+import com.oklib.utils.view.StatusBarUtil;
 import com.oklib.utils.TUtil;
 
 import butterknife.ButterKnife;

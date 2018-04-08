@@ -57,9 +57,6 @@ dependencies {
     //permissions
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
-    //log
-    compile 'com.orhanobut:logger:2.1.1'
-
     //轮播图
     compile 'com.bigkoo:convenientbanner:2.0.5'
 

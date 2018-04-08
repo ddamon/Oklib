@@ -4,8 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.network.util.FileUtil;
-import com.orhanobut.logger.Logger;
 
 /**
  * 配置信息加载

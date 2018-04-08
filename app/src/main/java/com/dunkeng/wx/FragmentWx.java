@@ -18,7 +18,7 @@ import com.dunkeng.wx.model.WxBean;
 import com.dunkeng.wx.model.WxModel;
 import com.dunkeng.wx.presenter.WxPresenter;
 import com.oklib.base.CoreBaseFragment;
-import com.oklib.utils.ToastUtils;
+import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;
@@ -27,7 +27,6 @@ import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Damon on 2016/12/7.

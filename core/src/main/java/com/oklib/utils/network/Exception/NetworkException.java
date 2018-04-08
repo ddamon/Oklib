@@ -3,8 +3,8 @@ package com.oklib.utils.network.Exception;
 import android.net.ParseException;
 
 import com.google.gson.JsonParseException;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.network.MThrowable;
-import com.orhanobut.logger.Logger;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;

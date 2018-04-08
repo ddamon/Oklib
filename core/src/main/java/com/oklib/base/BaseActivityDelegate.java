@@ -2,8 +2,8 @@ package com.oklib.base;
 
 import android.support.v4.app.FragmentActivity;
 
-import com.oklib.utils.ToastUtils;
-import com.orhanobut.logger.Logger;
+import com.oklib.utils.Logger.Logger;
+import com.oklib.utils.view.ToastUtils;
 
 
 /**

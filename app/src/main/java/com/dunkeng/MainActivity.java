@@ -21,8 +21,8 @@ import com.dunkeng.zhihu.FragmentZhihu;
 import com.oklib.AppManager;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.IntentUtils;
-import com.oklib.utils.ShareUtils;
-import com.oklib.utils.ToastUtils;
+import com.oklib.utils.assist.ShareUtils;
+import com.oklib.utils.view.ToastUtils;
 
 import butterknife.BindView;
 

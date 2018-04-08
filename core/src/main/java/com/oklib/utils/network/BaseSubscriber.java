@@ -4,10 +4,10 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.oklib.CoreConstants;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.network.Exception.NetworkException;
 import com.oklib.utils.network.util.NetworkUtil;
 import com.oklib.utils.network.util.ProgressDialogUtil;
-import com.orhanobut.logger.Logger;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

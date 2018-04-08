@@ -15,7 +15,7 @@ import com.dunkeng.news.model.NewsModel;
 import com.dunkeng.news.model.NewslistBean;
 import com.dunkeng.news.presenter.NewsPresenter;
 import com.oklib.base.CoreBaseFragment;
-import com.oklib.utils.ToastUtils;
+import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;

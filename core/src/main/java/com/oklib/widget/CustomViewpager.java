@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.oklib.R;
-import com.oklib.utils.ScreenUtil;
+import com.oklib.utils.system.ScreenUtil;
 
 
 /**

@@ -16,7 +16,7 @@ import com.oklib.CoreApp;
 import com.oklib.R;
 import com.oklib.base.swipeback.SwipeBackLayout;
 import com.oklib.utils.TUtil;
-import com.oklib.utils.ThemeUtil;
+import com.oklib.utils.view.ThemeUtil;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

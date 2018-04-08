@@ -15,7 +15,7 @@ import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.orhanobut.logger.Logger;
+import com.oklib.utils.Logger.Logger;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;

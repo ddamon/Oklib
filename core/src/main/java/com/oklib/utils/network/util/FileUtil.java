@@ -5,9 +5,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 
-import com.orhanobut.logger.Logger;
+import com.oklib.utils.Logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

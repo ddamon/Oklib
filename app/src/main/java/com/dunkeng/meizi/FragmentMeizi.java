@@ -15,20 +15,19 @@ import com.dunkeng.meizi.contract.MeiziContract;
 import com.dunkeng.meizi.model.Meizi;
 import com.dunkeng.meizi.model.MeiziModel;
 import com.dunkeng.meizi.model.MeiziResult;
-import com.dunkeng.meizi.presenter.MeiziPresenter;
 import com.dunkeng.meizi.model.PictureBean;
+import com.dunkeng.meizi.presenter.MeiziPresenter;
 import com.oklib.base.CoreBaseFragment;
-import com.oklib.utils.ToastUtils;
+import com.oklib.utils.Logger.Logger;
+import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;
 import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> implements MeiziContract.View {

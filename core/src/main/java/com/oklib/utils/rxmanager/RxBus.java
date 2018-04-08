@@ -2,8 +2,7 @@ package com.oklib.utils.rxmanager;
 
 import android.support.annotation.NonNull;
 
-
-import com.orhanobut.logger.Logger;
+import com.oklib.utils.Logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;

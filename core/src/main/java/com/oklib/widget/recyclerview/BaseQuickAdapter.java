@@ -24,7 +24,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 
 import com.oklib.R;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.widget.recyclerview.animation.AlphaInAnimation;
 import com.oklib.widget.recyclerview.animation.BaseAnimation;
 import com.oklib.widget.recyclerview.animation.ScaleInAnimation;
@@ -40,7 +40,6 @@ import com.oklib.widget.recyclerview.animation.SlideInBottomAnimation;
 import com.oklib.widget.recyclerview.animation.SlideInLeftAnimation;
 import com.oklib.widget.recyclerview.animation.SlideInRightAnimation;
 import com.oklib.widget.recyclerview.entity.IExpandable;
-import com.orhanobut.logger.Logger;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

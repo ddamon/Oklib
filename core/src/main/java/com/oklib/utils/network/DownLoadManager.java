@@ -4,10 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.network.util.Utils;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;

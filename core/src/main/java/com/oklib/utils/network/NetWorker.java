@@ -4,9 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.JsonParseException;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.network.Exception.NetworkException;
 import com.oklib.utils.network.util.Utils;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.InputStream;

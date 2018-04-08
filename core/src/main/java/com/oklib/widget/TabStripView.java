@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.oklib.R;
-import com.oklib.utils.ScreenUtil;
+import com.oklib.utils.system.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;

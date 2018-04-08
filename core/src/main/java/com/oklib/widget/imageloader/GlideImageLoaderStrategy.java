@@ -12,11 +12,11 @@ import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.widget.imageloader.glide.CircleBorderTransformation;
 import com.oklib.widget.imageloader.glide.RoundedCornersTransformation;
 import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
 import com.oklib.widget.imageloader.glide.listener.ProgressModelLoader;
-import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;

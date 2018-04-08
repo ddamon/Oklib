@@ -21,7 +21,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 
 import com.oklib.CoreApp;
-import com.orhanobut.logger.Logger;
+import com.oklib.utils.Logger.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

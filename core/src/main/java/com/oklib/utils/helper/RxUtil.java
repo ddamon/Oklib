@@ -4,9 +4,7 @@ package com.oklib.utils.helper;
 import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
-import com.orhanobut.logger.Logger;
-
-import org.reactivestreams.Subscriber;
+import com.oklib.utils.Logger.Logger;
 
 import java.util.concurrent.TimeUnit;
 
