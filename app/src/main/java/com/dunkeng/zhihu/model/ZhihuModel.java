@@ -1,11 +1,10 @@
 package com.dunkeng.zhihu.model;
 
-import com.dunkeng.App;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.api.ZhiHuApi;
 import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.oklib.utils.helper.RxUtil;
-import com.oklib.utils.network.NetWorker;
+import com.oklib.utils.network.http.ViseHttp;
 
 import io.reactivex.Observable;
 
@@ -18,17 +17,14 @@ import io.reactivex.Observable;
 
 public class ZhihuModel implements ZhihuContract.Model {
 
-    private NetWorker netWorker = new NetWorker.Builder(App.getAppContext())
-            .baseUrl(Config.BASE_URL_ZHIHU)
-            .build();
 
     @Override
     public Observable<DailyListBean> getDailyData() {
-        return netWorker.create(ZhiHuApi.class).getDailyList().compose(RxUtil.<DailyListBean>rxSchedulerHelper());
+        return ViseHttp.RETROFIT().baseUrl(Config.BASE_URL_ZHIHU).create(ZhiHuApi.class).getDailyList().compose(RxUtil.<DailyListBean>rxSchedulerHelper());
     }
 
     @Override
     public Observable<ZhihuDetailBean> getZhihuDetails(int anInt) {
-        return netWorker.create(ZhiHuApi.class).getDetailInfo(anInt).compose(RxUtil.rxSchedulerHelper());
+        return ViseHttp.RETROFIT().baseUrl(Config.BASE_URL_ZHIHU).create(ZhiHuApi.class).getDetailInfo(anInt).compose(RxUtil.rxSchedulerHelper());
     }
 }

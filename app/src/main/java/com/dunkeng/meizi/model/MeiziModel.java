@@ -1,11 +1,10 @@
 package com.dunkeng.meizi.model;
 
-import com.dunkeng.App;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.api.GankApi;
 import com.dunkeng.meizi.contract.MeiziContract;
 import com.oklib.utils.helper.RxUtil;
-import com.oklib.utils.network.NetWorker;
+import com.oklib.utils.network.http.ViseHttp;
 
 import io.reactivex.Observable;
 
@@ -15,10 +14,9 @@ import io.reactivex.Observable;
  */
 
 public class MeiziModel implements MeiziContract.Model {
-    NetWorker netWorker = new NetWorker.Builder(App.getAppContext()).baseUrl(Config.BASE_URL_GANK).build();
 
     @Override
     public Observable<MeiziResult> getMeizi(int page) {
-        return netWorker.create(GankApi.class).getMeizi(Config.Data.pageSize, page).compose(RxUtil.rxSchedulerHelper());
+        return ViseHttp.RETROFIT().baseUrl(Config.BASE_URL_GANK).create(GankApi.class).getMeizi(Config.Data.pageSize, page).compose(RxUtil.rxSchedulerHelper());
     }
 }

@@ -2,10 +2,12 @@ package com.oklib.utils.network.database;
 
 import android.database.sqlite.SQLiteException;
 
-
 import com.oklib.utils.Logger.Logger;
 
+import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.Collection;
 import java.util.List;
