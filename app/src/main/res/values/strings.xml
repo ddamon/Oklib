@@ -14,5 +14,6 @@
     <string name="menu_name_tools">实用工具</string>
     <string name="menu_name_share">分享</string>
     <string name="menu_name_about">关于</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>
