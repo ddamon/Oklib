@@ -14,12 +14,14 @@ import com.dunkeng.zhihu.model.DailyListBean;
 import com.dunkeng.zhihu.model.ZhihuModel;
 import com.dunkeng.zhihu.presenter.ZhihuPresenter;
 import com.oklib.base.CoreBaseFragment;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;
 import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
+import com.oklib.widget.recyclerview.listener.OnItemChildClickListener;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 import butterknife.BindView;
@@ -58,12 +60,7 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
     @Override
     public void showContent(DailyListBean info) {
         coreRecyclerView.getAdapter().addData(info.getStories());
-        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActZhihuDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((DailyListBean.StoriesBean) adapter.getData().get(position)).getId());
-            }
-        });
+
     }
 
 
@@ -89,6 +86,7 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
                                 .url(item.getImages().get(0)).build());
+                helper.addOnClickListener(R.id.iv_daily_item_image);
             }
         });
         //单独使用refresh需要使用带参数的
@@ -98,6 +96,20 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
                 initData();
             }
         });
+        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ActZhihuDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((DailyListBean.StoriesBean) adapter.getData().get(position)).getId());
+            }
+        });
+        coreRecyclerView.addOnChildItemClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Logger.e(view);
+            }
+
+        });
+
     }
 
     @Override

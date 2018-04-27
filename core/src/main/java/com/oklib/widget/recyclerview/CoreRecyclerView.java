@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.oklib.R;
 import com.oklib.widget.recyclerview.animation.BaseAnimation;
+import com.oklib.widget.recyclerview.listener.OnItemChildClickListener;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 
@@ -82,6 +83,10 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
 
     public CoreRecyclerView addOnItemClickListener(OnItemClickListener onItemClickListener) {
         mRecyclerView.removeOnItemTouchListener(onItemClickListener);
+        mRecyclerView.addOnItemTouchListener(onItemClickListener);
+        return this;
+    }
+    public CoreRecyclerView addOnChildItemClickListener(OnItemChildClickListener onItemClickListener) {
         mRecyclerView.addOnItemTouchListener(onItemClickListener);
         return this;
     }
