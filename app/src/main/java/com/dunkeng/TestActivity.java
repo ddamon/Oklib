@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.oklib.base.CoreBaseActivity;
+import com.oklib.widget.dialog.ConfirmDialog;
 
 public class TestActivity extends CoreBaseActivity {
 
@@ -29,6 +30,16 @@ public class TestActivity extends CoreBaseActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        ConfirmDialog confirmDialog = new ConfirmDialog(mContext);
+        confirmDialog.setCancelable(false);
+        confirmDialog.setMessage("message").setPositiveButton("知道了", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDialog.dismiss();
+                finish();
+            }
+        }).show();
     }
 
 }

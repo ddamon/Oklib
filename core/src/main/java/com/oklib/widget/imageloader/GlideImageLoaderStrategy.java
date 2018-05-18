@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
@@ -18,6 +19,7 @@ import com.oklib.widget.imageloader.glide.RoundedCornersTransformation;
 import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
 import com.oklib.widget.imageloader.glide.listener.ProgressModelLoader;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,24 +30,33 @@ import java.io.InputStream;
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
-    public void loadImage(ImageLoader imageLoader) {
-
-    }
-
-    @Override
     public void loadImage(Context ctx, ImageLoader img) {
-
         int strategy = img.getWifiStrategy();
         if (strategy == ImageLoaderUtil.LOAD_STRATEGY_ONLY_WIFI) {
             int netType = NetworkStatusUtil.getNetWorkType(ctx);
             if (netType == NetworkStatusUtil.NETWORKTYPE_WIFI) {
-                loadNormal(ctx, img);
+                loadNet(ctx, img);
             } else {
                 loadCache(ctx, img);
             }
         } else {
-            loadNormal(ctx, img);
+            loadNet(ctx, img);
         }
+    }
+
+    @Override
+    public void loadResource(Context context, int resId, ImageLoader imageLoader) {
+        loadImg(context, imageLoader, getRequestManager(context).load(resId));
+    }
+
+    @Override
+    public void loadAssets(Context context, String assetName, ImageLoader imageLoader) {
+        loadImg(context, imageLoader, getRequestManager(context).load("file:///android_asset/" + assetName));
+    }
+
+    @Override
+    public void loadFile(Context context, File file, ImageLoader imageLoader) {
+        loadImg(context, imageLoader, getRequestManager(context).load(file));
     }
 
     @Override
@@ -123,16 +134,18 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         }
     }
 
-    private void loadNormal(Context context, ImageLoader imageLoader) {
-        DrawableRequestBuilder drawableRequestBuilder =
-                Glide.with(context).load(imageLoader.getUrl())
-                        .crossFade()
-                        .thumbnail(imageLoader.getThumbnailSize())
-                        .placeholder(imageLoader.getPlaceHolder());
-        loadImg(context, imageLoader, drawableRequestBuilder);
+    private RequestManager getRequestManager(Context context) {
+        return Glide.with(context);
+    }
+
+    private void loadNet(Context context, ImageLoader imageLoader) {
+        loadImg(context, imageLoader, getRequestManager(context).load(imageLoader.getUrl()));
     }
 
     private void loadImg(Context context, ImageLoader imageLoader, DrawableRequestBuilder drawableRequestBuilder) {
+        drawableRequestBuilder.crossFade()
+                .thumbnail(imageLoader.getThumbnailSize())
+                .placeholder(imageLoader.getPlaceHolder());
         if (imageLoader.isCircle()) {
             //圆形图片
             drawableRequestBuilder.bitmapTransform(

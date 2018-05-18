@@ -1,5 +1,6 @@
 package com.oklib;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -89,6 +90,7 @@ public class AppManager {
     /**
      * 退出应用程序
      */
+    @SuppressLint("MissingPermission")
     public void AppExit(Context context) {
         try {
             finishAllActivity();

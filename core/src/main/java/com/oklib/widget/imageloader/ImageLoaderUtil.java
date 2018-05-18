@@ -4,13 +4,15 @@ import android.content.Context;
 
 import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
 
+import java.io.File;
+
 /**
  * Created by Damon.Han on 2016/11/24 0024.
  *
  * @author Damon
  */
 
-public class ImageLoaderUtil {
+public class ImageLoaderUtil implements BaseImageLoaderStrategy {
 
     public static final int PIC_LARGE = 0;
     public static final int PIC_MEDIUM = 1;
@@ -45,12 +47,39 @@ public class ImageLoaderUtil {
         return mInstance;
     }
 
+    @Override
     public void loadImage(Context context, ImageLoader imageLoader) {
         mStrategy.loadImage(context, imageLoader);
     }
 
+    @Override
+    public void loadResource(Context context, int resId, ImageLoader imageLoader) {
+        mStrategy.loadResource(context, resId, imageLoader);
+    }
+
+    @Override
+    public void loadAssets(Context context, String assetName, ImageLoader imageLoader) {
+        mStrategy.loadAssets(context, assetName, imageLoader);
+    }
+
+    @Override
+    public void loadFile(Context context, File file, ImageLoader imageLoader) {
+        mStrategy.loadFile(context, file, imageLoader);
+    }
+
+    @Override
     public void loadImageWithProgress(String url, ImageLoader imageLoader, ProgressLoadListener listener) {
         mStrategy.loadImageWithProgress(url, imageLoader, listener);
+    }
+
+    @Override
+    public void clearImageDiskCache(Context context) {
+        mStrategy.clearImageDiskCache(context);
+    }
+
+    @Override
+    public void clearImageMemoryCache(Context context) {
+        mStrategy.clearImageMemoryCache(context);
     }
 
 

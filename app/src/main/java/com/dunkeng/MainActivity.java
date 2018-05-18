@@ -94,7 +94,7 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
             shareUtils.shareText(txt);
         } else if (id == R.id.nav_about) {
             ToastUtils.showToast(this, getString(R.string.app_name));
-//            startActivity(new Intent(this,TestActivity.class));
+            startActivity(new Intent(this,TestActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
