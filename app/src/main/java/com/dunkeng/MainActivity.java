@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.meizi.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
+import com.dunkeng.tools.FragmentTools;
 import com.dunkeng.wx.FragmentWx;
 import com.dunkeng.zhihu.FragmentZhihu;
 import com.oklib.AppManager;
@@ -85,6 +86,9 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
         } else if (id == R.id.meizi) {
             loadRootFragment(R.id.main_container, new FragmentMeizi());
 
+        } else if (id == R.id.tools) {
+            loadRootFragment(R.id.main_container, new FragmentTools());
+
         } else if (id == R.id.nav_weixin) {
             loadRootFragment(R.id.main_container, new FragmentWx());
 
@@ -94,7 +98,7 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
             shareUtils.shareText(txt);
         } else if (id == R.id.nav_about) {
             ToastUtils.showToast(this, getString(R.string.app_name));
-            startActivity(new Intent(this,TestActivity.class));
+            startActivity(new Intent(this, TestActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

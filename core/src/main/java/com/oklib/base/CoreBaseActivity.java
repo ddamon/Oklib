@@ -42,7 +42,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     private boolean swipeBackEnable = false;
 
     final BaseActivityDelegate baseActivityDelegate = new BaseActivityDelegate(this);
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

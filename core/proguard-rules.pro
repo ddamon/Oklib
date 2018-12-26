@@ -15,3 +15,40 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+#glide
+####################库################################
+-dontwarn com.bumptech.glide.**
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+#gson
+-dontwarn com.google.gson.**
+-keep class com.google.gson.** { *; }
+
+#rxjava
+-dontwarn io.reactivex.**
+-keep class io.reactivex.** { *; }
+
+#okhttp
+-dontwarn okio.**
+-keep class okio.** { *; }
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *; }
+
+#retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+#greendao
+-dontwarn org.greenrobot.greendao.**
+-keep class org.greenrobot.greendao.** { *; }
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+    public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
