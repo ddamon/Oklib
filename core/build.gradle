@@ -64,6 +64,9 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     provided 'org.greenrobot:greendao:3.2.0' //数据库，如果需要使用，编译依赖即可
 
+    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1'
+    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+
 }
 
 group = "com.oklib"
