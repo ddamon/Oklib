@@ -33,9 +33,7 @@ public class RxManager {
     public void on(String eventName, Consumer<Object> consumer) {
         // 注册
         Observable<?> mObservable = mRxBus.register(eventName);
-
         mObservableMap.put(eventName, mObservable);
-
         mCompositeSubscription
                 .add(mObservable.observeOn(AndroidSchedulers.mainThread())
                         .subscribe(consumer, new Consumer<Throwable>() {
@@ -44,7 +42,6 @@ public class RxManager {
                                 throwable.printStackTrace();
                             }
                         }));
-
     }
 
     /**

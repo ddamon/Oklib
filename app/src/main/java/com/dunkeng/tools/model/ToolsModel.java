@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 
 public class ToolsModel implements ToolsContract.Model {
     @Override
-    public Observable<List<ToolObj>> getData(int page) {
+    public Observable<List<ToolObj>> getData() {
         return null;
     }
 }

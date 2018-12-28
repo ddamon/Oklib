@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 
 import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
@@ -12,19 +13,19 @@ import com.dunkeng.tools.contract.ToolsContract;
 import com.dunkeng.tools.model.ToolsModel;
 import com.dunkeng.tools.presenter.ToolsPresenter;
 import com.oklib.base.CoreBaseFragment;
-import com.oklib.utils.view.ToastUtils;
-import com.oklib.widget.recyclerview.CoreRecyclerView;
+import com.oklib.utils.Logger.Logger;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 工具类
  */
 public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> implements ToolsContract.View {
-    @BindView(R.id.recycler)
-    CoreRecyclerView coreRecyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.button)
+    Button button;
 
     protected OnFragmentOpenDrawerListener mOpenDraweListener;
 
@@ -41,11 +42,11 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
         super.onDetach();
         mOpenDraweListener = null;
     }
+
     @Override
     public void initData() {
         mPresenter.getData();
     }
-
 
 
     @Override
@@ -66,7 +67,34 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
 
     @Override
     public void showMsg(String msg) {
-        ToastUtils.showToast(mContext, msg);
+        Logger.e(msg);
     }
 
+    @Override
+    public void testRxLifeCycle() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Logger.e("onDestroy");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Logger.e("onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.e("onPause");
+    }
+
+    @OnClick(R.id.button)
+    public void onViewClicked() {
+        mPresenter.testRxLifecycle();
+    }
 }

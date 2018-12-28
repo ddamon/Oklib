@@ -24,11 +24,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <com.oklib.widget.recyclerview.CoreRecyclerView
-        android:id="@+id/recycler"
+    <Button
+        android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 
 </LinearLayout>

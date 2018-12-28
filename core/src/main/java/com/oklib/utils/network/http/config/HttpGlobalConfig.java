@@ -470,7 +470,7 @@ public class HttpGlobalConfig {
     }
 
     public int getRetryDelayMillis() {
-        if (retryDelayMillis <= 0) {
+        if (retryDelayMillis < 0) {
             retryDelayMillis = ViseConfig.DEFAULT_RETRY_DELAY_MILLIS;
         }
         return retryDelayMillis;
