@@ -2,7 +2,6 @@ package com.dunkeng.tools.presenter;
 
 import com.dunkeng.tools.contract.ToolsContract;
 import com.oklib.base.CoreBasePresenter;
-import com.oklib.utils.RxLifecycleUtils;
 import com.oklib.utils.helper.RxUtil;
 
 import io.reactivex.Observable;

@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,24 +13,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.oklib.R;
-import com.oklib.base.lifecycle.FragmentLifecycleable;
 import com.oklib.base.swipeback.SwipeBackLayout;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.view.StatusBarUtil;
-import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * @author Damon
  */
 
 
-public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment implements IBaseFragment, FragmentLifecycleable {
+public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends Fragment implements IBaseFragment {
     public P mPresenter;
     public M mModel;
     protected Context mContext;
@@ -42,7 +36,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
     final BaseFragmentDelegate baseFragmentDelegate = new BaseFragmentDelegate(this);
-    private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private boolean swipeBackEnable = false;
 
     @Override
@@ -52,11 +45,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         super.onAttach(context);
     }
 
-    @NonNull
-    @Override
-    public final Subject<FragmentEvent> provideLifecycleSubject() {
-        return mLifecycleSubject;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -165,12 +153,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
 
     public void setStatusBarColor() {
         StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(), null);
-    }
-
-    protected void setToolBar(Toolbar toolbar, String title) {
-        toolbar.setTitle(title);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_36dp);
-        toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
     }
 
     @Override

@@ -1,152 +1,105 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'me.tatarka.retrolambda'
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
     }
-    lintOptions {
-        abortOnError false
-    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    buildToolsVersion '26.0.2'
 }
+
+
+
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    //support
+    api(rootProject.ext.dependencies["support-v4"]) {
+        exclude module: 'support-annotations'
+    }
+    api(rootProject.ext.dependencies["appcompat-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    compileOnly rootProject.ext.dependencies["design"]
+    api(rootProject.ext.dependencies["recyclerview-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    api rootProject.ext.dependencies["annotations"]
 
-    // Android support
-    api "com.android.support:support-v4:$rootProject.supportLibraryVersion"
-    api "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    api "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    api "com.android.support:design:$rootProject.supportLibraryVersion"
-    api "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    //view
+    api(rootProject.ext.dependencies["butterknife"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-compat'
+    }
 
-    // Retrofit
-    api "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    api "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    api "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    //rx
+    api rootProject.ext.dependencies["rxjava2"]
+    api(rootProject.ext.dependencies["rxandroid2"]) {
+        exclude module: 'rxjava'
+    }
+    api(rootProject.ext.dependencies["rxcache2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'dagger'
+        exclude module: 'api'
+    }
+    implementation(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
+        exclude module: 'gson'
+    }
+    api(rootProject.ext.dependencies["rxpermissions2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'support-annotations'
+    }
 
+    //network
+    api(rootProject.ext.dependencies["retrofit"]) {
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+    }
+    implementation(rootProject.ext.dependencies["retrofit-converter-gson"]) {
+        exclude module: 'gson'
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+        exclude module: 'retrofit'
+    }
+    implementation(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'okhttp'
+        exclude module: 'retrofit'
+        exclude module: 'okio'
+    }
+    api rootProject.ext.dependencies["okhttp3"]
+    compileOnly rootProject.ext.dependencies["glide"]
+    annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
+        exclude module: 'jsr305'
+    }
 
-    api "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
-    api "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    //tools
+    compileOnly rootProject.ext.dependencies["javax.annotation"]
+    api rootProject.ext.dependencies["gson"]
 
-    // RxJava
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    api 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    // Glide
-    api "com.github.bumptech.glide:glide:3.7.0"
     //photoview
-    api "com.github.chrisbanes:PhotoView:1.2.6"
-
-    //fragmentation
-    api 'me.yokeyword:fragmentation:1.3.3'
-    //permissions
-    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    api rootProject.ext.dependencies["photoview"]
 
     //轮播图
     api 'com.bigkoo:convenientbanner:2.0.5'
+    implementation 'org.jetbrains:annotations:15.0'
 
-    api 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    provided 'org.greenrobot:greendao:3.2.0' //数据库，如果需要使用，编译依赖即可
-
-    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1'
-    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
-
+    compileOnly 'org.greenrobot:greendao:3.2.0' //数据库，如果需要使用，编译依赖即可
 }
 
-group = "com.oklib"
-version = '1.1.14'
-def siteUrl = "https://github.com/ddamon/Oklib"
-def gitUrl = "https://github.com/ddamon/Oklib.git"
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name 'oklib'
-                url siteUrl
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                //添加开发者信息
-                developers {
-                    developer {
-                        id 'ddamon'
-                        name 'damon'
-                        email 'hcjhuanghe@qq.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-task generateSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
-
-task generateJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task generateJavadocsJar(type: Jar, dependsOn: generateJavadocs) {
-    classifier 'javadoc'
-    from generateJavadocs.destinationDir
-}
-generateJavadocs {
-    options {
-        options.addStringOption('Xdoclint:none', '-quiet')
-        encoding "UTF-8"
-        charSet 'UTF-8'
-    }
-}
-artifacts {
-    archives generateJavadocsJar
-    archives generateSourcesJar
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    pkg {
-        repo = 'maven'
-        name = 'oklib'
-        version {
-            name = '1.1.14-release'
-            desc = "oklib"
-            vcsTag = '1.1.14'
-        }
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true  //是否发布
-        configurations = ['archives']
-    }
-}
+apply from: '../bintray.gradle'

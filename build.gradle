@@ -1,32 +1,27 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: "config.gradle"
 buildscript {
     repositories {
-        jcenter()
-        mavenCentral()
         google()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        //Gradle Android Maven plugin
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        //Gradle Bintray Plugin
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
         maven { url "https://jitpack.io" }
-        google()
     }
 }
 
-ext {
-    // App dependencies
-    supportLibraryVersion = '26.0.2'
-    retrofitVersion = '2.3.0'
-    okhttpVersion = '3.8.0'
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

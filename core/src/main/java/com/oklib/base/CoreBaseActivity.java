@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +15,12 @@ import android.widget.RelativeLayout;
 import com.oklib.AppManager;
 import com.oklib.CoreApp;
 import com.oklib.R;
-import com.oklib.base.lifecycle.ActivityLifecycleable;
 import com.oklib.base.swipeback.SwipeBackLayout;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.view.ThemeUtil;
-import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
-import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Base Activity
@@ -33,7 +28,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * @author Damon
  */
 
-public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity implements IBaseActivity, ActivityLifecycleable {
+public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends AppCompatActivity implements IBaseActivity {
     protected String TAG;
 
     public P mPresenter;
@@ -47,18 +42,11 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     private boolean swipeBackEnable = false;
 
     final BaseActivityDelegate baseActivityDelegate = new BaseActivityDelegate(this);
-    private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
-    }
-
-    @NonNull
-    @Override
-    public final Subject<ActivityEvent> provideLifecycleSubject() {
-        return mLifecycleSubject;
     }
 
     private void init(Bundle savedInstanceState) {
@@ -135,11 +123,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     }
 
-    @Override
-    public void onBackPressedSupport() {
-        supportFinishAfterTransition();
-    }
-
 
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
@@ -150,7 +133,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressedSupport();
+                supportFinishAfterTransition();
             }
         });
     }

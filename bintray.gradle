@@ -1,0 +1,84 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = "com.oklib"
+version = '1.1.14'
+def siteUrl = "https://github.com/ddamon/Oklib"
+def gitUrl = "https://github.com/ddamon/Oklib.git"
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'oklib'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                //添加开发者信息
+                developers {
+                    developer {
+                        id 'ddamon'
+                        name 'damon'
+                        email 'hcjhuanghe@qq.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task generateJavadocsJar(type: Jar, dependsOn: generateJavadocs) {
+    classifier 'javadoc'
+    from generateJavadocs.destinationDir
+}
+generateJavadocs {
+    options {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        encoding "UTF-8"
+        charSet 'UTF-8'
+    }
+}
+artifacts {
+    archives generateJavadocsJar
+    archives generateSourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    pkg {
+        repo = 'maven'
+        name = 'oklib'
+        version {
+            name = '1.1.14-release'
+            desc = "oklib"
+            vcsTag = '1.1.14'
+        }
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true  //是否发布
+        configurations = ['archives']
+    }
+}

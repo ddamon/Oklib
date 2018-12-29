@@ -23,7 +23,6 @@ import com.oklib.AppManager;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.IntentUtils;
 import com.oklib.utils.Logger.Logger;
-import com.oklib.utils.RxLifecycleUtils;
 import com.oklib.utils.assist.ShareUtils;
 import com.oklib.utils.helper.RxUtil;
 
