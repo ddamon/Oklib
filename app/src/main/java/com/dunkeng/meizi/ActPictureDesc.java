@@ -10,17 +10,21 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.DunkengFileUtil;
 import com.dunkeng.meizi.model.PictureBean;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+import com.github.chrisbanes.photoview.PhotoView;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
+
+import static com.github.chrisbanes.photoview.PhotoViewAttacher.*;
 
 /**
  *
@@ -62,15 +66,10 @@ public class ActPictureDesc extends AppCompatActivity {
                 return true;
             }
         });
-        imgPicture.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+        imgPicture.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
-            public void onPhotoTap(View view, float x, float y) {
-                finish();
-            }
+            public void onPhotoTap(ImageView view, float x, float y) {
 
-            @Override
-            public void onOutsidePhotoTap() {
-                finish();
             }
         });
     }

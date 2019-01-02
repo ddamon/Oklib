@@ -40,7 +40,6 @@ public class ToolsPresenter extends CoreBasePresenter<ToolsContract.Model, Tools
 
             }
         }).compose(RxUtil.rxSchedulerHelper())
-                .compose(RxLifecycleUtils.bindToLifecycle(mView))
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {

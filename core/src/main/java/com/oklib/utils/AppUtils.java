@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -64,7 +65,7 @@ public class AppUtils {
     public static String getIMEI(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         final String[] imei = {""};
-        RxPermissions rxPermissions = new RxPermissions((Activity) context);
+        RxPermissions rxPermissions = new RxPermissions((FragmentActivity) context);
         rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
                 .subscribe(permission -> {
                     if (permission) {

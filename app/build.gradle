@@ -11,6 +11,14 @@ android {
     }
 
     defaultConfig {
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'x86', 'armeabi-v7a', 'x86_64'
+                universalApk true
+            }
+        }
         applicationId "com.dunkeng"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]

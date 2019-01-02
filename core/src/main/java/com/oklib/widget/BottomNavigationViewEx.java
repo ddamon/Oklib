@@ -1032,7 +1032,7 @@ public class BottomNavigationViewEx extends BottomNavigationView {
 
     @SuppressLint("RestrictedApi")
     public void enableShiftingMode(int position, boolean enable) {
-        getBottomNavigationItemView(position).setShiftingMode(enable);
+        getBottomNavigationItemView(position).setShifting(enable);
     }
 
     @SuppressLint("RestrictedApi")
