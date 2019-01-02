@@ -2,7 +2,7 @@ package com.oklib.widget.imageloader;
 
 import android.content.Context;
 
-import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
+import com.bumptech.glide.request.RequestListener;
 
 import java.io.File;
 
@@ -68,8 +68,8 @@ public class ImageLoaderUtil implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadImageWithProgress(String url, ImageLoader imageLoader, ProgressLoadListener listener) {
-        mStrategy.loadImageWithProgress(url, imageLoader, listener);
+    public void loadImageWithProgress(Context context,ImageLoader imageLoader, RequestListener listener) {
+        mStrategy.loadImageWithProgress(context, imageLoader, listener);
     }
 
     @Override

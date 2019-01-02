@@ -2,7 +2,7 @@ package com.oklib.widget.imageloader;
 
 import android.content.Context;
 
-import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
+import com.bumptech.glide.request.RequestListener;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ public interface BaseImageLoaderStrategy {
 
     void loadFile(Context context, File file, ImageLoader imageLoader);
 
-    void loadImageWithProgress(String url, ImageLoader imageLoader, ProgressLoadListener listener);
+    void loadImageWithProgress(Context context, ImageLoader imageLoader, RequestListener listener);
 
     //清除硬盘缓存
     void clearImageDiskCache(final Context context);

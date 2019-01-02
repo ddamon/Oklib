@@ -5,7 +5,6 @@ import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.Logger.inner.LogcatTree;
 import com.oklib.utils.network.http.ViseHttp;
 import com.oklib.utils.network.http.interceptor.HttpLogInterceptor;
-import com.oklib.utils.network.loader.LoaderManager;
 
 
 /**
@@ -19,7 +18,6 @@ public class App extends CoreApp {
         super.onCreate();
         initLog();
         initNet();
-        LoaderManager.getLoader().init(this);
     }
 
     private void initLog() {

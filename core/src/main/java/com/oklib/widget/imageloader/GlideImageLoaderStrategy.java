@@ -1,27 +1,22 @@
 package com.oklib.widget.imageloader;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 
-import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.data.DataFetcher;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.stream.StreamModelLoader;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.oklib.utils.Logger.Logger;
-import com.oklib.widget.imageloader.glide.CircleBorderTransformation;
-import com.oklib.widget.imageloader.glide.RoundedCornersTransformation;
-import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
-import com.oklib.widget.imageloader.glide.listener.ProgressModelLoader;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author Damon
@@ -46,55 +41,34 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadResource(Context context, int resId, ImageLoader imageLoader) {
-        loadImg(context, imageLoader, getRequestManager(context).load(resId));
+        loadImg(context, imageLoader, getRequestManager(context).load(resId), false);
     }
 
     @Override
     public void loadAssets(Context context, String assetName, ImageLoader imageLoader) {
-        loadImg(context, imageLoader, getRequestManager(context).load("file:///android_asset/" + assetName));
+        loadImg(context, imageLoader, getRequestManager(context).load("file:///android_asset/" + assetName), false);
     }
 
     @Override
     public void loadFile(Context context, File file, ImageLoader imageLoader) {
-        loadImg(context, imageLoader, getRequestManager(context).load(file));
+        loadImg(context, imageLoader, getRequestManager(context).load(file), false);
     }
 
     @Override
-    public void loadImageWithProgress(String url, ImageLoader imageLoader, final ProgressLoadListener listener) {
-        Glide.with(imageLoader.getImgView().getContext()).using(new ProgressModelLoader(new ProgressLoadListener() {
-            @Override
-            public void update(final long bytesRead, final long contentLength) {
-                imageLoader.getImgView().post(new Runnable() {
+    public void loadImageWithProgress(Context context, ImageLoader imageLoader, final RequestListener listener) {
+        Glide.with(imageLoader.getImgView().getContext()).load(imageLoader.getUrl())
+                .listener(new RequestListener<Drawable>() {
                     @Override
-                    public void run() {
-                        listener.update(bytesRead, contentLength);
-                    }
-                });
-            }
-
-            @Override
-            public void onException(Exception e) {
-                Logger.e("onException");
-            }
-
-            @Override
-            public void onResourceReady() {
-                Logger.e("onResourceReady");
-            }
-        })).load(url).skipMemoryCache(true).dontAnimate().diskCacheStrategy(DiskCacheStrategy.SOURCE).
-                listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        listener.onException(e);
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        listener.onResourceReady();
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         return false;
                     }
-                }).into(imageLoader.getImgView());
+                })
+                .into(imageLoader.getImgView());
     }
 
 
@@ -139,27 +113,29 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     private void loadNet(Context context, ImageLoader imageLoader) {
-        loadImg(context, imageLoader, getRequestManager(context).load(imageLoader.getUrl()));
+        loadImg(context, imageLoader, getRequestManager(context).load(imageLoader.getUrl()), false);
     }
 
-    private void loadImg(Context context, ImageLoader imageLoader, DrawableRequestBuilder drawableRequestBuilder) {
-        drawableRequestBuilder.crossFade()
-                .thumbnail(imageLoader.getThumbnailSize())
-                .placeholder(imageLoader.getPlaceHolder());
-        if (imageLoader.isCircle()) {
-            //圆形图片
-            drawableRequestBuilder.bitmapTransform(
-                    new CircleBorderTransformation(context, imageLoader.getBorder())).into(imageLoader.getImgView()
-            );
-            //FIXME默认是四个方向的圆角
-        } else if (imageLoader.getRoundRadius() > 0) {
-            drawableRequestBuilder.bitmapTransform(
-                    new RoundedCornersTransformation(context, imageLoader.getRoundRadius(), 0, RoundedCornersTransformation.CornerType.ALL)).into(imageLoader.getImgView()
-            );
-        } else {
-            drawableRequestBuilder.into(imageLoader.getImgView());
-
+    private RequestBuilder loadImg(Context context, ImageLoader imageLoader, RequestBuilder drawableRequestBuilder, boolean isCache) {
+        RequestOptions options = new RequestOptions();
+        if (imageLoader.getPlaceHolder() != 0) {
+            options.placeholder(imageLoader.getPlaceHolder());
         }
+        if (imageLoader.isCircle()) {
+            options.centerCrop();
+            //圆形图片
+            drawableRequestBuilder.apply(options).into(imageLoader.getImgView());
+        }
+        if (imageLoader.getRoundRadius() > 0) {
+            options.circleCrop();
+            drawableRequestBuilder.apply(options).into(imageLoader.getImgView());
+        }
+        if (isCache) {
+            options.diskCacheStrategy(DiskCacheStrategy.ALL);
+        }
+        drawableRequestBuilder.transition(DrawableTransitionOptions.withCrossFade());
+        drawableRequestBuilder.apply(options).into(imageLoader.getImgView());
+        return drawableRequestBuilder;
     }
 
     /**
@@ -169,35 +145,6 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
      * @param imageLoader
      */
     private void loadCache(Context context, ImageLoader imageLoader) {
-        DrawableRequestBuilder drawableRequestBuilder = Glide.with(context).using(new StreamModelLoader<String>() {
-            @Override
-            public DataFetcher<InputStream> getResourceFetcher(final String model, int i, int i1) {
-                return new DataFetcher<InputStream>() {
-                    @Override
-                    public InputStream loadData(Priority priority) throws Exception {
-                        throw new IOException();
-                    }
-
-                    @Override
-                    public void cleanup() {
-
-                    }
-
-                    @Override
-                    public String getId() {
-                        return model;
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                };
-            }
-        }).load(imageLoader.getUrl())
-                .crossFade()
-                .placeholder(imageLoader.getPlaceHolder())
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
-        loadImg(context, imageLoader, drawableRequestBuilder);
+        loadImg(context, imageLoader, getRequestManager(context).load(imageLoader.getUrl()), true);
     }
 }

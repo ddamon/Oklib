@@ -3,6 +3,7 @@ package com.dunkeng;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,14 +25,8 @@ import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.IntentUtils;
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.assist.ShareUtils;
-import com.oklib.utils.helper.RxUtil;
-
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends CoreBaseActivity implements NavigationView.OnNavigationItemSelectedListener, OnFragmentOpenDrawerListener {
 
@@ -72,11 +67,9 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
     }
 
     @Override
-    public void onBackPressedSupport() {
+    public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressedSupport();
         }
     }
 
@@ -105,7 +98,7 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
         } else if (id == R.id.nav_about) {
 //            ToastUtils.showToast(this, getString(R.string.app_name));
 //            startActivity(new Intent(this, TestActivity.class));
-            testRxLifecycle();
+//            testRxLifecycle();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,33 +106,37 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
         return true;
     }
 
-    public void testRxLifecycle() {
-        Observable.interval(2, TimeUnit.SECONDS)
-                .compose(RxUtil.rxSchedulerHelper())
-                .compose(RxLifecycleUtils.bindToLifecycle(this))
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        if (d.isDisposed()) {
-                            showMessage("disposed");
-                        }
-                    }
+//    public void testRxLifecycle() {
+//        Observable.interval(2, TimeUnit.SECONDS)
+//                .compose(RxUtil.rxSchedulerHelper())
+//                .compose(RxLifecycleUtils.bindToLifecycle(this))
+//                .subscribe(new Observer<Long>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        if (d.isDisposed()) {
+//                            showMessage("disposed");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onNext(Long value) {
+//                        showMessage(value + "");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        showMessage(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        showMessage("onComplete");
+//                    }
+//                });
+//    }
 
-                    @Override
-                    public void onNext(Long value) {
-                        showMessage(value + "");
-                    }
+    private void loadRootFragment(int resId, Fragment fragment) {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        showMessage(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        showMessage("onComplete");
-                    }
-                });
     }
 
     private void showMessage(String msg) {

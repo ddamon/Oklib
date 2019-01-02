@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +14,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.dunkeng.App;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
@@ -21,12 +26,10 @@ import com.dunkeng.details.model.DetailBean;
 import com.dunkeng.details.model.DetailModel;
 import com.dunkeng.details.presenter.DetailPresenter;
 import com.oklib.base.CoreBaseActivity;
-import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.view.SnackbarUtil;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
-import com.oklib.widget.imageloader.glide.listener.ProgressLoadListener;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -102,20 +105,15 @@ public class ActWebDetail extends CoreBaseActivity<DetailPresenter, DetailModel>
         if (info == null) {
             return;
         }
-        ImageLoaderUtil.getInstance().loadImageWithProgress(info.getPicUrl(), new ImageLoader.Builder().imgView(detailBarImage).url(info.getPicUrl()).build(), new ProgressLoadListener() {
+        ImageLoaderUtil.getInstance().loadImageWithProgress(this, new ImageLoader.Builder().imgView(detailBarImage).url(info.getPicUrl()).build(), new RequestListener() {
             @Override
-            public void update(long bytesRead, long contentLength) {
-                Logger.e(bytesRead + "/" + contentLength);
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                return false;
             }
 
             @Override
-            public void onException(Exception e) {
-
-            }
-
-            @Override
-            public void onResourceReady() {
-
+            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                return false;
             }
         });
         collapsingToolbar.setTitle(info.getTitle());
