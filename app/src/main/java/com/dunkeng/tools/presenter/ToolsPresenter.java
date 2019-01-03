@@ -1,5 +1,7 @@
 package com.dunkeng.tools.presenter;
 
+import android.arch.lifecycle.LifecycleOwner;
+
 import com.dunkeng.tools.contract.ToolsContract;
 import com.oklib.base.CoreBasePresenter;
 import com.oklib.utils.helper.RxUtil;
@@ -39,7 +41,8 @@ public class ToolsPresenter extends CoreBasePresenter<ToolsContract.Model, Tools
                 }
 
             }
-        }).compose(RxUtil.rxSchedulerHelper())
+        }).compose(RxUtil.rxSchedulerHelper()).as(bindLifecycle())
+
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -63,5 +66,10 @@ public class ToolsPresenter extends CoreBasePresenter<ToolsContract.Model, Tools
                         mView.showMsg("onComplete");
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy(LifecycleOwner owner) {
+
     }
 }

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,25 +18,26 @@ import com.dunkeng.common.DunkengFileUtil;
 import com.dunkeng.meizi.model.PictureBean;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.github.chrisbanes.photoview.PhotoViewAttacher;
+import com.oklib.base.CoreBaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-import static com.github.chrisbanes.photoview.PhotoViewAttacher.*;
 
 /**
  *
  */
-public class ActPictureDesc extends AppCompatActivity {
+public class ActPictureDesc extends CoreBaseActivity {
     @BindView(R.id.image)
     PhotoView imgPicture;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_pic);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.act_pic;
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
         //新页面接收数据
         Bundle bundle = this.getIntent().getExtras();
         //接收name值
@@ -69,9 +69,14 @@ public class ActPictureDesc extends AppCompatActivity {
         imgPicture.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {
-
+                onBackPressedSupport();
             }
         });
+    }
+
+    @Override
+    public void initUI(Bundle savedInstanceState) {
+
     }
 
     public static void start(Context context, View view, PictureBean pictureBean) {

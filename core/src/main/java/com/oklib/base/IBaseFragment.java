@@ -5,7 +5,7 @@ package com.oklib.base;
  *
  * @author Damon
  */
-public interface IBaseFragment {
+public interface IBaseFragment extends IView {
     void showToast(String string);
     void showLog(String string);
 }

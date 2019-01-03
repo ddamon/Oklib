@@ -1,11 +1,13 @@
 package com.oklib.base;
 
 import android.app.Activity;
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +16,23 @@ import android.widget.RelativeLayout;
 
 import com.oklib.R;
 import com.oklib.base.swipeback.SwipeBackLayout;
+import com.oklib.utils.RxLifecycleUtils;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.view.StatusBarUtil;
+import com.uber.autodispose.AutoDisposeConverter;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * @author Damon
  */
 
 
-public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends Fragment implements IBaseFragment {
+public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportFragment implements IBaseFragment {
     public P mPresenter;
     public M mModel;
     protected Context mContext;
@@ -37,6 +44,18 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     private ImageView ivShadow;
     final BaseFragmentDelegate baseFragmentDelegate = new BaseFragmentDelegate(this);
     private boolean swipeBackEnable = false;
+
+
+    protected <T> AutoDisposeConverter<T> bindLifecycle() {
+        return RxLifecycleUtils.bindLifecycle(this);
+    }
+
+    @CallSuper
+    @MainThread
+    protected void initLifecycleObserver(@NotNull Lifecycle lifecycle) {
+        mPresenter.setLifecycleOwner(this);
+        lifecycle.addObserver(mPresenter);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -106,6 +125,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {
             mPresenter.attachVM(this, mModel);
         }
+        initLifecycleObserver(getLifecycle());
         this.initUI(mainView, savedInstanceState);
         initData();
     }

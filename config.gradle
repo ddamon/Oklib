@@ -5,8 +5,8 @@ ext {
             buildToolsVersion       : "28.0.3",
             minSdkVersion           : 14,
             targetSdkVersion        : 28,
-            versionCode             : 180,
-            versionName             : "2.5.0"
+            versionCode             : 200,
+            versionName             : "2.0.0"
     ]
 
     version = [
@@ -18,7 +18,8 @@ ext {
             rxlifecycleSdkVersion   : "1.0",
             rxlifecycle2SdkVersion  : "2.2.2",
             espressoSdkVersion      : "3.0.1",
-            canarySdkVersion        : "1.5.4"
+            canarySdkVersion        : "1.5.4",
+            autoDispose             : "0.8.0"
     ]
 
     dependencies = [
@@ -73,6 +74,9 @@ ext {
             "rxcache2"                 : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
             "rxpermissions2"           : "com.github.tbruyelle:rxpermissions:0.10.2",
             "rxerrorhandler2"          : "me.jessyan:rxerrorhandler:2.1.1",
+
+            "auto-dispose"               : "com.uber.autodispose:autodispose-android:${version["autoDispose"]}",
+            "auto-dispose-archcomponents": "com.uber.autodispose:autodispose-android-archcomponents:${version["autoDispose"]}",
 
             //tools
             "dagger2"                  : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",

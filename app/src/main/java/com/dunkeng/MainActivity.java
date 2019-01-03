@@ -3,7 +3,6 @@ package com.dunkeng;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -67,11 +66,14 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressedSupport() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressedSupport();
         }
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -135,9 +137,6 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
 //                });
 //    }
 
-    private void loadRootFragment(int resId, Fragment fragment) {
-
-    }
 
     private void showMessage(String msg) {
         Logger.e(msg);

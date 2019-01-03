@@ -1,11 +1,13 @@
 package com.oklib.base;
 
 import android.app.Activity;
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.CallSuper;
+import android.support.annotation.MainThread;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +18,16 @@ import com.oklib.AppManager;
 import com.oklib.CoreApp;
 import com.oklib.R;
 import com.oklib.base.swipeback.SwipeBackLayout;
+import com.oklib.utils.RxLifecycleUtils;
 import com.oklib.utils.TUtil;
 import com.oklib.utils.view.ThemeUtil;
+import com.uber.autodispose.AutoDisposeConverter;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Base Activity
@@ -28,7 +35,7 @@ import butterknife.Unbinder;
  * @author Damon
  */
 
-public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends AppCompatActivity implements IBaseActivity {
+public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends CoreBaseModel> extends SupportActivity implements IBaseActivity {
     protected String TAG;
 
     public P mPresenter;
@@ -42,7 +49,15 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     private boolean swipeBackEnable = false;
 
     final BaseActivityDelegate baseActivityDelegate = new BaseActivityDelegate(this);
-
+    @CallSuper
+    @MainThread
+    protected void initLifecycleObserver(@NotNull Lifecycle lifecycle) {
+        mPresenter.setLifecycleOwner(this);
+        lifecycle.addObserver(mPresenter);
+    }
+    protected <T> AutoDisposeConverter<T> bindLifecycle() {
+        return RxLifecycleUtils.bindLifecycle(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +68,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         TAG = getClass().getSimpleName();
         setTheme(ThemeUtil.themeArr[CoreApp.getThemeIndex(this)][CoreApp.getNightModel(this) ? 1 : 0]);
         this.setContentView(this.getLayoutId());
+        initLifecycleObserver(getLifecycle());
         binder = ButterKnife.bind(this);
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
@@ -123,6 +139,11 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     }
 
+    @Override
+    public void onBackPressedSupport() {
+        supportFinishAfterTransition();
+    }
+
 
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
@@ -133,7 +154,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                supportFinishAfterTransition();
+                onBackPressedSupport();
             }
         });
     }

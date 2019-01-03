@@ -119,7 +119,7 @@ public class ActWebDetail extends CoreBaseActivity<DetailPresenter, DetailModel>
         collapsingToolbar.setTitle(info.getTitle());
         detailBarCopyright.setText(info.getDescription());
         wvDetailContent.loadUrl(info.getUrl());
-
+        setToolBar(toolbar,info.getTitle());
     }
 
     @Override

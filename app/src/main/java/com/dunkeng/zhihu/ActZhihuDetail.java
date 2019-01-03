@@ -125,6 +125,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
         detailBarCopyright.setText(info.getImage_source());
         String htmlData = HtmlUtil.createHtmlData(info.getBody(), info.getCss(), info.getJs());
         wvDetailContent.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
+        setToolBar(toolbar,info.getTitle());
     }
 
     @Override
