@@ -1,14 +1,13 @@
 package com.dunkeng.tools.presenter;
 
-import android.arch.lifecycle.LifecycleOwner;
-
 import com.dunkeng.tools.contract.ToolsContract;
 import com.oklib.base.CoreBasePresenter;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.helper.RxUtil;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -30,46 +29,32 @@ public class ToolsPresenter extends CoreBasePresenter<ToolsContract.Model, Tools
     }
 
     public void testRxLifecycle() {
-        final int[] i = {1};
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> e) throws Exception {
-                for (int j = 0; j < 1000; j++) {
-                    Thread.sleep(2000);
-                    i[0]++;
-                    e.onNext(i[0] + "");
-                }
-
-            }
-        }).compose(RxUtil.rxSchedulerHelper()).as(bindLifecycle())
-
-                .subscribe(new Observer<String>() {
+        Observable.interval(2, TimeUnit.SECONDS)
+                .compose(RxUtil.rxSchedulerHelper())
+                .as(bindLifecycle())
+                .subscribe(new Observer<Long>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (d.isDisposed()) {
-                            mView.showMsg("disposed");
+                            Logger.e("disposed");
                         }
                     }
 
                     @Override
-                    public void onNext(String value) {
-                        mView.showMsg(value);
+                    public void onNext(Long value) {
+                        Logger.e(value + "");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showMsg(e.getMessage());
+                        Logger.e(e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        mView.showMsg("onComplete");
+                        Logger.e("onComplete");
                     }
                 });
     }
 
-    @Override
-    public void onDestroy(LifecycleOwner owner) {
-
-    }
 }

@@ -108,34 +108,6 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
         return true;
     }
 
-//    public void testRxLifecycle() {
-//        Observable.interval(2, TimeUnit.SECONDS)
-//                .compose(RxUtil.rxSchedulerHelper())
-//                .compose(RxLifecycleUtils.bindToLifecycle(this))
-//                .subscribe(new Observer<Long>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        if (d.isDisposed()) {
-//                            showMessage("disposed");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onNext(Long value) {
-//                        showMessage(value + "");
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        showMessage(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        showMessage("onComplete");
-//                    }
-//                });
-//    }
 
 
     private void showMessage(String msg) {

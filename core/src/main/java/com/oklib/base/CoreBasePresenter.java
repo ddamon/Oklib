@@ -36,8 +36,6 @@ public abstract class CoreBasePresenter<M, V> implements IPresenter {
     public abstract void onStart();
 
 
-
-
     private LifecycleOwner lifecycleOwner;
 
     protected <T> AutoDisposeConverter<T> bindLifecycle() {
@@ -46,6 +44,7 @@ public abstract class CoreBasePresenter<M, V> implements IPresenter {
         }
         return RxLifecycleUtils.bindLifecycle(lifecycleOwner);
     }
+
     @Override
     @CallSuper
     @MainThread
@@ -93,6 +92,10 @@ public abstract class CoreBasePresenter<M, V> implements IPresenter {
 
     }
 
-
+    @Override
+    @CallSuper
+    @MainThread
+    public void onDestroy(@NotNull LifecycleOwner owner) {
+    }
 
 }

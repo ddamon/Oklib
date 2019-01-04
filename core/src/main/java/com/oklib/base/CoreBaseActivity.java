@@ -52,8 +52,10 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     @CallSuper
     @MainThread
     protected void initLifecycleObserver(@NotNull Lifecycle lifecycle) {
-        mPresenter.setLifecycleOwner(this);
-        lifecycle.addObserver(mPresenter);
+        if (mPresenter!=null) {
+            mPresenter.setLifecycleOwner(this);
+            lifecycle.addObserver(mPresenter);
+        }
     }
     protected <T> AutoDisposeConverter<T> bindLifecycle() {
         return RxLifecycleUtils.bindLifecycle(this);
@@ -68,7 +70,6 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         TAG = getClass().getSimpleName();
         setTheme(ThemeUtil.themeArr[CoreApp.getThemeIndex(this)][CoreApp.getNightModel(this) ? 1 : 0]);
         this.setContentView(this.getLayoutId());
-        initLifecycleObserver(getLifecycle());
         binder = ButterKnife.bind(this);
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
@@ -76,6 +77,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         if (this instanceof CoreBaseView) {
             mPresenter.attachVM(this, mModel);
         }
+        initLifecycleObserver(getLifecycle());
         this.initUI(savedInstanceState);
         initData();
         AppManager.getAppManager().addActivity(this);

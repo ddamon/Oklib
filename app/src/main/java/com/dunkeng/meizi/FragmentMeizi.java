@@ -18,7 +18,6 @@ import com.dunkeng.meizi.model.MeiziResult;
 import com.dunkeng.meizi.model.PictureBean;
 import com.dunkeng.meizi.presenter.MeiziPresenter;
 import com.oklib.base.CoreBaseFragment;
-import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
@@ -96,7 +95,6 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
         coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Logger.e("点击图片");
                 PictureBean pictureBean = new PictureBean();
                 pictureBean.url = ((Meizi) adapter.getData().get(position)).getUrl();
                 pictureBean.desc = ((Meizi) adapter.getData().get(position)).getDesc();
