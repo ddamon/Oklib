@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dm.learn.rxjava.LearnActivityRxjavaActivity;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.meizi.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
@@ -90,7 +91,9 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
         } else if (id == R.id.tools) {
             loadRootFragment(R.id.main_container, new FragmentTools());
 
-        } else if (id == R.id.nav_weixin) {
+        } else if (id == R.id.learn) {
+            startActivity(LearnActivityRxjavaActivity.class);
+        }  else if (id == R.id.nav_weixin) {
             loadRootFragment(R.id.main_container, new FragmentWx());
 
         } else if (id == R.id.nav_share) {

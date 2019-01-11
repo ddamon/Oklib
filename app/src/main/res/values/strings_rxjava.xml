@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="title_activity_test" translatable="false">TestActivity</string>
+    <string name="title_activity_learn_rxjava" translatable="false">LearnActivityRxjavaActivity</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+
+    <string name="rx_ch2" translatable="false">第二章-基础知识</string>
+    <string name="rx_ch3" translatable="false">第三章-创建操作符</string>
+    <string name="rx_ch4" translatable="false">第四章-线程操作</string>
+</resources>

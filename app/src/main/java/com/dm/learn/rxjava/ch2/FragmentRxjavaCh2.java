@@ -1,4 +1,4 @@
-package com.dunkeng.tools;
+package com.dm.learn.rxjava.ch2;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.dunkeng.R;
+import com.dm.learn.rxjava.ch2.contract.RxjavaContract;
+import com.dm.learn.rxjava.ch2.model.RxjavaModel;
+import com.dm.learn.rxjava.ch2.presenter.RxjavaPresenter;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
-import com.dunkeng.tools.contract.ToolsContract;
-import com.dunkeng.tools.model.ToolsModel;
-import com.dunkeng.tools.presenter.ToolsPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.Logger.Logger;
 
@@ -19,9 +19,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 工具类
+ * rxjava学习使用
+ * 第二章
  */
-public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> implements ToolsContract.View {
+public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter, RxjavaModel> implements RxjavaContract.View {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.button1)
@@ -56,7 +57,7 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
 
     @Override
     public void initUI(View view, @Nullable Bundle savedInstanceState) {
-        toolbar.setTitle("工具");
+        toolbar.setTitle(getString(R.string.rx_ch2));
         toolbar.setNavigationIcon(R.mipmap.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(v -> {
             if (mOpenDraweListener != null) {
@@ -70,10 +71,6 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
         Logger.e(msg);
     }
 
-    @Override
-    public void testRxLifeCycle() {
-
-    }
 
     @Override
     public void onDestroy() {

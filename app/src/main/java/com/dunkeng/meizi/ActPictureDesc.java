@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +35,14 @@ public class ActPictureDesc extends CoreBaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.act_pic;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -76,7 +86,6 @@ public class ActPictureDesc extends CoreBaseActivity {
 
     @Override
     public void initUI(Bundle savedInstanceState) {
-
     }
 
     public static void start(Context context, View view, PictureBean pictureBean) {

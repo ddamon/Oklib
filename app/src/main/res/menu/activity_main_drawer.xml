@@ -23,6 +23,10 @@
             android:id="@+id/tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_name_tools" />
+        <item
+            android:id="@+id/learn"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_name_learn" />
     </group>
 
     <item android:title="其它">
