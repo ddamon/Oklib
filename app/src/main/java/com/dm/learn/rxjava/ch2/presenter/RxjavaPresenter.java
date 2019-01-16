@@ -7,9 +7,18 @@ import com.oklib.utils.helper.RxUtil;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Maybe;
+import io.reactivex.MaybeEmitter;
+import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.Notification;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -22,6 +31,9 @@ import io.reactivex.functions.Consumer;
  */
 
 public class RxjavaPresenter extends CoreBasePresenter<RxjavaContract.Model, RxjavaContract.View> {
+
+    private String testResult;
+
     @Override
     public void onStart() {
 
@@ -95,6 +107,59 @@ public class RxjavaPresenter extends CoreBasePresenter<RxjavaContract.Model, Rxj
 
     }
 
+    public void testSingle() {
+        Single.create(new SingleOnSubscribe<String>() {
+            @Override
+            public void subscribe(SingleEmitter<String> emitter) throws Exception {
+                emitter.onSuccess("Hello!");
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Logger.e(s);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Logger.e(throwable.getMessage());
+            }
+        });
+    }
+
+    public void testCompleteable() {
+        Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter emitter) throws Exception {
+                testResult = "";
+                TimeUnit.SECONDS.sleep(1);
+                emitter.onComplete();
+            }
+        }).andThen(Observable.range(1, 10)).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                testResult = testResult + "\n" + integer;
+                putResult(testResult);
+            }
+        });
+    }
+
+    public void testMaybe() {
+        Maybe.create(new MaybeOnSubscribe<String>() {
+            @Override
+            public void subscribe(MaybeEmitter<String> emitter) throws Exception {
+                testResult = "";
+                emitter.onSuccess("Hello");
+                emitter.onComplete();
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                testResult += s;
+                putResult(testResult);
+            }
+        });
+    }
+
     public void testRxLifecycle() {
         Observable.interval(2, TimeUnit.SECONDS)
                 .compose(RxUtil.rxSchedulerHelper())
@@ -122,6 +187,15 @@ public class RxjavaPresenter extends CoreBasePresenter<RxjavaContract.Model, Rxj
                         Logger.e("onComplete");
                     }
                 });
+    }
+
+    /**
+     * 在文本框显示结果
+     *
+     * @param msg
+     */
+    private void putResult(String msg) {
+        mView.showMsg(msg);
     }
 
 }

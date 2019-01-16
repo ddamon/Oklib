@@ -15,6 +15,9 @@ import com.oklib.base.CoreBaseActivity;
 
 import butterknife.BindView;
 
+/**
+ * 顾名思义
+ */
 public class LearnActivityRxjavaActivity extends CoreBaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +44,7 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
     public void initUI(Bundle savedInstanceState) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        loadRootFragment(R.id.main_container, new FragmentRxjavaCh2());
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.dunkeng.R;
 import com.dm.learn.rxjava.ch2.contract.RxjavaContract;
@@ -26,7 +27,17 @@ public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter, RxjavaM
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.button1)
-    Button button;
+    Button button1;
+    @BindView(R.id.button2)
+    Button button2;
+    @BindView(R.id.button3)
+    Button button3;
+    @BindView(R.id.button4)
+    Button button4;
+    @BindView(R.id.button5)
+    Button button5;
+    @BindView(R.id.txt_result)
+    TextView txtResult;
 
     protected OnFragmentOpenDrawerListener mOpenDraweListener;
 
@@ -68,7 +79,7 @@ public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter, RxjavaM
 
     @Override
     public void showMsg(String msg) {
-        Logger.e(msg);
+        txtResult.setText(msg);
     }
 
 
@@ -90,8 +101,24 @@ public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter, RxjavaM
         Logger.e("onPause");
     }
 
-    @OnClick(R.id.button1)
-    public void onViewClicked() {
-        mPresenter.testRxLifecycle();
+    @OnClick({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5})
+    public void onViewClicked(View v) {
+        switch (v.getId()) {
+            case R.id.button1:
+                mPresenter.testDo();
+                break;
+            case R.id.button2:
+                mPresenter.testSingle();
+                break;
+            case R.id.button3:
+                mPresenter.testCompleteable();
+                break;
+            case R.id.button4:
+                mPresenter.testMaybe();
+                break;
+            case R.id.button5:
+                break;
+        }
+
     }
 }

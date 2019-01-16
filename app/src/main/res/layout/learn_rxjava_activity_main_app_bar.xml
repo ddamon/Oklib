@@ -20,14 +20,17 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.dm.learn.rxjava.LearnActivityRxjavaActivity"
         tools:showIn="@layout/learn_rxjava_activity_main_app_bar">
 
-    </LinearLayout>
+    </FrameLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
