@@ -2,6 +2,8 @@ package com.oklib.utils.assist;
 
 import android.text.TextUtils;
 
+import com.oklib.utils.DataValidation;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -320,7 +322,7 @@ public class JSONUtil {
      * </ul>
      */
     public static String getStringCascade(JSONObject jsonObject, String defaultValue, String... keyArray) {
-        if (jsonObject == null || Check.isEmpty(keyArray)) {
+        if (jsonObject == null || DataValidation.isEmpty(keyArray)) {
             return defaultValue;
         }
 
@@ -561,7 +563,7 @@ public class JSONUtil {
      * </ul>
      */
     public static JSONObject getJSONObjectCascade(JSONObject jsonObject, JSONObject defaultValue, String... keyArray) {
-        if (jsonObject == null || Check.isEmpty(keyArray)) {
+        if (jsonObject == null || DataValidation.isEmpty(keyArray)) {
             return defaultValue;
         }
 
@@ -777,7 +779,7 @@ public class JSONUtil {
         Map<String, String> keyAndValueMap = new HashMap<String, String>();
         for (Iterator iter = sourceObj.keys(); iter.hasNext(); ) {
             String key = (String) iter.next();
-            if (!Check.isEmpty(keyAndValueMap) && !Check.isEmpty(key)) {
+            if (!DataValidation.isEmpty(keyAndValueMap) && !DataValidation.isEmpty(key)) {
                 keyAndValueMap.put(key, getString(sourceObj, key, ""));
             }
         }

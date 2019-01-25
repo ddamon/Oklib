@@ -11,7 +11,7 @@ import java.security.MessageDigest;
  * @author: <a href="http://www.xiaoyaoyou1212.com">DAWI</a>
  * @date: 2017-01-12 11:04
  */
-public class MD5 {
+public class Md5 {
 
     /**
      * 十六进制

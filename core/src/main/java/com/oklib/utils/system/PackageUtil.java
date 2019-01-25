@@ -13,8 +13,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
+import com.oklib.utils.DataValidation;
 import com.oklib.utils.Logger.Logger;
-import com.oklib.utils.assist.Check;
 import com.oklib.utils.assist.ShellUtil;
 
 import java.io.File;
@@ -184,9 +184,9 @@ public class PackageUtil {
      * 获取已安装的全部应用信息
      */
     public static boolean isInsatalled(Context context, String pkg) {
-        if (!Check.isEmpty(pkg)) {
+        if (!DataValidation.isEmpty(pkg)) {
             List<PackageInfo> list = getInsatalledPackages(context);
-            if (!Check.isEmpty(list)) {
+            if (!DataValidation.isEmpty(list)) {
                 for (PackageInfo pi : list) {
                     if (pkg.equalsIgnoreCase(pi.packageName)) {
                         return true;

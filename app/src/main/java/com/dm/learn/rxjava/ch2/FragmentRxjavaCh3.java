@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.dm.learn.rxjava.ch2.contract.RxjavaContract;
 import com.dm.learn.rxjava.ch2.model.RxjavaModel;
-import com.dm.learn.rxjava.ch2.presenter.RxjavaPresenter2;
+import com.dm.learn.rxjava.ch2.presenter.RxjavaPresenter3;
 import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.oklib.base.CoreBaseFragment;
@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * rxjava学习使用
  * 第二章
  */
-public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter2, RxjavaModel> implements RxjavaContract.View {
+public class FragmentRxjavaCh3 extends CoreBaseFragment<RxjavaPresenter3, RxjavaModel> implements RxjavaContract.View {
     @BindView(R.id.button1)
     Button button1;
     @BindView(R.id.button2)
@@ -60,7 +60,7 @@ public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter2, Rxjava
 
     @Override
     public int getLayoutId() {
-        return R.layout.learn_rxjava_fragment_ch2;
+        return R.layout.learn_rxjava_fragment_ch3;
     }
 
     @Override
@@ -95,23 +95,20 @@ public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter2, Rxjava
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.button1:
-                mPresenter.testDo();
                 break;
             case R.id.button2:
-                mPresenter.testSingle();
+                mPresenter.testDefer();
                 break;
             case R.id.button3:
-                mPresenter.testCompleteable();
+
                 break;
             case R.id.button4:
-                mPresenter.testMaybe();
                 break;
             case R.id.button5:
                 break;
             case R.id.button6:
                 break;
             case R.id.button7:
-                mPresenter.testMaybe();
                 break;
             case R.id.button8:
                 break;
@@ -120,8 +117,10 @@ public class FragmentRxjavaCh2 extends CoreBaseFragment<RxjavaPresenter2, Rxjava
             case R.id.button10:
                 break;
             case R.id.button11:
+                mPresenter.testObservableDataShare();
                 break;
             case R.id.button12:
+
                 break;
         }
 

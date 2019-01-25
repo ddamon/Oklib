@@ -1,4 +1,4 @@
-package com.oklib.utils.crypt;
+package com.oklib.utils.cipher;
 
 import java.security.MessageDigest;
 import java.util.Random;

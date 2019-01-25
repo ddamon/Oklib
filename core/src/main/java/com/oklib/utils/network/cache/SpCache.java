@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.oklib.utils.Logger.Logger;
-import com.oklib.utils.cipher.BASE64;
+import com.oklib.utils.cipher.Base64Util;
 import com.oklib.utils.convert.ByteUtil;
 import com.oklib.utils.convert.HexUtil;
 import com.oklib.utils.network.common.ViseConfig;
@@ -38,7 +38,7 @@ public class SpCache implements ICache {
                 sp.edit().remove(key).apply();
             } else {
                 byte[] bytes = ByteUtil.objectToByte(ser);
-                bytes = BASE64.encode(bytes);
+                bytes = Base64Util.encode(bytes);
                 put(key, HexUtil.encodeHexStr(bytes));
             }
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class SpCache implements ICache {
             String hex = get(key, null);
             if (hex == null) return null;
             byte[] bytes = HexUtil.decodeHex(hex.toCharArray());
-            bytes = BASE64.decode(bytes);
+            bytes = Base64Util.decode(bytes);
             Object obj = ByteUtil.byteToObject(bytes);
             Logger.i(key + " get: " + obj);
             return obj;

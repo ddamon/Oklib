@@ -1,5 +1,7 @@
 package com.dunkeng;
 
+import android.util.Log;
+
 import com.oklib.CoreApp;
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.Logger.inner.LogcatTree;
@@ -22,9 +24,13 @@ public class App extends CoreApp {
 
     private void initLog() {
         Logger.getLogConfig()
-                .configAllowLog(true)//是否输出日志
-                .configShowBorders(false);//是否排版显示
-        Logger.plant(new LogcatTree());//添加打印日志信息到Logcat的树
+                //是否输出日志
+                .configAllowLog(true)
+                .configLevel(Log.VERBOSE)
+                //是否排版显示
+                .configShowBorders(false);
+        //添加打印日志信息到Logcat的树
+        Logger.plant(new LogcatTree());
     }
 
     private void initNet() {

@@ -1,4 +1,4 @@
-package com.oklib.utils.crypt;
+package com.oklib.utils.cipher;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class AES {
+public class Aes {
 
 	/**
 	 * 加密
@@ -26,12 +26,12 @@ public class AES {
 	 */
 	public static byte[] encrypt(String content, String password) {
 		try {
-			KeyGenerator kgen = KeyGenerator.getInstance("AES");
+			KeyGenerator kgen = KeyGenerator.getInstance("Aes");
 			kgen.init(128, new SecureRandom(password.getBytes()));
 			SecretKey secretKey = kgen.generateKey();
 			byte[] enCodeFormat = secretKey.getEncoded();
-			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
+			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "Aes");
+			Cipher cipher = Cipher.getInstance("Aes");// 创建密码器
 			byte[] byteContent = content.getBytes("utf-8");
 			cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
 			byte[] result = cipher.doFinal(byteContent);
@@ -63,12 +63,12 @@ public class AES {
 	 */
 	public static byte[] decrypt(byte[] content, String password) {
 		try {
-			KeyGenerator kgen = KeyGenerator.getInstance("AES");
+			KeyGenerator kgen = KeyGenerator.getInstance("Aes");
 			kgen.init(128, new SecureRandom(password.getBytes()));
 			SecretKey secretKey = kgen.generateKey();
 			byte[] enCodeFormat = secretKey.getEncoded();
-			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
+			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "Aes");
+			Cipher cipher = Cipher.getInstance("Aes");// 创建密码器
 			cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
 			byte[] result = cipher.doFinal(content);
 			return result; // 加密

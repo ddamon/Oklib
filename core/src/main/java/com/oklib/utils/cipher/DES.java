@@ -36,14 +36,14 @@ public class DES {
     public static String initKey(String seed) throws Exception {
         SecureRandom secureRandom = null;
         if (seed != null) {
-            secureRandom = new SecureRandom(BASE64.decode(seed));
+            secureRandom = new SecureRandom(Base64Util.decode(seed));
         } else {
             secureRandom = new SecureRandom();
         }
         KeyGenerator kg = KeyGenerator.getInstance(CipherType.DES.getType());
         kg.init(secureRandom);
         SecretKey secretKey = kg.generateKey();
-        return BASE64.encodeToString(secretKey.getEncoded());
+        return Base64Util.encodeToString(secretKey.getEncoded());
     }
 
     /**
@@ -69,7 +69,7 @@ public class DES {
      * @throws Exception
      */
     public static byte[] decrypt(byte[] plain, String key) throws Exception {
-        Key k = toKey(BASE64.decode(key));
+        Key k = toKey(Base64Util.decode(key));
         Cipher cipher = Cipher.getInstance(CipherType.DES.getType());
         cipher.init(Cipher.DECRYPT_MODE, k);
         return cipher.doFinal(plain);
@@ -84,7 +84,7 @@ public class DES {
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data, String key) throws Exception {
-        Key k = toKey(BASE64.decode(key));
+        Key k = toKey(Base64Util.decode(key));
         Cipher cipher = Cipher.getInstance(CipherType.DES.getType());
         cipher.init(Cipher.ENCRYPT_MODE, k);
         return cipher.doFinal(data);

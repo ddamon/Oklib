@@ -22,7 +22,7 @@ public class HMAC {
         if (type == null) type = CipherType.Hmac_MD5;
         KeyGenerator keyGenerator = KeyGenerator.getInstance(type.getType());
         SecretKey secretKey = keyGenerator.generateKey();
-        return BASE64.encodeToString(secretKey.getEncoded());
+        return Base64Util.encodeToString(secretKey.getEncoded());
     }
 
     /**
@@ -36,7 +36,7 @@ public class HMAC {
      */
     public static byte[] encrypt(byte[] plain, String key, CipherType type) throws Exception {
         if (type == null) type = CipherType.Hmac_MD5;
-        SecretKey secretKey = new SecretKeySpec(BASE64.decode(key), type.getType());
+        SecretKey secretKey = new SecretKeySpec(Base64Util.decode(key), type.getType());
         Mac mac = Mac.getInstance(secretKey.getAlgorithm());
         mac.init(secretKey);
         return mac.doFinal(plain);

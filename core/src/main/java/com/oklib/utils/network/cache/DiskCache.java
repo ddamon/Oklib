@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 
 import com.oklib.utils.Logger.Logger;
-import com.oklib.utils.cipher.MD5;
+import com.oklib.utils.cipher.Md5;
 import com.oklib.utils.network.common.GsonUtil;
 import com.oklib.utils.network.common.ViseConfig;
 import com.oklib.utils.system.AppUtil;
@@ -151,7 +151,7 @@ public class DiskCache implements ICache {
     }
 
     private String getMd5Key(String key) {
-        return MD5.getMessageDigest(key.getBytes());
+        return Md5.getMessageDigest(key.getBytes());
     }
 
     private static File getDiskCacheDir(Context context, String dirName) {

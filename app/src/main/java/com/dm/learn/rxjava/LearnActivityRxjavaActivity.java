@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dm.learn.rxjava.ch2.FragmentRxjavaCh2;
+import com.dm.learn.rxjava.ch2.FragmentRxjavaCh3;
 import com.dunkeng.R;
 import com.oklib.base.CoreBaseActivity;
 
@@ -88,6 +89,7 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
             loadRootFragment(R.id.main_container, new FragmentRxjavaCh2());
             // Handle the camera action
         } else if (id == R.id.rx_ch3) {
+            loadRootFragment(R.id.main_container, new FragmentRxjavaCh3());
 
         } else if (id == R.id.rx_ch4) {
 

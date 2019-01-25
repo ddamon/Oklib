@@ -6,22 +6,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-
-    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,6 +15,7 @@
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:background="@color/aliceblue"
             android:orientation="vertical">
 
             <Button
@@ -38,26 +23,80 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Do操作符" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Observable" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Flowable" />
+
             <Button
                 android:id="@+id/button2"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Single" />
+
             <Button
                 android:id="@+id/button3"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Completable" />
+
             <Button
                 android:id="@+id/button4"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Maybe" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@color/aliceblue"
+            android:orientation="vertical">
+
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/button7"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Do操作符" />
+                android:text="AsyncSubject" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="BehaviorSubject" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Flowable" />
+
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Single" />
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Completable" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Maybe" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -68,10 +107,10 @@
 
             <TextView
                 android:id="@+id/txt_result"
-                android:background="@color/aqua"
                 android:layout_width="match_parent"
-                android:text="执行结果："
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/aqua"
+                android:text="执行结果：" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -53,7 +53,9 @@ public class HttpLogInterceptor implements Interceptor {
     }
 
     public HttpLogInterceptor setLevel(Level level) {
-        if (level == null) throw new NullPointerException("level == null. Use Level.NONE instead.");
+        if (level == null) {
+            throw new NullPointerException("level == null. Use Level.NONE instead.");
+        }
         this.level = level;
         return this;
     }

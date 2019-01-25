@@ -22,6 +22,7 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.subjects.AsyncSubject;
 
 
 /**
@@ -30,7 +31,7 @@ import io.reactivex.functions.Consumer;
  * @author Damon
  */
 
-public class RxjavaPresenter extends CoreBasePresenter<RxjavaContract.Model, RxjavaContract.View> {
+public class RxjavaPresenter2 extends CoreBasePresenter<RxjavaContract.Model, RxjavaContract.View> {
 
     private String testResult;
 
@@ -156,6 +157,29 @@ public class RxjavaPresenter extends CoreBasePresenter<RxjavaContract.Model, Rxj
             public void accept(String s) throws Exception {
                 testResult += s;
                 putResult(testResult);
+            }
+        });
+    }
+
+    public void testAsyncSubject() {
+        AsyncSubject<String> subject = AsyncSubject.create();
+        subject.onNext("AsyncSubject1");
+        subject.onNext("AsyncSubject2");
+        subject.onComplete();
+        subject.subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Logger.d("AsyncSubject: " + s);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Logger.d("AsyncSubject: onError");
+            }
+        }, new Action() {
+            @Override
+            public void run() throws Exception {
+                Logger.d("AsyncSubject: onComplete/");
             }
         });
     }

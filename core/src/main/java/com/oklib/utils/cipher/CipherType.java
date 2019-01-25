@@ -7,7 +7,7 @@ package com.oklib.utils.cipher;
  */
 public enum CipherType {
     SHA("SHA"),
-    MD5("MD5"),
+    MD5("Md5"),
     Hmac_MD5("HmacMD5"),
     Hmac_SHA1("HmacSHA1"),
     Hmac_SHA256("HmacSHA256"),

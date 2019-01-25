@@ -32,7 +32,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * 自定义一个缓存实现
+ */
 public class ACache {
+
     public static final int TIME_HOUR = 60 * 60;
     public static final int TIME_DAY = TIME_HOUR * 24;
     private static final int MAX_SIZE = 1000 * 1000 * 50; // 50 MB
@@ -105,14 +109,12 @@ public class ACache {
         }
     }
 
-    public void put(String key, String value, int saveTime) {
-        put(key, Utils.newStringWithDateInfo(saveTime, value));
-    }
 
     public String getAsString(String key) {
         File file = mCache.get(key);
-        if (!file.exists())
+        if (!file.exists()) {
             return null;
+        }
         boolean removeFile = false;
         BufferedReader in = null;
         try {
@@ -139,17 +141,10 @@ public class ACache {
                     e.printStackTrace();
                 }
             }
-            if (removeFile)
+            if (removeFile) {
                 remove(key);
+            }
         }
-    }
-
-    public void put(String key, JSONObject value) {
-        put(key, value.toString());
-    }
-
-    public void put(String key, JSONObject value, int saveTime) {
-        put(key, value.toString(), saveTime);
     }
 
     public JSONObject getAsJSONObject(String key) {
@@ -163,14 +158,6 @@ public class ACache {
         }
     }
 
-    public void put(String key, JSONArray value) {
-        put(key, value.toString());
-    }
-
-    public void put(String key, JSONArray value, int saveTime) {
-        put(key, value.toString(), saveTime);
-    }
-
     public JSONArray getAsJSONArray(String key) {
         String JSONString = getAsString(key);
         try {
@@ -181,6 +168,112 @@ public class ACache {
             return null;
         }
     }
+
+    public byte[] getAsBinary(String key) {
+        RandomAccessFile RAFile = null;
+        boolean removeFile = false;
+        try {
+            File file = mCache.get(key);
+            if (!file.exists()) {
+                return null;
+            }
+            RAFile = new RandomAccessFile(file, "r");
+            byte[] byteArray = new byte[(int) RAFile.length()];
+            RAFile.read(byteArray);
+            if (!Utils.isDue(byteArray)) {
+                return Utils.clearDateInfo(byteArray);
+            } else {
+                removeFile = true;
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (RAFile != null) {
+                try {
+                    RAFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (removeFile) {
+                remove(key);
+            }
+        }
+    }
+
+    public Object getAsObject(String key) {
+        byte[] data = getAsBinary(key);
+        if (data != null) {
+            ByteArrayInputStream bais = null;
+            ObjectInputStream ois = null;
+            try {
+                bais = new ByteArrayInputStream(data);
+                ois = new ObjectInputStream(bais);
+                Object reObject = ois.readObject();
+                return reObject;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            } finally {
+                try {
+                    if (bais != null) {
+                        bais.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (ois != null) {
+                        ois.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+
+    }
+
+    public Drawable getAsDrawable(String key) {
+        if (getAsBinary(key) == null) {
+            return null;
+        }
+        return Utils.bitmap2Drawable(Utils.Bytes2Bimap(getAsBinary(key)));
+    }
+
+    public Bitmap getAsBitmap(String key) {
+        if (getAsBinary(key) == null) {
+            return null;
+        }
+        return Utils.Bytes2Bimap(getAsBinary(key));
+    }
+
+
+    //==============================PUT=============================
+
+    public void put(String key, String value, int saveTime) {
+        put(key, Utils.newStringWithDateInfo(saveTime, value));
+    }
+
+    public void put(String key, JSONObject value) {
+        put(key, value.toString());
+    }
+
+    public void put(String key, JSONObject value, int saveTime) {
+        put(key, value.toString(), saveTime);
+    }
+
+    public void put(String key, JSONArray value) {
+        put(key, value.toString());
+    }
+
+    public void put(String key, JSONArray value, int saveTime) {
+        put(key, value.toString(), saveTime);
+    }
+
 
     public void put(String key, byte[] value) {
         File file = mCache.newFile(key);
@@ -207,37 +300,6 @@ public class ACache {
         put(key, Utils.newByteArrayWithDateInfo(saveTime, value));
     }
 
-    public byte[] getAsBinary(String key) {
-        RandomAccessFile RAFile = null;
-        boolean removeFile = false;
-        try {
-            File file = mCache.get(key);
-            if (!file.exists())
-                return null;
-            RAFile = new RandomAccessFile(file, "r");
-            byte[] byteArray = new byte[(int) RAFile.length()];
-            RAFile.read(byteArray);
-            if (!Utils.isDue(byteArray)) {
-                return Utils.clearDateInfo(byteArray);
-            } else {
-                removeFile = true;
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (RAFile != null) {
-                try {
-                    RAFile.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (removeFile)
-                remove(key);
-        }
-    }
 
     public void put(String key, Serializable value) {
         put(key, value, -1);
@@ -266,37 +328,6 @@ public class ACache {
         }
     }
 
-    public Object getAsObject(String key) {
-        byte[] data = getAsBinary(key);
-        if (data != null) {
-            ByteArrayInputStream bais = null;
-            ObjectInputStream ois = null;
-            try {
-                bais = new ByteArrayInputStream(data);
-                ois = new ObjectInputStream(bais);
-                Object reObject = ois.readObject();
-                return reObject;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            } finally {
-                try {
-                    if (bais != null)
-                        bais.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    if (ois != null)
-                        ois.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-
-    }
 
     public void put(String key, Bitmap value) {
         put(key, Utils.Bitmap2Bytes(value));
@@ -306,12 +337,6 @@ public class ACache {
         put(key, Utils.Bitmap2Bytes(value), saveTime);
     }
 
-    public Bitmap getAsBitmap(String key) {
-        if (getAsBinary(key) == null) {
-            return null;
-        }
-        return Utils.Bytes2Bimap(getAsBinary(key));
-    }
 
     public void put(String key, Drawable value) {
         put(key, Utils.drawable2Bitmap(value));
@@ -321,17 +346,12 @@ public class ACache {
         put(key, Utils.drawable2Bitmap(value), saveTime);
     }
 
-    public Drawable getAsDrawable(String key) {
-        if (getAsBinary(key) == null) {
-            return null;
-        }
-        return Utils.bitmap2Drawable(Utils.Bytes2Bimap(getAsBinary(key)));
-    }
 
     public File file(String key) {
         File f = mCache.newFile(key);
-        if (f.exists())
+        if (f.exists()) {
             return f;
+        }
         return null;
     }
 
@@ -546,8 +566,9 @@ public class ACache {
 
         private static byte[] copyOfRange(byte[] original, int from, int to) {
             int newLength = to - from;
-            if (newLength < 0)
+            if (newLength < 0) {
                 throw new IllegalArgumentException(from + " > " + to);
+            }
             byte[] copy = new byte[newLength];
             System.arraycopy(original, from, copy, 0,
                     Math.min(original.length - from, newLength));

@@ -1,7 +1,7 @@
 package com.oklib.utils.system;
 
+import com.oklib.utils.DataValidation;
 import com.oklib.utils.Logger.Logger;
-import com.oklib.utils.assist.Check;
 import com.oklib.utils.file.FileUtil;
 
 import java.io.BufferedReader;
@@ -90,7 +90,7 @@ public class CpuUtil {
      * Get CPU name.
      */
     public static String getCpuName() {
-        if (!Check.isEmpty(CPU_NAME)) {
+        if (!DataValidation.isEmpty(CPU_NAME)) {
             return CPU_NAME;
         }
         try {
