@@ -18,6 +18,10 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
         multiDexEnabled true
+        //防止rxbinding3报错
+        packagingOptions {
+            exclude 'META-INF/proguard/androidx-annotations.pro'
+        }
     }
 
     buildTypes {

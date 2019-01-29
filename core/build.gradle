@@ -49,7 +49,7 @@ dependencies {
     }
 
     //rx
-    api rootProject.ext.dependencies["rxjava2"]
+//    api rootProject.ext.dependencies["rxjava2"]
     api(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
@@ -83,6 +83,7 @@ dependencies {
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
+    api rootProject.ext.dependencies["rxbinding"]
     api rootProject.ext.dependencies["okhttp3"]
     compileOnly rootProject.ext.dependencies["glide"]
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
@@ -103,8 +104,6 @@ dependencies {
     api 'com.bigkoo:convenientbanner:2.0.5'
     //fragmentation
     api 'me.yokeyword:fragmentation:1.3.3'
-
-    implementation 'org.jetbrains:annotations:15.0'
 
     compileOnly 'org.greenrobot:greendao:3.2.0'
 }

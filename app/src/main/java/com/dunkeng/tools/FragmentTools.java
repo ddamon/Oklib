@@ -51,7 +51,7 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
 
     @Override
     public int getLayoutId() {
-        return R.layout.learn_rxjava_fragment_ch2;
+        return R.layout.fragment_tools;
     }
 
     @Override
@@ -95,6 +95,6 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
 
     @OnClick(R.id.button1)
     public void onViewClicked() {
-        mPresenter.testRxLifecycle();
+        mPresenter.testWebviewCam();
     }
 }

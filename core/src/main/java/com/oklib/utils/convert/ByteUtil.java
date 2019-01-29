@@ -18,7 +18,9 @@ public class ByteUtil {
             ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
             return ois.readObject();
         } finally {
-            if (ois != null) ois.close();
+            if (ois != null) {
+                ois.close();
+            }
         }
     }
 
@@ -36,19 +38,23 @@ public class ByteUtil {
             oos.writeObject(obj);
             return bos.toByteArray();
         } finally {
-            if (oos != null) oos.close();
+            if (oos != null) {
+                oos.close();
+            }
         }
     }
 
     public static void byteToBit(byte[] bytes, StringBuilder sb) {
-        for (int i = 0; i < Byte.SIZE * bytes.length; i++)
+        for (int i = 0; i < Byte.SIZE * bytes.length; i++) {
             sb.append((bytes[i / Byte.SIZE] << i % Byte.SIZE & 0x80) == 0 ? '0' : '1');
+        }
     }
 
     public static String byteToBit(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < Byte.SIZE * bytes.length; i++)
+        for (int i = 0; i < Byte.SIZE * bytes.length; i++) {
             sb.append((bytes[i / Byte.SIZE] << i % Byte.SIZE & 0x80) == 0 ? '0' : '1');
+        }
         return sb.toString();
     }
 
