@@ -1,17 +1,12 @@
 package com.oklib.utils.helper;
 
 
-import android.view.View;
-
-import com.jakewharton.rxbinding3.view.RxView;
-import com.oklib.utils.Logger.Logger;
-
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -32,37 +27,19 @@ public class RxUtil {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+
     /**
-     * Rx点击事件
+     * 防止重复点击
      *
-     * @param view
-     * @param listener
+     * @return
      */
-    public static void click(View view, OnRxClickListener listener) {
-        RxView.clicks(view)
-                .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Observer<Object>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+    public static ObservableTransformer preventRepeatClicksTransformer() {
+        return new ObservableTransformer() {
+            @Override
+            public ObservableSource apply(Observable upstream) {
+                return upstream.throttleFirst(1000, TimeUnit.MILLISECONDS);
 
-                    @Override
-                    public void onNext(Object value) {
-                        if (listener != null) {
-                            listener.onRxClick(view);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        Logger.e("RxUtils.click error: " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+            }
+        };
     }
 }

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.dm.learn.rxjava.ch11.FragmentCh11;
 import com.dm.learn.rxjava.ch2.FragmentRxjavaCh2;
 import com.dm.learn.rxjava.ch2.FragmentRxjavaCh3;
 import com.dunkeng.R;
@@ -98,7 +99,8 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_11) {
+            loadRootFragment(R.id.main_container, new FragmentCh11());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -20,6 +20,10 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Tools" />
+        <item
+            android:id="@+id/nav_11"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="第11章 RxBinding" />
     </group>
 
     <item android:title="Communicate">
