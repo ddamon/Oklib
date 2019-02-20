@@ -10,6 +10,7 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.oklib.utils.assist.StringUtils;
@@ -329,10 +330,10 @@ public class IntentUtils {
     }
 
     /*
-  * 采用了新的办法获取APK图标，之前的失败是因为android中存在的一个BUG,通过
-  * appInfo.publicSourceDir = apkPath;来修正这个问题，详情参见:
-  * http://code.google.com/p/android/issues/detail?id=9151
-  */
+     * 采用了新的办法获取APK图标，之前的失败是因为android中存在的一个BUG,通过
+     * appInfo.publicSourceDir = apkPath;来修正这个问题，详情参见:
+     * http://code.google.com/p/android/issues/detail?id=9151
+     */
     public static Drawable getApkIcon(Context context, String apkPath) {
         PackageManager pm = context.getPackageManager();
         PackageInfo info = pm.getPackageArchiveInfo(apkPath,
@@ -373,5 +374,22 @@ public class IntentUtils {
             intent.setAction(action);
         }
         context.startActivity(intent);
+    }
+
+    /**
+     * 获取日历intent
+     *
+     * @return
+     */
+    public static Intent getCalendarIntent() {
+        Intent i = new Intent();
+        ComponentName cn = null;
+        if (Integer.parseInt(Build.VERSION.SDK) >= 8) {
+            cn = new ComponentName("com.android.calendar", "com.android.calendar.LaunchActivity");
+        } else {
+            cn = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
+        }
+        i.setComponent(cn);
+        return i;
     }
 }

@@ -1,5 +1,6 @@
-package com.dunkeng;
+package com.dunkeng.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,21 +15,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dm.learn.rxjava.LearnActivityRxjavaActivity;
+import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
+import com.dunkeng.main.contract.MainContract;
+import com.dunkeng.main.model.Lunar;
+import com.dunkeng.main.model.LunarBean;
+import com.dunkeng.main.model.MainModel;
+import com.dunkeng.main.presenter.MainPresenter;
 import com.dunkeng.meizi.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
 import com.dunkeng.tools.FragmentTools;
 import com.dunkeng.wx.FragmentWx;
 import com.dunkeng.zhihu.FragmentZhihu;
+import com.jakewharton.rxbinding3.view.RxView;
 import com.oklib.AppManager;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.IntentUtils;
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.assist.ShareUtils;
+import com.oklib.utils.helper.RxUtil;
+import com.oklib.utils.view.SnackbarUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
-public class MainActivity extends CoreBaseActivity implements NavigationView.OnNavigationItemSelectedListener, OnFragmentOpenDrawerListener {
+public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> implements NavigationView.OnNavigationItemSelectedListener, OnFragmentOpenDrawerListener, MainContract.MainView {
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
@@ -64,6 +77,13 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
             }
         });
 //        navigationView.setCheckedItem(R.id.nav_zhihu);
+
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        mPresenter.getLunarData();
     }
 
     @Override
@@ -93,7 +113,7 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
 
         } else if (id == R.id.learn) {
             startActivity(LearnActivityRxjavaActivity.class);
-        }  else if (id == R.id.nav_weixin) {
+        } else if (id == R.id.nav_weixin) {
             loadRootFragment(R.id.main_container, new FragmentWx());
 
         } else if (id == R.id.nav_share) {
@@ -110,7 +130,6 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 
     private void showMessage(String msg) {
@@ -143,5 +162,37 @@ public class MainActivity extends CoreBaseActivity implements NavigationView.OnN
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void showLunar(Lunar info) {
+        if (info == null) {
+            return;
+        }
+        List<LunarBean> data = info.getNewslist();
+        if (data.size() <= 0) {
+            return;
+        }
+        LunarBean lunarBean = data.get(0);
+        TextView strDate = navigationView.findViewById(R.id.str_date);
+        strDate.setText(lunarBean.getLunardate() + "\n" + lunarBean.getLubarmonth() + lunarBean.getLunarday());
+
+        RxView.clicks(strDate).compose(RxUtil.preventRepeatClicksTransformer()).subscribe(new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                Intent intent = IntentUtils.getCalendarIntent();
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void showMsg(String msg) {
+        SnackbarUtil.showShort(getWindow().getDecorView(), msg);
     }
 }

@@ -22,7 +22,7 @@ public interface WxContract {
     }
 
 
-    abstract class PresenterWx extends CoreBasePresenter<com.dunkeng.wx.contract.WxContract.Model, WxView> {
+    abstract class PresenterWx extends CoreBasePresenter<WxContract.Model, WxView> {
         public abstract void getNewsData(String type, int num);
     }
 

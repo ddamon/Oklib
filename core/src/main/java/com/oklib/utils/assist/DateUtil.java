@@ -195,6 +195,18 @@ public class DateUtil {
         return calendar.get(Calendar.MONTH) + 1;
     }
 
+    /**
+     * 获取当前日期
+     *
+     * @param mills
+     * @return
+     */
+    public static int getDay(long mills) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(mills);
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
 
     /**
      * 获取月份的天数
@@ -463,4 +475,20 @@ public class DateUtil {
         return calendar.getTime();
     }
 
+    /**
+     * 获取2019-1-20格式日期
+     *
+     * @return
+     */
+    public static String getDateYYYYMDD(long time) {
+        String m = getMonth(time) + "";
+        String y = getYear(time) + "";
+        String d = getDay(time) + "";
+        return y + "-" + m + "-" + d;
+    }
+
+    public static void main(String[] args) {
+        String str = getYmd(System.currentTimeMillis());
+        System.out.println(str);
+    }
 }

@@ -9,6 +9,7 @@ import java.io.File;
  */
 
 public class Config {
+
     public static final String SD_CARD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;// SD卡路径
     public static final String APP_CARD_PATH = SD_CARD_PATH + "dunkeng";// SD卡路径
     public static final String APP_CARD_PATH_PICTURE = APP_CARD_PATH + File.separator + "picture";// SD卡路径
