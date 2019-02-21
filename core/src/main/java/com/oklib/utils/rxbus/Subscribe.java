@@ -1,7 +1,7 @@
-package com.oklib.utils.network.event;
+package com.oklib.utils.rxbus;
 
 
-import com.oklib.utils.network.event.inner.ThreadMode;
+import com.oklib.utils.rxbus.inner.ThreadMode;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

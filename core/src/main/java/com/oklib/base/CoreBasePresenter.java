@@ -6,7 +6,6 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.MainThread;
 
 import com.oklib.utils.RxLifecycleUtils;
-import com.oklib.utils.rxmanager.RxManager;
 import com.uber.autodispose.AutoDisposeConverter;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 public abstract class CoreBasePresenter<M, V> implements IPresenter {
     public M mModel;
     public V mView;
-    public RxManager mRxManager = new RxManager();
 
     public void attachVM(V v, M m) {
         this.mView = v;
@@ -28,7 +26,6 @@ public abstract class CoreBasePresenter<M, V> implements IPresenter {
     }
 
     public void detachVM() {
-        mRxManager.clear();
         mView = null;
         mModel = null;
     }

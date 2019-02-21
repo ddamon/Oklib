@@ -7,10 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.R;
+import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.zhihu.contract.ZhihuContract;
 import com.dunkeng.zhihu.model.DailyListBean;
+import com.dunkeng.zhihu.model.StoryItemBean;
 import com.dunkeng.zhihu.model.ZhihuModel;
 import com.dunkeng.zhihu.presenter.ZhihuPresenter;
 import com.oklib.base.CoreBaseFragment;
@@ -23,6 +24,8 @@ import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemChildClickListener;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -58,8 +61,8 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
     }
 
     @Override
-    public void showContent(DailyListBean info) {
-        coreRecyclerView.getAdapter().addData(info.getStories());
+    public void showContent(List<StoryItemBean> info) {
+        coreRecyclerView.getAdapter().addData(info);
 
     }
 
@@ -78,14 +81,14 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
                 mOpenDraweListener.onOpenDrawer();
             }
         });
-        coreRecyclerView.init(new BaseQuickAdapter<DailyListBean.StoriesBean, BaseViewHolder>(R.layout.item_news) {
+        coreRecyclerView.init(new BaseQuickAdapter<StoryItemBean, BaseViewHolder>(R.layout.item_news) {
             @Override
-            protected void convert(BaseViewHolder helper, DailyListBean.StoriesBean item) {
+            protected void convert(BaseViewHolder helper, StoryItemBean item) {
                 helper.setText(R.id.tv_daily_item_title, item.getTitle());
                 ImageLoaderUtil.getInstance().loadImage(mContext,
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
-                                .url(item.getImages().get(0)).build());
+                                .url(item.getImage()).build());
                 helper.addOnClickListener(R.id.iv_daily_item_image);
             }
         });

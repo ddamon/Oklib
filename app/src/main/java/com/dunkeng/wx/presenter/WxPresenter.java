@@ -17,7 +17,7 @@ public class WxPresenter extends WxContract.PresenterWx {
 
     @Override
     public void getNewsData(String type, int num) {
-        mRxManager.add(mModel.getNewsData(type, num)
+        mModel.getNewsData(type, num)
                 .subscribe(
                         new Consumer<Wx>() {
                             @Override
@@ -29,7 +29,7 @@ public class WxPresenter extends WxContract.PresenterWx {
                             public void accept(Throwable throwable) throws Exception {
                                 mView.showMsg("数据加载失败");
                             }
-                        }));
+                        });
     }
 
     @Override

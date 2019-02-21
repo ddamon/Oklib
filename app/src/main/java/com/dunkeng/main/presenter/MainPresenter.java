@@ -19,7 +19,7 @@ public class MainPresenter extends CoreBasePresenter<MainModel, MainContract.Mai
     }
 
     public void getLunarData() {
-        mRxManager.add(mModel.getLunarData()
+        mModel.getLunarData()
                 .subscribe(
                         new Consumer<Lunar>() {
                             @Override
@@ -31,7 +31,7 @@ public class MainPresenter extends CoreBasePresenter<MainModel, MainContract.Mai
                             public void accept(Throwable throwable) throws Exception {
                                 mView.showMsg("数据加载失败");
                             }
-                        }));
+                        });
     }
 
 }

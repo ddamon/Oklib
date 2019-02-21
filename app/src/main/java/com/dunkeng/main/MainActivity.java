@@ -140,6 +140,7 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     public void onOpenDrawer() {
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START);
+            mPresenter.getLunarData();
         }
     }
 

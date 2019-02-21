@@ -1,5 +1,6 @@
 package com.dm.learn.rxjava;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,8 +13,13 @@ import android.view.MenuItem;
 import com.dm.learn.rxjava.ch11.FragmentCh11;
 import com.dm.learn.rxjava.ch2.FragmentRxjavaCh2;
 import com.dm.learn.rxjava.ch2.FragmentRxjavaCh3;
+import com.dm.learn.rxjava.rxbus.ExceptionEvent;
+import com.dm.learn.rxjava.rxbus.RxBusTestActivity;
 import com.dunkeng.R;
 import com.oklib.base.CoreBaseActivity;
+import com.oklib.utils.Logger.Logger;
+import com.oklib.utils.rxbus.BusManager;
+import com.oklib.utils.rxbus.Subscribe;
 
 import butterknife.BindView;
 
@@ -47,6 +53,7 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         loadRootFragment(R.id.main_container, new FragmentRxjavaCh2());
+        BusManager.getBus().register(this);
     }
 
     @Override
@@ -101,10 +108,18 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
         } else if (id == R.id.nav_send) {
         } else if (id == R.id.nav_11) {
             loadRootFragment(R.id.main_container, new FragmentCh11());
+
+        } else if (id == R.id.nav_13) {
+            startActivity(new Intent(mContext, RxBusTestActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Subscribe
+    public void testRxbusEvent(ExceptionEvent exceptionEvent) {
+        Logger.e(exceptionEvent.text);
     }
 }

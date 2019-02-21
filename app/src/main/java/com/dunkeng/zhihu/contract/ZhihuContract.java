@@ -1,10 +1,12 @@
 package com.dunkeng.zhihu.contract;
 
-import com.dunkeng.zhihu.model.DailyListBean;
+import com.dunkeng.zhihu.model.StoryItemBean;
 import com.dunkeng.zhihu.model.ZhihuDetailBean;
 import com.oklib.base.CoreBaseModel;
 import com.oklib.base.CoreBasePresenter;
 import com.oklib.base.CoreBaseView;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -17,12 +19,18 @@ import io.reactivex.Observable;
 
 public interface ZhihuContract {
     interface Model extends CoreBaseModel {
-        Observable<DailyListBean> getDailyData();
+        /**
+         * 获取知乎日报列表
+         *
+         * @return
+         */
+        Observable<List<StoryItemBean>> getDailyData();
+
         Observable<ZhihuDetailBean> getZhihuDetails(int anInt);
     }
 
     interface ZhihuView extends CoreBaseView {
-        void showContent(DailyListBean info);
+        void showContent(List<StoryItemBean> info);
     }
 
     abstract class Presenter extends CoreBasePresenter<Model, ZhihuView> {

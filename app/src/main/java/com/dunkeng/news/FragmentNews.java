@@ -50,6 +50,10 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
             @Override
             protected void convert(BaseViewHolder helper, NewslistBean item) {
                 helper.setText(R.id.tv_daily_item_title, item.getTitle());
+                if (item.getCtime() != null && item.getCtime().contains(" ")) {
+                    helper.setText(R.id.tv_daily_item_date, item.getCtime().split(" ")[0]);
+                }
+                helper.setText(R.id.tv_daily_item_description, item.getDescription());
                 ImageLoaderUtil.getInstance().loadImage(mContext,
                         new ImageLoader.Builder()
                                 .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))

@@ -1,4 +1,4 @@
-package com.oklib.utils.network.event;
+package com.oklib.utils.rxbus;
 
 /**
  * @Description: 事件总线接口
@@ -6,11 +6,31 @@ package com.oklib.utils.network.event;
  * @date: 2016-12-19 15:06
  */
 public interface IBus {
+    /**
+     * 注册事件
+     *
+     * @param object
+     */
     void register(Object object);
 
+    /**
+     * 解除事件注册
+     *
+     * @param object
+     */
     void unregister(Object object);
 
+    /**
+     * 发送事件
+     *
+     * @param event
+     */
     void post(IEvent event);
 
+    /**
+     * 发送粘性事件
+     *
+     * @param event
+     */
     void postSticky(IEvent event);
 }

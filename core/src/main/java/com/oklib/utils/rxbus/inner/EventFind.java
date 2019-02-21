@@ -1,7 +1,7 @@
-package com.oklib.utils.network.event.inner;
+package com.oklib.utils.rxbus.inner;
 
 
-import com.oklib.utils.network.event.Subscribe;
+import com.oklib.utils.rxbus.Subscribe;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

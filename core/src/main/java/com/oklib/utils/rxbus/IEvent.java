@@ -1,4 +1,4 @@
-package com.oklib.utils.network.event;
+package com.oklib.utils.rxbus;
 
 /**
  * @Description: 事件接口

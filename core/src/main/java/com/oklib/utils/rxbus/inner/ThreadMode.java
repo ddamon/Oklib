@@ -1,4 +1,4 @@
-package com.oklib.utils.network.event.inner;
+package com.oklib.utils.rxbus.inner;
 
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;

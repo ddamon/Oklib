@@ -1,9 +1,9 @@
-package com.oklib.utils.network.event;
+package com.oklib.utils.rxbus;
 
 
-import com.oklib.utils.network.event.inner.EventBase;
-import com.oklib.utils.network.event.inner.EventComposite;
-import com.oklib.utils.network.event.inner.EventFind;
+import com.oklib.utils.rxbus.inner.EventBase;
+import com.oklib.utils.rxbus.inner.EventComposite;
+import com.oklib.utils.rxbus.inner.EventFind;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -32,8 +32,8 @@ public class RxBusImpl extends EventBase implements IBus {
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         EventComposite subscriberMethods = EventFind.findAnnotatedSubscriberMethods(object, compositeDisposable);
         mEventCompositeMap.put(object, subscriberMethods);
-
-        if (!STICKY_EVENT_MAP.isEmpty()) {//如果有粘性事件，则发送粘性事件
+        //如果有粘性事件，则发送粘性事件
+        if (!STICKY_EVENT_MAP.isEmpty()) {
             subscriberMethods.subscriberSticky(STICKY_EVENT_MAP);
         }
     }

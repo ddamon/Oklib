@@ -1,7 +1,8 @@
-package com.oklib.utils.network.event;
+package com.oklib.utils.rxbus;
 
 /**
  * @Description: 事件管理，可定制事件发送方式，可替换成EventBus。
+ * 参照：https://github.com/xiaoyaoyou1212/XSnow/
  * @author: <a href="http://www.xiaoyaoyou1212.com">DAWI</a>
  * @date: 2016-12-19 15:06
  */

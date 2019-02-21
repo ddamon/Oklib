@@ -11,8 +11,8 @@ import com.dunkeng.meizi.contract.MeiziContract;
 public class MeiziPresenter extends MeiziContract.Presenter {
     @Override
     public void getMeizi(int page) {
-        mRxManager.add(mModel.getMeizi(page).subscribe(bean -> mView.showContent(bean),
-                e -> mView.showMsg("数据加载失败")));
+        mModel.getMeizi(page).subscribe(bean -> mView.showContent(bean),
+                e -> mView.showMsg("数据加载失败"));
     }
 
 

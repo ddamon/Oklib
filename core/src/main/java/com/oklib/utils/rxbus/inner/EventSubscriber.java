@@ -1,4 +1,4 @@
-package com.oklib.utils.network.event.inner;
+package com.oklib.utils.rxbus.inner;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -1,9 +1,9 @@
-package com.oklib.utils.network.event.inner;
+package com.oklib.utils.rxbus.inner;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -21,7 +21,7 @@ public class EventBase {
 
     static {
         SUBJECT = PublishSubject.create().toSerialized();
-        STICKY_EVENT_MAP = new HashMap<>();
+        STICKY_EVENT_MAP = new ConcurrentHashMap<>();
     }
 
     protected EventBase() {

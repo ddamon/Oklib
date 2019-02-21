@@ -12,9 +12,9 @@ import com.dunkeng.zhihu.contract.ZhihuContract;
 public class ZhihuPresenter extends ZhihuContract.Presenter {
     @Override
     public void getDailyData() {
-        mRxManager.add(mModel.getDailyData()
+        mModel.getDailyData()
                 .subscribe(bean -> mView.showContent(bean),
-                        e -> mView.showMsg("数据加载失败")));
+                        e -> mView.showMsg("数据加载失败"));
     }
 
 

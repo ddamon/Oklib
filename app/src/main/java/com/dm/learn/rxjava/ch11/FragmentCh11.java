@@ -113,6 +113,7 @@ public class FragmentCh11 extends CoreBaseFragment<Ch11Presenter, Ch11Model> imp
                 startActivity(new Intent(getActivity(), ActivityValidateText.class));
                 break;
             case R.id.button5:
+
                 break;
             case R.id.button6:
                 break;
