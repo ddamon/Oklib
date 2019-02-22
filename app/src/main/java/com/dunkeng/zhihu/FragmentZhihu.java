@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.zhihu.contract.ZhihuContract;
-import com.dunkeng.zhihu.model.DailyListBean;
 import com.dunkeng.zhihu.model.StoryItemBean;
 import com.dunkeng.zhihu.model.ZhihuModel;
 import com.dunkeng.zhihu.presenter.ZhihuPresenter;
@@ -102,7 +101,7 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
         coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActZhihuDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((DailyListBean.StoriesBean) adapter.getData().get(position)).getId());
+                ActZhihuDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), ((StoryItemBean) adapter.getData().get(position)).getId());
             }
         });
         coreRecyclerView.addOnChildItemClickListener(new OnItemChildClickListener() {

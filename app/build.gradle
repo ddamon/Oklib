@@ -22,6 +22,13 @@ android {
         packagingOptions {
             exclude 'META-INF/proguard/androidx-annotations.pro'
         }
+
+        versionCode 10
+        versionName "0.1.0"
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+
+        }
     }
 
     buildTypes {

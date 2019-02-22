@@ -14,8 +14,8 @@ public class Config {
     public static final String APP_CARD_PATH = SD_CARD_PATH + "dunkeng";// SD卡路径
     public static final String APP_CARD_PATH_PICTURE = APP_CARD_PATH + File.separator + "picture";// SD卡路径
     /*
-    * tianxing
-    * */
+     * tianxing
+     * */
     public static final String BASE_URL_TIANXING = "http://api.tianapi.com/";
     public static final String API_KEY_TIANXING = "7216c2025585eddc71b02cafcf856062";
     /**
@@ -26,12 +26,6 @@ public class Config {
      * zhihu
      */
     public static final String BASE_URL_ZHIHU = "http://news-at.zhihu.com/api/4/";
-
-    /*
-    * mob
-    * */
-    public static final String APP_KEY_MOB = "1c83c05bca61d";
-    public static final String APP_KEY_SECRET = "eb43dbc0404396dc870d5d26df3848db";
 
 
     public static class Data {
