@@ -1,13 +1,10 @@
 package com.dunkeng.main.presenter;
 
-import com.dunkeng.common.Config;
 import com.dunkeng.main.contract.MainContract;
 import com.dunkeng.main.model.IpModel;
 import com.dunkeng.main.model.LunarModel;
 import com.dunkeng.main.model.MainModel;
 import com.oklib.base.CoreBasePresenter;
-import com.oklib.utils.network.http.ViseHttp;
-import com.oklib.utils.network.http.callback.ACallback;
 
 import io.reactivex.functions.Consumer;
 
@@ -39,17 +36,19 @@ public class MainPresenter extends CoreBasePresenter<MainModel, MainContract.Mai
     }
 
     public void getIpData() {
-        ViseHttp.GET(Config.BASE_URL_ip).request(new ACallback<IpModel>() {
-            @Override
-            public void onSuccess(IpModel data) {
-                mView.showIp(data);
-            }
-
-            @Override
-            public void onFail(int errCode, String errMsg) {
-                mView.showMsg("ip数据加载失败");
-            }
-        });
+        mModel.getIpData()
+                .subscribe(
+                        new Consumer<IpModel>() {
+                            @Override
+                            public void accept(IpModel lunar) throws Exception {
+                                mView.showIp(lunar);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                mView.showMsg("数据加载失败");
+                            }
+                        });
     }
 
 }

@@ -1,6 +1,7 @@
 package com.dunkeng.main.model;
 
 import com.dunkeng.common.Config;
+import com.dunkeng.common.api.IpApi;
 import com.dunkeng.common.api.TianxingApi;
 import com.dunkeng.main.contract.MainContract;
 import com.oklib.utils.assist.DateUtil;
@@ -34,6 +35,8 @@ public class MainModel implements MainContract.Model {
 
     @Override
     public Observable<IpModel> getIpData() {
-        return null;
+        Observable<IpModel> observable = ViseHttp.RETROFIT().baseUrl(Config.BASE_URL_ip)
+                .create(IpApi.class).getIpData("myip");
+        return observable.compose(RxUtil.<IpModel>rxSchedulerHelper());
     }
 }

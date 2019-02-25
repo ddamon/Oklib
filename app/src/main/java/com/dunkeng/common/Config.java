@@ -30,7 +30,7 @@ public class Config {
     /**
      * ip
      */
-    public static final String BASE_URL_ip = "http://ip.taobao.com/service/getIpInfo2.php?ip=myip";
+    public static final String BASE_URL_ip = "http://ip.taobao.com/service/";
 //    public static final String BASE_URL_ip = "http://ip.taobao.com/service/getIpInfo2.php?ip=myip";
 
     public static class Data {
