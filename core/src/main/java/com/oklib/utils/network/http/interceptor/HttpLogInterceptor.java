@@ -44,7 +44,7 @@ public class HttpLogInterceptor implements Interceptor {
         if (message.startsWith("--> POST") || message.startsWith("--> GET")) {
             showMessage.setLength(0);
         }
-        showMessage.append(message);
+        showMessage.append(message.concat("\n"));
         // 响应结束，打印整条日志
         if (message.startsWith("<-- END HTTP")) {
             Logger.i(showMessage.toString());

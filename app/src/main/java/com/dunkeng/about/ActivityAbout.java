@@ -2,6 +2,7 @@ package com.dunkeng.about;
 
 import android.os.Bundle;
 
+import com.dunkeng.R;
 import com.oklib.base.CoreBaseActivity;
 
 /**
@@ -12,7 +13,7 @@ import com.oklib.base.CoreBaseActivity;
 public class ActivityAbout extends CoreBaseActivity {
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.activity_about;
     }
 
     @Override

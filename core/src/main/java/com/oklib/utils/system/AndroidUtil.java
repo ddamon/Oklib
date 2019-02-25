@@ -113,4 +113,7 @@ public class AndroidUtil {
         Logger.i(sb.toString());
         return sb.toString();
     }
+    public static void main(String[] args){
+        printSystemInfo();
+    }
 }

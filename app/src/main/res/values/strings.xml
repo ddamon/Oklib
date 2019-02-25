@@ -1,11 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
     <string name="app_name" translatable="false">蹲坑</string>
+    <string name="app_github" translatable="false">https://github.com/ddamon/Oklib</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings" translatable="false">Settings</string>
-    <string name="slogan" translatable="false">时间太长，会得痔疮</string>
+    <string name="slogan" translatable="false">谨防痔疮</string>
 
     <string name="menu_name_zhihu" translatable="false">知乎精编</string>
     <string name="menu_name_news" translatable="false">热门新闻</string>
@@ -15,19 +16,19 @@
     <string name="menu_name_learn" translatable="false">学习</string>
     <string name="menu_name_share" translatable="false">分享</string>
     <string name="menu_name_about" translatable="false">关于</string>
-    <string name="title_activity_rx_bus_test">Sign in</string>
+
+    <string name="title_activity_rx_bus_test" translatable="false">Sign in</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
+    <string name="prompt_email" translatable="false">Email</string>
+    <string name="prompt_password" translatable="false">Password (optional)</string>
+    <string name="action_sign_in" translatable="false">Sign in or register</string>
+    <string name="action_sign_in_short" translatable="false">Sign in</string>
+    <string name="error_invalid_email" translatable="false">This email address is invalid</string>
+    <string name="error_invalid_password" translatable="false">This password is too short</string>
+    <string name="error_incorrect_password" translatable="false">This password is incorrect</string>
+    <string name="error_field_required" translatable="false">This field is required</string>
+    <string name="permission_rationale" translatable="false">"Contacts permissions are needed for providing email
         completions."
     </string>
-
 
 </resources>

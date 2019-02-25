@@ -1,7 +1,7 @@
 package com.dunkeng.common.api;
 
 
-import com.dunkeng.main.model.Lunar;
+import com.dunkeng.main.model.LunarModel;
 import com.dunkeng.news.model.News;
 import com.dunkeng.wx.model.Wx;
 
@@ -36,7 +36,7 @@ public interface TianxingApi {
     Observable<Wx> getWeixinNews(@Query("key") String key, @Query("num") int num);
     //万年历
     @GET("/txapi/lunar")
-    Observable<Lunar> getLunar(@Query("key") String key, @Query("date") String date);
+    Observable<LunarModel> getLunar(@Query("key") String key, @Query("date") String date);
 
 
 }

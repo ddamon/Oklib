@@ -27,6 +27,11 @@ public class Config {
      */
     public static final String BASE_URL_ZHIHU = "http://news-at.zhihu.com/api/4/";
 
+    /**
+     * ip
+     */
+    public static final String BASE_URL_ip = "http://ip.taobao.com/service/getIpInfo2.php?ip=myip";
+//    public static final String BASE_URL_ip = "http://ip.taobao.com/service/getIpInfo2.php?ip=myip";
 
     public static class Data {
         public static final int pageSize = 20;

@@ -18,7 +18,9 @@ import com.dm.learn.rxjava.LearnActivityRxjavaActivity;
 import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.main.contract.MainContract;
-import com.dunkeng.main.model.Lunar;
+import com.dunkeng.main.model.IpBean;
+import com.dunkeng.main.model.IpModel;
+import com.dunkeng.main.model.LunarModel;
 import com.dunkeng.main.model.LunarBean;
 import com.dunkeng.main.model.MainModel;
 import com.dunkeng.main.presenter.MainPresenter;
@@ -84,6 +86,7 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     public void initData() {
         super.initData();
         mPresenter.getLunarData();
+        mPresenter.getIpData();
     }
 
     @Override
@@ -141,6 +144,7 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START);
             mPresenter.getLunarData();
+            mPresenter.getIpData();
         }
     }
 
@@ -166,7 +170,7 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     }
 
     @Override
-    public void showLunar(Lunar info) {
+    public void showLunar(LunarModel info) {
         if (info == null) {
             return;
         }
@@ -176,15 +180,24 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
         }
         LunarBean lunarBean = data.get(0);
         TextView strDate = navigationView.findViewById(R.id.str_date);
-        strDate.setText(lunarBean.getLunardate() + "\n" + lunarBean.getLubarmonth() + lunarBean.getLunarday());
+        strDate.setText(lunarBean.getLunardate() + " " + lunarBean.getLubarmonth() + lunarBean.getLunarday());
 
         RxView.clicks(strDate).compose(RxUtil.preventRepeatClicksTransformer()).subscribe(new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
-                Intent intent = IntentUtils.getCalendarIntent();
-                startActivity(intent);
+//                Intent intent = IntentUtils.getCalendarIntent();
+//                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void showIp(IpModel ipModel) {
+        if (ipModel != null && ipModel.getData() != null) {
+            IpBean ipBean = ipModel.getData();
+            TextView str = navigationView.findViewById(R.id.str_ip);
+            str.setText(ipBean.getIp() + "(" + ipBean.getIsp() + ")\n" + ipBean.getCountry() + ipBean.getRegion() + ipBean.getCity());
+        }
     }
 
     @Override

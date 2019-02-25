@@ -7,5 +7,5 @@ import com.dunkeng.common.CommonModel;
  *
  * @author Damon
  */
-public class Lunar extends CommonModel<LunarBean> {
+public class LunarModel extends CommonModel<LunarBean> {
 }
