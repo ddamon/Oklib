@@ -4,6 +4,7 @@ import com.dunkeng.main.model.IpModel;
 import com.dunkeng.main.model.LunarModel;
 import com.oklib.base.CoreBaseModel;
 import com.oklib.base.CoreBaseView;
+import com.oklib.utils.network.http.mode.CacheResult;
 
 import io.reactivex.Observable;
 
@@ -21,6 +22,6 @@ public interface MainContract {
 
     interface MainView extends CoreBaseView {
         void showLunar(LunarModel info);
-        void showIp(IpModel ipModel);
+        void showIp(CacheResult<IpModel> ipModel);
     }
 }

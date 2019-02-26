@@ -20,8 +20,8 @@ import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.main.contract.MainContract;
 import com.dunkeng.main.model.IpBean;
 import com.dunkeng.main.model.IpModel;
-import com.dunkeng.main.model.LunarModel;
 import com.dunkeng.main.model.LunarBean;
+import com.dunkeng.main.model.LunarModel;
 import com.dunkeng.main.model.MainModel;
 import com.dunkeng.main.presenter.MainPresenter;
 import com.dunkeng.meizi.FragmentMeizi;
@@ -36,6 +36,7 @@ import com.oklib.utils.IntentUtils;
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.assist.ShareUtils;
 import com.oklib.utils.helper.RxUtil;
+import com.oklib.utils.network.http.mode.CacheResult;
 import com.oklib.utils.view.SnackbarUtil;
 
 import java.util.List;
@@ -85,8 +86,8 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     @Override
     public void initData() {
         super.initData();
-        mPresenter.getLunarData();
-        mPresenter.getIpData();
+//        mPresenter.getLunarData();
+//        mPresenter.getIpData();
     }
 
     @Override
@@ -143,7 +144,7 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     public void onOpenDrawer() {
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START);
-            mPresenter.getLunarData();
+//            mPresenter.getLunarData();
             mPresenter.getIpData();
         }
     }
@@ -192,12 +193,18 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     }
 
     @Override
-    public void showIp(IpModel ipModel) {
-        if (ipModel != null && ipModel.getData() != null) {
-            IpBean ipBean = ipModel.getData();
-            TextView str = navigationView.findViewById(R.id.str_ip);
-            str.setText(ipBean.getIp() + "(" + ipBean.getIsp() + ")\n" + ipBean.getCountry() + ipBean.getRegion() + ipBean.getCity());
+    public void showIp(CacheResult<IpModel> ipModel) {
+        if (ipModel == null) {
+            return;
         }
+        TextView str = navigationView.findViewById(R.id.str_ip);
+        IpBean ipBean = ipModel.getCacheData().getData();
+        if (ipModel.isCache()) {
+            Logger.e("来自缓存");
+        } else {
+            Logger.e("来自网络");
+        }
+        str.setText(ipBean.getIp() + "(" + ipBean.getIsp() + ")\n" + ipBean.getCountry() + ipBean.getRegion() + ipBean.getCity());
     }
 
     @Override

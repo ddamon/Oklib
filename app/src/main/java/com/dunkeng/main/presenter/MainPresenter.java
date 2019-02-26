@@ -5,6 +5,9 @@ import com.dunkeng.main.model.IpModel;
 import com.dunkeng.main.model.LunarModel;
 import com.dunkeng.main.model.MainModel;
 import com.oklib.base.CoreBasePresenter;
+import com.oklib.utils.network.http.ViseHttp;
+import com.oklib.utils.network.http.mode.CacheMode;
+import com.oklib.utils.network.http.mode.CacheResult;
 
 import io.reactivex.functions.Consumer;
 
@@ -37,16 +40,17 @@ public class MainPresenter extends CoreBasePresenter<MainModel, MainContract.Mai
 
     public void getIpData() {
         mModel.getIpData()
+                .compose(ViseHttp.getApiCache().<IpModel>transformer(CacheMode.FIRST_REMOTE, IpModel.class))
                 .subscribe(
-                        new Consumer<IpModel>() {
+                        new Consumer<CacheResult<IpModel>>() {
                             @Override
-                            public void accept(IpModel lunar) throws Exception {
+                            public void accept(CacheResult<IpModel> lunar) throws Exception {
                                 mView.showIp(lunar);
                             }
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                mView.showMsg("数据加载失败");
+                                mView.showMsg("ip获取失败");
                             }
                         });
     }
