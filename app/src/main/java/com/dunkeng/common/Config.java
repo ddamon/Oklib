@@ -21,7 +21,7 @@ public class Config {
     /**
      * gank
      */
-    public static final String BASE_URL_GANK = "http://gank.io/api/data/";
+    public static final String BASE_URL_GANK = "http://gank.io/api/";
     /**
      * zhihu
      */

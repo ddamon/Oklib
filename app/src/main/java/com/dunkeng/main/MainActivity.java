@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.dm.learn.rxjava.LearnActivityRxjavaActivity;
 import com.dunkeng.R;
+import com.dunkeng.about.ActivityAbout;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
+import com.dunkeng.ganhuo.FragmentGanHuosMain;
 import com.dunkeng.main.contract.MainContract;
 import com.dunkeng.main.model.IpBean;
 import com.dunkeng.main.model.IpModel;
@@ -109,9 +111,6 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
         } else if (id == R.id.nav_news) {
             FragmentNewsMain fragmentNewsMain = FragmentNewsMain.newInstance(0);
             loadRootFragment(R.id.main_container, fragmentNewsMain);
-        } else if (id == R.id.meizi) {
-            loadRootFragment(R.id.main_container, new FragmentMeizi());
-
         } else if (id == R.id.tools) {
             loadRootFragment(R.id.main_container, new FragmentTools());
 
@@ -125,9 +124,13 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
             ShareUtils shareUtils = new ShareUtils(mContext);
             shareUtils.shareText(txt);
         } else if (id == R.id.nav_about) {
-//            ToastUtils.showToast(this, getString(R.string.app_name));
-//            startActivity(new Intent(this, TestActivity.class));
-//            testRxLifecycle();
+            startActivity(new Intent(this, ActivityAbout.class));
+        } else if (id == R.id.menu_name_ganhuo_category) {
+            FragmentGanHuosMain fragmentNewsMain = FragmentGanHuosMain.newInstance(0);
+            loadRootFragment(R.id.main_container, fragmentNewsMain);
+        } else if (id == R.id.menu_name_ganhuo_fuli) {
+            loadRootFragment(R.id.main_container, new FragmentMeizi());
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

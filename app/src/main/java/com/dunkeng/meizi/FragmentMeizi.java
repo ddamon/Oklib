@@ -75,16 +75,18 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
                 mOpenDraweListener.onOpenDrawer();
             }
         });
-        coreRecyclerView.init(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL), new BaseQuickAdapter<Meizi, BaseViewHolder>(R.layout.item_meizi) {
-            @Override
-            protected void convert(BaseViewHolder helper, Meizi item) {
+        coreRecyclerView.init(
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL),
+                new BaseQuickAdapter<Meizi, BaseViewHolder>(R.layout.item_meizi) {
+                    @Override
+                    protected void convert(BaseViewHolder helper, Meizi item) {
 //                helper.setText(R.id.title, item.getDesc());
-                ImageLoaderUtil.getInstance().loadImage(mContext,
-                        new ImageLoader.Builder()
-                                .imgView((ImageView) helper.getView(R.id.image))
-                                .url(item.getUrl()).build());
-            }
-        });
+                        ImageLoaderUtil.getInstance().loadImage(mContext,
+                                new ImageLoader.Builder()
+                                        .imgView((ImageView) helper.getView(R.id.image))
+                                        .url(item.getUrl()).build());
+                    }
+                });
         coreRecyclerView.openLoadMore(Config.Data.pageSize, new CoreRecyclerView.addDataListener() {
             @Override
             public void addData(int page) {

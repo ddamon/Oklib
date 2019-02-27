@@ -11,11 +11,33 @@
     <string name="menu_name_zhihu" translatable="false">知乎精编</string>
     <string name="menu_name_news" translatable="false">热门新闻</string>
     <string name="menu_name_weixin" translatable="false">微信精选</string>
-    <string name="menu_name_girls" translatable="false">好风景</string>
     <string name="menu_name_tools" translatable="false">实用工具</string>
     <string name="menu_name_learn" translatable="false">学习</string>
     <string name="menu_name_share" translatable="false">分享</string>
     <string name="menu_name_about" translatable="false">关于</string>
+
+    <string name="menu_name_ganhuo_today" translatable="false">今日干货</string>
+    <string name="menu_name_ganhuo_category" translatable="false">分类干货</string>
+
+
+    <string name="menu_name_ganhuo_android" translatable="false">Android</string>
+    <string name="menu_name_ganhuo_ios" translatable="false">iOS</string>
+    <string name="menu_name_ganhuo_qianduan" translatable="false">前端</string>
+    <string name="menu_name_ganhuo_app" translatable="false">App</string>
+    <string name="menu_name_ganhuo_tuozhan" translatable="false">拓展资源</string>
+    <string name="menu_name_ganhuo_xia" translatable="false">瞎推荐</string>
+    <string name="menu_name_ganhuo_video" translatable="false">休息视频</string>
+    <string name="menu_name_ganhuo_fuli" translatable="false">福利</string>
+
+    <string-array name="ganhuo_tab">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>前端</item>
+        <item>App</item>
+        <item>拓展资源</item>
+        <item>瞎推荐</item>
+        <item>休息视频</item>
+    </string-array>
 
     <string name="title_activity_rx_bus_test" translatable="false">Sign in</string>
     <!-- Strings related to login -->

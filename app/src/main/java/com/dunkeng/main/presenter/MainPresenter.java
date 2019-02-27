@@ -40,7 +40,7 @@ public class MainPresenter extends CoreBasePresenter<MainModel, MainContract.Mai
 
     public void getIpData() {
         mModel.getIpData()
-                .compose(ViseHttp.getApiCache().<IpModel>transformer(CacheMode.FIRST_REMOTE, IpModel.class))
+                .compose(ViseHttp.getApiCache().<IpModel>transformer(CacheMode.FIRST_CACHE, IpModel.class))
                 .subscribe(
                         new Consumer<CacheResult<IpModel>>() {
                             @Override

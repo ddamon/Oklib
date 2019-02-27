@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        android:title="随便看看">
         <item
             android:id="@+id/nav_zhihu"
             android:checked="true"
@@ -15,10 +17,7 @@
             android:id="@+id/nav_weixin"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_name_weixin" />
-        <item
-            android:id="@+id/meizi"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_name_girls" />
+
         <item
             android:id="@+id/tools"
             android:icon="@drawable/ic_menu_manage"
@@ -27,6 +26,22 @@
             android:id="@+id/learn"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_name_learn" />
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:title="干货">
+        <item
+            android:id="@+id/nav_ganhuo_today"
+            android:icon="@drawable/ic_menu_compass"
+            android:title="@string/menu_name_ganhuo_today" />
+        <item
+            android:id="@+id/menu_name_ganhuo_category"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_name_ganhuo_category" />
+        <item
+            android:id="@+id/menu_name_ganhuo_fuli"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_name_ganhuo_fuli" />
     </group>
 
     <item android:title="其它">
