@@ -1,13 +1,19 @@
 package com.dunkeng.meizi;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
@@ -19,8 +25,6 @@ import com.dunkeng.meizi.model.PictureBean;
 import com.dunkeng.meizi.presenter.MeiziPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
-import com.oklib.widget.imageloader.ImageLoader;
-import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.BaseQuickAdapter;
 import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
@@ -57,6 +61,16 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
 
     @Override
     public void showContent(MeiziResult info) {
+        //在此处设置图片大小
+        for (int i = 0; i < info.beauties.size(); i++) {
+            Glide.with(mContext).load(info.beauties.get(i).getUrl()).transition(new DrawableTransitionOptions().crossFade()).into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    float scale = resource.getIntrinsicWidth() / (float) resource.getIntrinsicHeight();
+                    coreRecyclerView.getRecyclerView().getAdapter().notifyDataSetChanged();
+                }
+            });
+        }
         coreRecyclerView.getAdapter().addData(info.beauties);
     }
 
@@ -75,16 +89,18 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
                 mOpenDraweListener.onOpenDrawer();
             }
         });
-        coreRecyclerView.init(
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL),
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        coreRecyclerView.init(manager,
                 new BaseQuickAdapter<Meizi, BaseViewHolder>(R.layout.item_meizi) {
                     @Override
                     protected void convert(BaseViewHolder helper, Meizi item) {
+                        Glide.with(mContext).load(item.getUrl()).transition(new DrawableTransitionOptions().crossFade()).into((ImageView) helper.getView(R.id.image));
 //                helper.setText(R.id.title, item.getDesc());
-                        ImageLoaderUtil.getInstance().loadImage(mContext,
-                                new ImageLoader.Builder()
-                                        .imgView((ImageView) helper.getView(R.id.image))
-                                        .url(item.getUrl()).build());
+//                        ImageLoaderUtil.getInstance().loadImage(mContext,
+//                                new ImageLoader.Builder()
+//                                        .imgView((ImageView) helper.getView(R.id.image))
+//                                        .url(item.getUrl()).build());
                     }
                 });
         coreRecyclerView.openLoadMore(Config.Data.pageSize, new CoreRecyclerView.addDataListener() {

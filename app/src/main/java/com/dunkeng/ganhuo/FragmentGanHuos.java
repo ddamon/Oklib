@@ -54,12 +54,14 @@ public class FragmentGanHuos extends CoreBaseFragment<GanHuosPresenter, GanHuosM
                     helper.setText(R.id.tv_daily_item_date, item.getCreatedAt());
                 }
                 helper.setText(R.id.tv_daily_item_description, item.getSource());
+                String url = "";
                 if (item.getImages() != null && item.getImages().size() > 0) {
-                    ImageLoaderUtil.getInstance().loadImage(mContext,
-                            new ImageLoader.Builder().placeHolder(R.mipmap.shit_blue)
-                                    .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
-                                    .url(item.getImages().get(0)).build());
+                    url = item.getImages().get(0);
                 }
+                ImageLoaderUtil.getInstance().loadImage(mContext,
+                        new ImageLoader.Builder().placeHolder(R.mipmap.shit_blue).fallback(R.mipmap.shit_blue)
+                                .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
+                                .url(url).build());
             }
         });
         coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {

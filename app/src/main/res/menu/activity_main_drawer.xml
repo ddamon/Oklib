@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group
+        android:id="@+id/g_news"
         android:checkableBehavior="single"
-        android:title="随便看看">
+        android:title="随便看看"
+        android:visible="true">
         <item
             android:id="@+id/nav_zhihu"
             android:checked="true"
@@ -28,8 +29,10 @@
             android:title="@string/menu_name_learn" />
     </group>
     <group
+        android:id="@+id/g_ganke"
         android:checkableBehavior="single"
-        android:title="干货">
+        android:title="干货"
+        android:visible="true">
         <item
             android:id="@+id/nav_ganhuo_today"
             android:icon="@drawable/ic_menu_compass"
@@ -43,18 +46,18 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_name_ganhuo_fuli" />
     </group>
-
-    <item android:title="其它">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_name_share" />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_name_about" />
-        </menu>
-    </item>
-
+    <group
+        android:id="@+id/g_other"
+        android:checkableBehavior="none"
+        android:title="干货"
+        android:visible="true">
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/menu_name_share" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/menu_name_about" />
+    </group>
 </menu>

@@ -118,6 +118,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     private RequestBuilder loadImg(Context context, ImageLoader imageLoader, RequestBuilder drawableRequestBuilder, boolean isCache) {
         RequestOptions options = new RequestOptions();
+        options.fallback(imageLoader.getFallback());
         if (imageLoader.getPlaceHolder() != 0) {
             options.placeholder(imageLoader.getPlaceHolder());
         }

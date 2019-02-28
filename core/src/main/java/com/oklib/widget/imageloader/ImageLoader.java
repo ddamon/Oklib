@@ -21,7 +21,7 @@ public class ImageLoader {
     private int border;//
     private int roundRadius;//
     private float thumbnailSize;//
-
+    private int fallback;
     private ImageLoader(Builder builder) {
         this.type = builder.type;
         this.url = builder.url;
@@ -32,6 +32,7 @@ public class ImageLoader {
         this.border = builder.border;
         this.roundRadius = builder.roundRadius;
         this.thumbnailSize = builder.thumbnailSize;
+        this.fallback = builder.fallback;
     }
 
     public float getThumbnailSize() {
@@ -69,6 +70,9 @@ public class ImageLoader {
     public int getBorder() {
         return border;
     }
+    public int getFallback() {
+        return fallback;
+    }
 
     public static class Builder {
         private int type;
@@ -80,6 +84,7 @@ public class ImageLoader {
         private int border;//
         private int roundRadius;//
         private float thumbnailSize;//
+        private int fallback;//
 
         public Builder() {
             this.type = ImageLoaderUtil.PIC_SMALL;
@@ -91,6 +96,7 @@ public class ImageLoader {
             this.border = 0;
             this.roundRadius = 0;
             this.thumbnailSize = 1;
+            this.fallback = 0;
         }
 
         public Builder type(int type) {
@@ -137,7 +143,10 @@ public class ImageLoader {
             this.thumbnailSize = thumnailSize;
             return this;
         }
-
+        public Builder fallback(int fallback) {
+            this.fallback = fallback;
+            return this;
+        }
         public ImageLoader build() {
             return new ImageLoader(this);
         }
