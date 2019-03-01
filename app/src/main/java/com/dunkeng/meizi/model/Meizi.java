@@ -25,6 +25,15 @@ public class Meizi implements Serializable {
     private String url;
     private boolean used;
     private String who;
+    private float scale;
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
 
     public String get_id() {
         return _id;
