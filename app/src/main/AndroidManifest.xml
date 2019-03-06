@@ -43,14 +43,13 @@
         <activity
             android:name=".meizi.ActPictureDesc"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
-        <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme" />
+        <activity android:name=".about.ActivityAbout" />
+
+
+        <!--rxjava_learn-->
         <activity
             android:name="com.dm.learn.rxjava.LearnActivityRxjavaActivity"
-            android:label="@string/title_activity_learn_rxjava"
-            android:theme="@style/AppTheme" />
+            android:label="@string/title_activity_learn_rxjava" />
         <activity android:name="com.dm.learn.rxjava.ch11.ActivityValidateText" />
         <activity
             android:name="com.dm.learn.rxjava.rxbus.RxBusTestActivity"
