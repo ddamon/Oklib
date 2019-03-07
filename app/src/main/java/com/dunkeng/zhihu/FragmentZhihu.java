@@ -18,8 +18,6 @@ import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
-import com.oklib.widget.recyclerview.BaseQuickAdapter;
-import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemChildClickListener;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;

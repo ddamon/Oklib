@@ -18,7 +18,7 @@ import io.reactivex.Observable;
 public interface ToolsContract {
 
     interface View extends CoreBaseView {
-        void testRxLifeCycle();
+        void showContent(List<ToolObj> toolObjs);
     }
 
     interface Model extends CoreBaseModel {

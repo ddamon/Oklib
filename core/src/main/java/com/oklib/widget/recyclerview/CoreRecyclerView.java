@@ -11,10 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.BaseAnimation;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.oklib.R;
-import com.oklib.widget.recyclerview.animation.BaseAnimation;
-import com.oklib.widget.recyclerview.listener.OnItemChildClickListener;
-import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 
 public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
@@ -99,7 +100,7 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
         if (addDataListener != null) {
             addDataListener.addData(1);
         }
-        mQuickAdapter.openLoadMore(mQuickAdapter.getPageSize());
+        mQuickAdapter.setEnableLoadMore(true);
         mQuickAdapter.removeAllFooterView();
         mSwipeRefreshLayout.setRefreshing(false);
     }
@@ -107,8 +108,8 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
     @Override
     public void onLoadMoreRequested() {
         mRecyclerView.post(() -> {
-            if (mQuickAdapter.getData().size() < page * mQuickAdapter.getPageSize()) {
-                mQuickAdapter.loadComplete();
+            if (mQuickAdapter.getData().size() < page * mQuickAdapter.setPreLoadNumber()) {
+                mQuickAdapter.loadMoreComplete();
                 if (notLoadingView == null) {
                     notLoadingView = LayoutInflater.from(getContext()).inflate(R.layout.not_loading, (ViewGroup) mRecyclerView.getParent(), false);
                 }
@@ -150,12 +151,12 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
     }
 
     public CoreRecyclerView hideLoadingMore() {
-        mQuickAdapter.hideLoadingMore();
+        mQuickAdapter.loadMoreEnd();
         return this;
     }
 
     public CoreRecyclerView loadComplete() {
-        mQuickAdapter.loadComplete();
+        mQuickAdapter.loadMoreComplete();
         return this;
     }
 
@@ -177,8 +178,8 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
     public CoreRecyclerView openLoadMore(int pageSize, addDataListener addDataListener) {
 //        this.data = data == null ? new ArrayList<T>() : data;
         this.addDataListener = addDataListener;
-        mQuickAdapter.openLoadMore(pageSize);
-        mQuickAdapter.setOnLoadMoreListener(this);
+        mQuickAdapter.setOnLoadMoreListener(this,mRecyclerView);
+        mQuickAdapter.loadmo
         return this;
     }
 
@@ -212,28 +213,15 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
         return this;
     }
 
-    public CoreRecyclerView setEmptyView(boolean isHeadAndEmpty, boolean isFootAndEmpty, View emptyView) {
-        mQuickAdapter.setEmptyView(isHeadAndEmpty, isFootAndEmpty, emptyView);
-        return this;
-    }
-
-    public CoreRecyclerView setEmptyView(boolean isHeadAndEmpty, View emptyView) {
-        mQuickAdapter.setEmptyView(isHeadAndEmpty, emptyView);
-        return this;
-    }
 
     public CoreRecyclerView setEmptyView(View emptyView) {
         mQuickAdapter.setEmptyView(emptyView);
         return this;
     }
 
-    public CoreRecyclerView setLoadingView(View loadingView) {
-        mQuickAdapter.setLoadingView(loadingView);
-        return this;
-    }
 
-    public CoreRecyclerView setLoadMoreFailedView(View view) {
-        mQuickAdapter.setLoadMoreFailedView(view);
+    public CoreRecyclerView setLoadMoreFailed() {
+        mQuickAdapter.loadMoreFail();
         return this;
     }
 
@@ -242,15 +230,6 @@ public class CoreRecyclerView extends LinearLayout implements BaseQuickAdapter.R
         return this;
     }
 
-    public CoreRecyclerView showLoadMoreFailedView() {
-        mQuickAdapter.showLoadMoreFailedView();
-        return this;
-    }
-
-    public CoreRecyclerView startAnim(Animator anim, int index) {
-        mQuickAdapter.startAnim(anim, index);
-        return this;
-    }
 
     public CoreRecyclerView openRefresh() {
         mSwipeRefreshLayout.setEnabled(true);

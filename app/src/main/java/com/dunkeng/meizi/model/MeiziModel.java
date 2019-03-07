@@ -17,6 +17,8 @@ public class MeiziModel implements MeiziContract.Model {
 
     @Override
     public Observable<MeiziResult> getMeizi(int page) {
-        return ViseHttp.RETROFIT().baseUrl(Config.BASE_URL_GANK).create(GankApi.class).getMeizi(Config.Data.pageSize, page).compose(RxUtil.rxSchedulerHelper());
+        return ViseHttp.RETROFIT().baseUrl(Config.BASE_URL_GANK)
+                .create(GankApi.class).getMeizi(Config.Data.pageSize, page)
+                .compose(RxUtil.rxSchedulerHelper());
     }
 }

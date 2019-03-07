@@ -1,7 +1,9 @@
 package com.dunkeng.tools.model;
 
+import com.dunkeng.R;
 import com.dunkeng.tools.contract.ToolsContract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -16,6 +18,8 @@ import io.reactivex.Observable;
 public class ToolsModel implements ToolsContract.Model {
     @Override
     public Observable<List<ToolObj>> getData() {
-        return null;
+        List<ToolObj> toolObjs = new ArrayList<>();
+        toolObjs.add(new ToolObj("web摄像头", R.mipmap.shit_blue));
+        return Observable.fromArray(toolObjs);
     }
 }

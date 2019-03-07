@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
@@ -21,8 +23,6 @@ import com.dunkeng.meizi.model.PictureBean;
 import com.dunkeng.meizi.presenter.MeiziPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
-import com.oklib.widget.recyclerview.BaseQuickAdapter;
-import com.oklib.widget.recyclerview.BaseViewHolder;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
@@ -124,7 +124,7 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
     @Override
     public void showMsg(String msg) {
         ToastUtils.showToast(mContext, msg);
-        coreRecyclerView.showLoadMoreFailedView();
+        coreRecyclerView.getAdapter().getEmptyView();
     }
 
 }

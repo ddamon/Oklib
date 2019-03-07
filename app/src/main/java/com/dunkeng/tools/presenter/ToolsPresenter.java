@@ -17,11 +17,8 @@ public class ToolsPresenter extends CoreBasePresenter<ToolsContract.Model, Tools
     }
 
     public void getData() {
-        mView.showMsg("tool");
-    }
-
-    public void testWebviewCam() {
-
+        mModel.getData().subscribe(bean -> mView.showContent(bean),
+                e -> mView.showMsg("数据加载失败"));
     }
 
 }
