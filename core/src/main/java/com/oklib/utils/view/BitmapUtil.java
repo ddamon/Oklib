@@ -112,14 +112,16 @@ public class BitmapUtil {
         matrix.postScale(scaleWidth, scaleHeight);
         // 得到新的图片
         Bitmap newBitMap = Bitmap.createBitmap(bitMap, 0, 0, width, height, matrix, true);
-        if (needRecycle)
+        if (needRecycle) {
             bitMap.recycle();
+        }
         return newBitMap;
     }
 
     public static boolean saveBitmap(Bitmap bitmap, File file) {
-        if (bitmap == null)
+        if (bitmap == null) {
             return false;
+        }
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);

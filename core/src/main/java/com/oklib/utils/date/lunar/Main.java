@@ -58,8 +58,9 @@ public class Main {
         // Festival
         println("Festival");
         LunarCalendar festivalDay = LunarCalendar.obtainCalendar(2016, 10, 1);
-        for (String festival : festivalDay.getFestivals().getSet())
+        for (String festival : festivalDay.getFestivals().getSet()) {
             print(festival);
+        }
         println();
         println();
 

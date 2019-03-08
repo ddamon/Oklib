@@ -35,7 +35,9 @@ public class MemoryCache implements ICache {
 
     @Override
     public synchronized void put(String key, Object value) {
-        if (TextUtils.isEmpty(key)) return;
+        if (TextUtils.isEmpty(key)) {
+            return;
+        }
 
         if (cache.get(key) != null) {
             cache.remove(key);

@@ -77,8 +77,12 @@ public class FieldUtil {
         Type type = f.getGenericType();
         if (type instanceof ParameterizedType) {
             type = ((ParameterizedType) type).getActualTypeArguments()[0];
-            if (type instanceof Class<?>) return (Class<?>) type;
-        } else if (type instanceof Class<?>) return (Class<?>) type;
+            if (type instanceof Class<?>) {
+                return (Class<?>) type;
+            }
+        } else if (type instanceof Class<?>) {
+            return (Class<?>) type;
+        }
         return null;
     }
 

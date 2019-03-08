@@ -41,7 +41,7 @@
             android:name=".details.ActWebDetail"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
         <activity
-            android:name=".meizi.ActPictureDesc"
+            android:name=".meizi.view.ActPictureDesc"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
         <activity android:name=".about.ActivityAbout" />
 

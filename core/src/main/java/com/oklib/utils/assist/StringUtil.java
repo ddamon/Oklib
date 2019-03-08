@@ -125,11 +125,15 @@ public class StringUtil {
         IP = trimSpaces(IP);
         if (IP.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")) {
             String s[] = IP.split("\\.");
-            if (Integer.parseInt(s[0]) < 255)
-                if (Integer.parseInt(s[1]) < 255)
-                    if (Integer.parseInt(s[2]) < 255)
-                        if (Integer.parseInt(s[3]) < 255)
+            if (Integer.parseInt(s[0]) < 255) {
+                if (Integer.parseInt(s[1]) < 255) {
+                    if (Integer.parseInt(s[2]) < 255) {
+                        if (Integer.parseInt(s[3]) < 255) {
                             b = true;
+                        }
+                    }
+                }
+            }
         }
         return b;
     }
@@ -141,10 +145,12 @@ public class StringUtil {
      * @param content
      * @return ArrayList<String>    返回类型
      */
+   static Pattern p = Pattern.compile("1([\\d]{10})|((\\+[0-9]{2,4})?\\(?[0-9]+\\)?-?)?[0-9]{7,8}");
     public static ArrayList<String> checkPhone(String content) {
         ArrayList<String> list = new ArrayList<String>();
-        if (isEmpty(content)) return list;
-        Pattern p = Pattern.compile("1([\\d]{10})|((\\+[0-9]{2,4})?\\(?[0-9]+\\)?-?)?[0-9]{7,8}");
+        if (isEmpty(content)) {
+            return list;
+        }
         Matcher m = p.matcher(content);
         while (m.find()) {
             list.add(m.group());
@@ -187,8 +193,9 @@ public class StringUtil {
      * @return String
      */
     public static String getFileName(String path) {
-        if (isNullString(path))
+        if (isNullString(path)) {
             return null;
+        }
         int bingindex = path.lastIndexOf("/");
         int endindex = path.lastIndexOf(".");
         return path.substring(bingindex + 1, endindex);
@@ -369,8 +376,9 @@ public class StringUtil {
      * @return String
      */
     public static String stringFilter(String input) {
-        if (input == null)
+        if (input == null) {
             return null;
+        }
         input = input.replaceAll("【", "[").replaceAll("】", "]")
                 .replaceAll("！", "!").replaceAll("：", ":");// 替换中文标号
         String regEx = "[『』]"; // 清除掉特殊字符
@@ -386,16 +394,18 @@ public class StringUtil {
      * @return String
      */
     public static String toDBC(String input) {
-        if (input == null)
+        if (input == null) {
             return null;
+        }
         char[] c = input.toCharArray();
         for (int i = 0; i < c.length; i++) {
             if (c[i] == 12288) {
                 c[i] = (char) 32;
                 continue;
             }
-            if (c[i] > 65280 && c[i] < 65375)
+            if (c[i] > 65280 && c[i] < 65375) {
                 c[i] = (char) (c[i] - 65248);
+            }
         }
         return new String(c);
     }
@@ -492,8 +502,9 @@ public class StringUtil {
      */
     public static int getThemeNum(String content) {
         int tnum = -1;
-        if (isNullOrEmpty(content))
+        if (isNullOrEmpty(content)) {
             return tnum;
+        }
         int a = content.indexOf(".");
         if (a > 0) {
             String num = content.substring(0, a);
@@ -533,8 +544,9 @@ public class StringUtil {
      * @return String
      */
     public static String detailNum(String oldnum) {
-        if (isNullOrEmpty(oldnum))
+        if (isNullOrEmpty(oldnum)) {
             return oldnum;
+        }
         int newnum = Integer.parseInt(oldnum);
         return newnum + ".";
     }
@@ -565,8 +577,9 @@ public class StringUtil {
     public static String resetStoreNum(String str) {
         String value = "";
         try {
-            if (str == null || str.length() < 1)
+            if (str == null || str.length() < 1) {
                 return value;
+            }
             String[] results = str.split(",");
             String[] newarr = getStoreArr(results);
             for (int i = 0; i < newarr.length; i++) {
@@ -649,7 +662,9 @@ public class StringUtil {
      * @return String  转换后的距离
      */
     public static String distanceSize(double distance) {
-        if (distance < 1.0) return (int) (distance * 1000) + "m";
+        if (distance < 1.0) {
+            return (int) (distance * 1000) + "m";
+        }
         String dd = "0";
         try {
             DecimalFormat fnum = new DecimalFormat("##0.00");
@@ -669,8 +684,9 @@ public class StringUtil {
      * @return String    返回类型
      */
     public static String replaceResult(String content) {
-        if (!isEmpty(content))
+        if (!isEmpty(content)) {
             return content = content.replace("\\", "").replace("\"{", "{").replace("}\"", "}");
+        }
         return content;
     }
 
@@ -681,14 +697,18 @@ public class StringUtil {
      * @return 设定文件
      */
     public static String parseStr(String value) {
-        if (StringUtil.isNullString(value)) return "0.0";
+        if (StringUtil.isNullString(value)) {
+            return "0.0";
+        }
         DecimalFormat df = new DecimalFormat("######0.0");
         double mvalue = Double.parseDouble(value);
         return df.format(mvalue);
     }
 
     public static String parseStr(double value) {
-        if (value == 0) return "0.0";
+        if (value == 0) {
+            return "0.0";
+        }
         DecimalFormat df = new DecimalFormat("######0.0");
         return df.format(Double.parseDouble(String.valueOf(value)));
     }
@@ -706,8 +726,9 @@ public class StringUtil {
                 c[i] = (char) 32;
                 continue;
             }
-            if (c[i] > 65280 && c[i] < 65375)
+            if (c[i] > 65280 && c[i] < 65375) {
                 c[i] = (char) (c[i] - 65248);
+            }
         }
         return new String(c);
     }
@@ -767,8 +788,9 @@ public class StringUtil {
      * @return 转换异常返回 0
      */
     public static int toInt(Object obj) {
-        if (obj == null)
+        if (obj == null) {
             return 0;
+        }
         return toInt(obj.toString(), 0);
     }
 

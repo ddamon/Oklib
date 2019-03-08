@@ -2,8 +2,8 @@ package com.dunkeng.ganhuo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
@@ -14,20 +14,23 @@ import com.dunkeng.ganhuo.model.GanHuoBean;
 import com.dunkeng.ganhuo.model.GanHuos;
 import com.dunkeng.ganhuo.model.GanHuosModel;
 import com.dunkeng.ganhuo.presenter.GanHuosPresenter;
+import com.dunkeng.ganhuo.view.GanHuosAdapter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
-import com.oklib.widget.imageloader.ImageLoader;
-import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
-import com.oklib.widget.recyclerview.listener.OnItemClickListener;
+import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+
+import butterknife.BindView;
 
 
 /**
  * @author Damon
  */
 public class FragmentGanHuos extends CoreBaseFragment<GanHuosPresenter, GanHuosModel> implements GanHuosContract.ViewGanHuos {
+    @BindView(R.id.recycler)
     CoreRecyclerView coreRecyclerView;
     private int pageNum = 20;
+    private GanHuosAdapter adapter;
 
     public static FragmentGanHuos newInstance(int position) {
         FragmentGanHuos fragment = new FragmentGanHuos();
@@ -37,35 +40,39 @@ public class FragmentGanHuos extends CoreBaseFragment<GanHuosPresenter, GanHuosM
         return fragment;
     }
 
-    /**
-     * 初始化view
-     *
-     * @return
-     */
+
     @Override
-    public View getLayoutView() {
-        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<GanHuoBean, BaseViewHolder>(R.layout.item_news) {
+    public void initData() {
+        int position = getArguments().getInt(Config.ArgumentKey.ARG_POSITION, 0);
+        String[] types = getContext().getResources().getStringArray(R.array.ganhuo_tab);
+        String type = types[position];
+        mPresenter.getGanHuosData(type, pageNum);
+    }
+
+    @Override
+    public void showContent(GanHuos info) {
+        adapter.addAll(info.getResults());
+    }
+
+    @Override
+    public void showTabList(String[] mTabs) {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.base_recyclerview;
+    }
+
+    @Override
+    public void initUI(View view, @Nullable Bundle savedInstanceState) {
+        adapter = new GanHuosAdapter(mContext);
+        coreRecyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
-            protected void convert(BaseViewHolder helper, GanHuoBean item) {
-                helper.setText(R.id.tv_daily_item_title, item.getDesc());
-                if (item.getCreatedAt() != null) {
-                    helper.setText(R.id.tv_daily_item_date, item.getCreatedAt());
-                }
-                helper.setText(R.id.tv_daily_item_description, item.getSource());
-                String url = "";
-                if (item.getImages() != null && item.getImages().size() > 0) {
-                    url = item.getImages().get(0);
-                }
-                ImageLoaderUtil.getInstance().loadImage(mContext,
-                        new ImageLoader.Builder().placeHolder(R.mipmap.shit_blue).fallback(R.mipmap.shit_blue)
-                                .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
-                                .url(url).build());
-            }
-        });
-        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GanHuoBean newslistBean = ((GanHuoBean) adapter.getData().get(position));
+            public void onItemClick(View view, int position) {
+                GanHuoBean newslistBean = ((GanHuoBean) adapter.getAllData().get(position));
                 if (newslistBean == null) {
                     return;
                 }
@@ -80,42 +87,15 @@ public class FragmentGanHuos extends CoreBaseFragment<GanHuosPresenter, GanHuosM
                 ActWebDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), detailBean);
             }
         });
-        //单独使用refresh需要使用带参数的
-        coreRecyclerView.openRefresh(new CoreRecyclerView.addDataListener() {
+
+
+        coreRecyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void addData(int page) {
+            public void onRefresh() {
+                adapter.clear();
                 initData();
             }
         });
-        return coreRecyclerView;
-    }
-
-    @Override
-    public void initData() {
-        int position = getArguments().getInt(Config.ArgumentKey.ARG_POSITION, 0);
-        String[] types = getContext().getResources().getStringArray(R.array.ganhuo_tab);
-        String type = types[position];
-        mPresenter.getGanHuosData(type, pageNum);
-    }
-
-    @Override
-    public void showContent(GanHuos info) {
-        coreRecyclerView.getAdapter().addData(info.getResults());
-    }
-
-    @Override
-    public void showTabList(String[] mTabs) {
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initUI(View view, @Nullable Bundle savedInstanceState) {
-
     }
 
     @Override

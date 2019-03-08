@@ -110,7 +110,9 @@ public class PhotoView extends ImageView {
 
     private void init() {
         super.setScaleType(ScaleType.MATRIX);
-        if (mScaleType == null) mScaleType = ScaleType.CENTER_INSIDE;
+        if (mScaleType == null) {
+            mScaleType = ScaleType.CENTER_INSIDE;
+        }
         mRotateDetector = new RotateGestureDetector(mRotateListener);
         mDetector = new GestureDetector(getContext(), mGestureListener);
         mScaleDetector = new ScaleGestureDetector(getContext(), mScaleListener);
@@ -139,7 +141,9 @@ public class PhotoView extends ImageView {
 
     @Override
     public void setScaleType(ScaleType scaleType) {
-        if (scaleType == ScaleType.MATRIX) return;
+        if (scaleType == ScaleType.MATRIX) {
+            return;
+        }
 
         if (scaleType != mScaleType) {
             mScaleType = scaleType;
@@ -244,8 +248,9 @@ public class PhotoView extends ImageView {
             return;
         }
 
-        if (!hasSize(drawable))
+        if (!hasSize(drawable)) {
             return;
+        }
 
         if (!hasDrawable) {
             hasDrawable = true;
@@ -265,21 +270,33 @@ public class PhotoView extends ImageView {
 
     private static int getDrawableWidth(Drawable d) {
         int width = d.getIntrinsicWidth();
-        if (width <= 0) width = d.getMinimumWidth();
-        if (width <= 0) width = d.getBounds().width();
+        if (width <= 0) {
+            width = d.getMinimumWidth();
+        }
+        if (width <= 0) {
+            width = d.getBounds().width();
+        }
         return width;
     }
 
     private static int getDrawableHeight(Drawable d) {
         int height = d.getIntrinsicHeight();
-        if (height <= 0) height = d.getMinimumHeight();
-        if (height <= 0) height = d.getBounds().height();
+        if (height <= 0) {
+            height = d.getMinimumHeight();
+        }
+        if (height <= 0) {
+            height = d.getBounds().height();
+        }
         return height;
     }
 
     private void initBase() {
-        if (!hasDrawable) return;
-        if (!isKnowSize) return;
+        if (!hasDrawable) {
+            return;
+        }
+        if (!isKnowSize) {
+            return;
+        }
 
         mBaseMatrix.reset();
         mAnimaMatrix.reset();
@@ -360,8 +377,12 @@ public class PhotoView extends ImageView {
     }
 
     private void initCenter() {
-        if (!hasDrawable) return;
-        if (!isKnowSize) return;
+        if (!hasDrawable) {
+            return;
+        }
+        if (!isKnowSize) {
+            return;
+        }
 
         Drawable img = getDrawable();
 
@@ -580,7 +601,9 @@ public class PhotoView extends ImageView {
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (isEnable) {
             final int Action = event.getActionMasked();
-            if (event.getPointerCount() >= 2) hasMultiTouch = true;
+            if (event.getPointerCount() >= 2) {
+                hasMultiTouch = true;
+            }
 
             mDetector.onTouchEvent(event);
             if (isRotateEnable) {
@@ -588,7 +611,9 @@ public class PhotoView extends ImageView {
             }
             mScaleDetector.onTouchEvent(event);
 
-            if (Action == MotionEvent.ACTION_UP || Action == MotionEvent.ACTION_CANCEL) onUp();
+            if (Action == MotionEvent.ACTION_UP || Action == MotionEvent.ACTION_CANCEL) {
+                onUp();
+            }
 
             return true;
         } else {
@@ -597,16 +622,19 @@ public class PhotoView extends ImageView {
     }
 
     private void onUp() {
-        if (mTranslate.isRuning) return;
+        if (mTranslate.isRuning) {
+            return;
+        }
 
         if (canRotate || mDegrees % 90 != 0) {
             float toDegrees = (int) (mDegrees / 90) * 90;
             float remainder = mDegrees % 90;
 
-            if (remainder > 45)
+            if (remainder > 45) {
                 toDegrees += 90;
-            else if (remainder < -45)
+            } else if (remainder < -45) {
                 toDegrees -= 90;
+            }
 
             mTranslate.withRotate((int) mDegrees, (int) toDegrees);
 
@@ -648,8 +676,9 @@ public class PhotoView extends ImageView {
         int ty = 0;
 
         if (imgRect.width() <= mWidgetRect.width()) {
-            if (!isImageCenterWidth(imgRect))
+            if (!isImageCenterWidth(imgRect)) {
                 tx = -(int) ((mWidgetRect.width() - imgRect.width()) / 2 - imgRect.left);
+            }
         } else {
             if (imgRect.left > mWidgetRect.left) {
                 tx = (int) (imgRect.left - mWidgetRect.left);
@@ -659,8 +688,9 @@ public class PhotoView extends ImageView {
         }
 
         if (imgRect.height() <= mWidgetRect.height()) {
-            if (!isImageCenterHeight(imgRect))
+            if (!isImageCenterHeight(imgRect)) {
                 ty = -(int) ((mWidgetRect.height() - imgRect.height()) / 2 - imgRect.top);
+            }
         } else {
             if (imgRect.top > mWidgetRect.top) {
                 ty = (int) (imgRect.top - mWidgetRect.top);
@@ -670,7 +700,9 @@ public class PhotoView extends ImageView {
         }
 
         if (tx != 0 || ty != 0) {
-            if (!mTranslate.mFlingScroller.isFinished()) mTranslate.mFlingScroller.abortAnimation();
+            if (!mTranslate.mFlingScroller.isFinished()) {
+                mTranslate.mFlingScroller.abortAnimation();
+            }
             mTranslate.withTranslate(mTranslateX, mTranslateY, -tx, -ty);
         }
     }
@@ -705,8 +737,9 @@ public class PhotoView extends ImageView {
         public boolean onScale(ScaleGestureDetector detector) {
             float scaleFactor = detector.getScaleFactor();
 
-            if (Float.isNaN(scaleFactor) || Float.isInfinite(scaleFactor))
+            if (Float.isNaN(scaleFactor) || Float.isInfinite(scaleFactor)) {
                 return false;
+            }
 
             mScale *= scaleFactor;
 //            mScaleCenter.set(detector.getFocusX(), detector.getFocusY());
@@ -715,10 +748,12 @@ public class PhotoView extends ImageView {
             return true;
         }
 
+        @Override
         public boolean onScaleBegin(ScaleGestureDetector detector) {
             return true;
         }
 
+        @Override
         public void onScaleEnd(ScaleGestureDetector detector) {
 
         }
@@ -795,9 +830,15 @@ public class PhotoView extends ImageView {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (hasMultiTouch) return false;
-            if (!imgLargeWidth && !imgLargeHeight) return false;
-            if (mTranslate.isRuning) return false;
+            if (hasMultiTouch) {
+                return false;
+            }
+            if (!imgLargeWidth && !imgLargeHeight) {
+                return false;
+            }
+            if (mTranslate.isRuning) {
+                return false;
+            }
 
             float vx = velocityX;
             float vy = velocityY;
@@ -814,10 +855,11 @@ public class PhotoView extends ImageView {
                 float toDegrees = (int) (mDegrees / 90) * 90;
                 float remainder = mDegrees % 90;
 
-                if (remainder > 45)
+                if (remainder > 45) {
                     toDegrees += 90;
-                else if (remainder < -45)
+                } else if (remainder < -45) {
                     toDegrees -= 90;
+                }
 
                 mTranslate.withRotate((int) mDegrees, (int) toDegrees);
 
@@ -840,20 +882,24 @@ public class PhotoView extends ImageView {
             }
 
             if (canScrollHorizontallySelf(distanceX)) {
-                if (distanceX < 0 && mImgRect.left - distanceX > mWidgetRect.left)
+                if (distanceX < 0 && mImgRect.left - distanceX > mWidgetRect.left) {
                     distanceX = mImgRect.left;
-                if (distanceX > 0 && mImgRect.right - distanceX < mWidgetRect.right)
+                }
+                if (distanceX > 0 && mImgRect.right - distanceX < mWidgetRect.right) {
                     distanceX = mImgRect.right - mWidgetRect.right;
+                }
 
                 mAnimaMatrix.postTranslate(-distanceX, 0);
                 mTranslateX -= distanceX;
             } else if (imgLargeWidth || hasMultiTouch || hasOverTranslate) {
                 checkRect();
                 if (!hasMultiTouch) {
-                    if (distanceX < 0 && mImgRect.left - distanceX > mCommonRect.left)
+                    if (distanceX < 0 && mImgRect.left - distanceX > mCommonRect.left) {
                         distanceX = resistanceScrollByX(mImgRect.left - mCommonRect.left, distanceX);
-                    if (distanceX > 0 && mImgRect.right - distanceX < mCommonRect.right)
+                    }
+                    if (distanceX > 0 && mImgRect.right - distanceX < mCommonRect.right) {
                         distanceX = resistanceScrollByX(mImgRect.right - mCommonRect.right, distanceX);
+                    }
                 }
 
                 mTranslateX -= distanceX;
@@ -862,20 +908,24 @@ public class PhotoView extends ImageView {
             }
 
             if (canScrollVerticallySelf(distanceY)) {
-                if (distanceY < 0 && mImgRect.top - distanceY > mWidgetRect.top)
+                if (distanceY < 0 && mImgRect.top - distanceY > mWidgetRect.top) {
                     distanceY = mImgRect.top;
-                if (distanceY > 0 && mImgRect.bottom - distanceY < mWidgetRect.bottom)
+                }
+                if (distanceY > 0 && mImgRect.bottom - distanceY < mWidgetRect.bottom) {
                     distanceY = mImgRect.bottom - mWidgetRect.bottom;
+                }
 
                 mAnimaMatrix.postTranslate(0, -distanceY);
                 mTranslateY -= distanceY;
             } else if (imgLargeHeight || hasOverTranslate || hasMultiTouch) {
                 checkRect();
                 if (!hasMultiTouch) {
-                    if (distanceY < 0 && mImgRect.top - distanceY > mCommonRect.top)
+                    if (distanceY < 0 && mImgRect.top - distanceY > mCommonRect.top) {
                         distanceY = resistanceScrollByY(mImgRect.top - mCommonRect.top, distanceY);
-                    if (distanceY > 0 && mImgRect.bottom - distanceY < mCommonRect.bottom)
+                    }
+                    if (distanceY > 0 && mImgRect.bottom - distanceY < mCommonRect.bottom) {
                         distanceY = resistanceScrollByY(mImgRect.bottom - mCommonRect.bottom, distanceY);
+                    }
                 }
 
                 mAnimaMatrix.postTranslate(0, -distanceY);
@@ -938,32 +988,44 @@ public class PhotoView extends ImageView {
     };
 
     public boolean canScrollHorizontallySelf(float direction) {
-        if (mImgRect.width() <= mWidgetRect.width()) return false;
-        if (direction < 0 && Math.round(mImgRect.left) - direction >= mWidgetRect.left)
+        if (mImgRect.width() <= mWidgetRect.width()) {
             return false;
-        if (direction > 0 && Math.round(mImgRect.right) - direction <= mWidgetRect.right)
+        }
+        if (direction < 0 && Math.round(mImgRect.left) - direction >= mWidgetRect.left) {
             return false;
+        }
+        if (direction > 0 && Math.round(mImgRect.right) - direction <= mWidgetRect.right) {
+            return false;
+        }
         return true;
     }
 
     public boolean canScrollVerticallySelf(float direction) {
-        if (mImgRect.height() <= mWidgetRect.height()) return false;
-        if (direction < 0 && Math.round(mImgRect.top) - direction >= mWidgetRect.top)
+        if (mImgRect.height() <= mWidgetRect.height()) {
             return false;
-        if (direction > 0 && Math.round(mImgRect.bottom) - direction <= mWidgetRect.bottom)
+        }
+        if (direction < 0 && Math.round(mImgRect.top) - direction >= mWidgetRect.top) {
             return false;
+        }
+        if (direction > 0 && Math.round(mImgRect.bottom) - direction <= mWidgetRect.bottom) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public boolean canScrollHorizontally(int direction) {
-        if (hasMultiTouch) return true;
+        if (hasMultiTouch) {
+            return true;
+        }
         return canScrollHorizontallySelf(direction);
     }
 
     @Override
     public boolean canScrollVertically(int direction) {
-        if (hasMultiTouch) return true;
+        if (hasMultiTouch) {
+            return true;
+        }
         return canScrollVerticallySelf(direction);
     }
 
@@ -1199,7 +1261,9 @@ public class PhotoView extends ImageView {
 
 
         private void postExecute() {
-            if (isRuning) post(this);
+            if (isRuning) {
+                post(this);
+            }
         }
     }
 
@@ -1242,7 +1306,9 @@ public class PhotoView extends ImageView {
         while (viewParent instanceof View) {
             final View view = (View) viewParent;
 
-            if (view.getId() == android.R.id.content) return;
+            if (view.getId() == android.R.id.content) {
+                return;
+            }
 
             position[0] -= view.getScrollX();
             position[1] -= view.getScrollY();
@@ -1270,18 +1336,21 @@ public class PhotoView extends ImageView {
     }
 
     public class START implements ClipCalculate {
+        @Override
         public float calculateTop() {
             return mImgRect.top;
         }
     }
 
     public class END implements ClipCalculate {
+        @Override
         public float calculateTop() {
             return mImgRect.bottom;
         }
     }
 
     public class OTHER implements ClipCalculate {
+        @Override
         public float calculateTop() {
             return (mImgRect.top + mImgRect.bottom) / 2;
         }

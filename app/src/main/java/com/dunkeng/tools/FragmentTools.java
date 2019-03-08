@@ -6,10 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
 import com.dunkeng.tools.contract.ToolsContract;
@@ -19,7 +16,6 @@ import com.dunkeng.tools.presenter.ToolsPresenter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
-import com.oklib.widget.recyclerview.listener.OnItemClickListener;
 
 import java.util.List;
 
@@ -56,7 +52,7 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
 
     @Override
     public void showContent(List<ToolObj> info) {
-        coreRecyclerView.getAdapter().addData(info);
+
     }
 
 
@@ -76,27 +72,10 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
         });
 
         GridLayoutManager manager = new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false);
-        coreRecyclerView.init(manager,
-                new BaseQuickAdapter<ToolObj, BaseViewHolder>(R.layout.item_tools) {
-                    @Override
-                    protected void convert(BaseViewHolder helper, ToolObj item) {
-                        RequestOptions options = new RequestOptions();
-                        options.dontAnimate();
-                        Glide.with(mContext).load(item.getDrawable()).apply(options).into((ImageView) helper.getView(R.id.image));
-                        helper.setText(R.id.text, item.getTitle());
-                    }
-                });
-        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-        });
     }
 
     @Override
     public void showMsg(String msg) {
         ToastUtils.showToast(mContext, msg);
-        coreRecyclerView.showLoadMoreFailedView();
     }
 }

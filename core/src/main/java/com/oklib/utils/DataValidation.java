@@ -208,8 +208,9 @@ public class DataValidation {
         }
         if (str instanceof String) {
             String ss = (String) str;
-            if ("".equals(ss) || "".equals(ss.trim()))
+            if ("".equals(ss) || "".equals(ss.trim())) {
                 return true;
+            }
         }
         return false;
     }

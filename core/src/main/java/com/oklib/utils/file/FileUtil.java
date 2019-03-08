@@ -2543,8 +2543,12 @@ public class FileUtil {
             e.printStackTrace();
         } finally {
             try {
-                if (fo != null) fo.close();
-                if (fi != null) fi.close();
+                if (fo != null) {
+                    fo.close();
+                }
+                if (fi != null) {
+                    fi.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

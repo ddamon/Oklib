@@ -175,8 +175,9 @@ public class HttpLogInterceptor implements Interceptor {
             if (subtype.contains("x-www-form-urlencoded") ||
                     subtype.contains("json") ||
                     subtype.contains("xml") ||
-                    subtype.contains("html"))
+                    subtype.contains("html")) {
                 return true;
+            }
         }
         return false;
     }

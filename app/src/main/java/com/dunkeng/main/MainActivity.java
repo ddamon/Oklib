@@ -26,7 +26,7 @@ import com.dunkeng.main.model.LunarBean;
 import com.dunkeng.main.model.LunarModel;
 import com.dunkeng.main.model.MainModel;
 import com.dunkeng.main.presenter.MainPresenter;
-import com.dunkeng.meizi.FragmentMeizi;
+import com.dunkeng.meizi.view.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
 import com.dunkeng.tools.FragmentTools;
 import com.dunkeng.wx.FragmentWx;

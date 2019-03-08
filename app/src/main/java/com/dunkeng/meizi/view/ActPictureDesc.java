@@ -1,4 +1,4 @@
-package com.dunkeng.meizi;
+package com.dunkeng.meizi.view;
 
 import android.app.Activity;
 import android.content.Context;

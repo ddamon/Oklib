@@ -38,8 +38,9 @@ public class ActivityUtil {
     public static void startForwardActivity(Activity context, Class<?> forwardActivity, Bundle bundle, Boolean
             isFinish, int animIn, int animOut) {
         Intent intent = new Intent(context, forwardActivity);
-        if (bundle != null)
+        if (bundle != null) {
             intent.putExtras(bundle);
+        }
         context.startActivity(intent);
         if (isFinish) {
             context.finish();
@@ -55,8 +56,9 @@ public class ActivityUtil {
     public static void startForwardActivity(Activity context, Class<?> forwardActivity, Bundle bundle, Boolean
             isFinish) {
         Intent intent = new Intent(context, forwardActivity);
-        if (bundle != null)
+        if (bundle != null) {
             intent.putExtras(bundle);
+        }
         context.startActivity(intent);
         if (isFinish) {
             context.finish();
@@ -66,8 +68,9 @@ public class ActivityUtil {
     public static void startForResultActivity(Activity context, Class<?> forwardActivity, int requestCode, Bundle
             bundle, Boolean isFinish) {
         Intent intent = new Intent(context, forwardActivity);
-        if (bundle != null)
+        if (bundle != null) {
             intent.putExtras(bundle);
+        }
         context.startActivityForResult(intent, requestCode);
         if (isFinish) {
             context.finish();
@@ -77,8 +80,9 @@ public class ActivityUtil {
     public static void startForResultActivity(Activity context, Class<?> forwardActivity, int requestCode, Bundle
             bundle, Boolean isFinish, int animIn, int animOut) {
         Intent intent = new Intent(context, forwardActivity);
-        if (bundle != null)
+        if (bundle != null) {
             intent.putExtras(bundle);
+        }
         context.startActivityForResult(intent, requestCode);
         if (isFinish) {
             context.finish();
@@ -103,10 +107,11 @@ public class ActivityUtil {
                 .getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> runningTaskInfo = manager.getRunningTasks(1);
 
-        if (runningTaskInfo != null)
+        if (runningTaskInfo != null) {
             return (runningTaskInfo.get(0).topActivity.getClassName()).toString();
-        else
+        } else {
             return "";
+        }
     }
 
     /**
@@ -117,8 +122,9 @@ public class ActivityUtil {
      */
     public static boolean isTopActivity(Context context, String className) {
         final String topActivity = getTopActivity(context);
-        if (className.equals(topActivity))
+        if (className.equals(topActivity)) {
             return true;
+        }
         return false;
     }
 

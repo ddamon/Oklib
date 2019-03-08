@@ -49,6 +49,8 @@ public class EventBase {
     }
 
     static void stickyEventMapRemove(List<Class> classes) {
-        for (Class aClass : classes) STICKY_EVENT_MAP.remove(aClass);
+        for (Class aClass : classes) {
+            STICKY_EVENT_MAP.remove(aClass);
+        }
     }
 }

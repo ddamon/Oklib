@@ -88,7 +88,9 @@ public class CookiesStore {
 
     public List<Cookie> get(HttpUrl url) {
         ArrayList<Cookie> ret = new ArrayList<>();
-        if (cookies.containsKey(url.host())) ret.addAll(cookies.get(url.host()).values());
+        if (cookies.containsKey(url.host())) {
+            ret.addAll(cookies.get(url.host()).values());
+        }
         return ret;
     }
 
@@ -121,14 +123,17 @@ public class CookiesStore {
 
     public List<Cookie> getCookies() {
         ArrayList<Cookie> ret = new ArrayList<>();
-        for (String key : cookies.keySet())
+        for (String key : cookies.keySet()) {
             ret.addAll(cookies.get(key).values());
+        }
 
         return ret;
     }
 
     private String encodeCookie(OkHttpCookies cookie) {
-        if (cookie == null) return null;
+        if (cookie == null) {
+            return null;
+        }
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(os);

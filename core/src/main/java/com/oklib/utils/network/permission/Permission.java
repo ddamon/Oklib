@@ -26,14 +26,21 @@ public class Permission {
     @Override
     @SuppressWarnings("SimplifiableIfStatement")
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         final Permission that = (Permission) o;
 
-        if (granted != that.granted) return false;
-        if (shouldShowRequestPermissionRationale != that.shouldShowRequestPermissionRationale)
+        if (granted != that.granted) {
             return false;
+        }
+        if (shouldShowRequestPermissionRationale != that.shouldShowRequestPermissionRationale) {
+            return false;
+        }
         return name.equals(that.name);
     }
 

@@ -103,8 +103,9 @@ public final class SolarTerm {
     }
 
     private void setFromJD(double jd, boolean utc) {
-        if (utc)
+        if (utc) {
             jd -= this.deltaT2(jd - J2000);
+        }
         jd += 0.5;
 
         double a = int2(jd);

@@ -35,28 +35,34 @@ public class Blowfish {
 
 	public String decrypt(String s) {
 		int i = s.length() >> 1 & 0xfffffff8;
-		if (i < 8)
-			return null;
+		if (i < 8) {
+            return null;
+        }
 		byte abyte0[] = new byte[8];
 		int j = binHexToBytes(s, abyte0, 0, 0, 8);
-		if (j < 8)
-			return null;
+		if (j < 8) {
+            return null;
+        }
 		m_bfish.setCBCIV(abyte0);
-		if ((i -= 8) == 0)
-			return "";
+		if ((i -= 8) == 0) {
+            return "";
+        }
 		byte abyte1[] = new byte[i];
 		j = binHexToBytes(s, abyte1, 16, 0, i);
-		if (j < i)
-			return null;
+		if (j < i) {
+            return null;
+        }
 		m_bfish.decrypt(abyte1);
 		int k = abyte1[abyte1.length - 1] & 0xff;
-		if (k > 8 || k < 0)
-			k = 0;
+		if (k > 8 || k < 0) {
+            k = 0;
+        }
 		j -= k;
-		if (j < 0)
-			return "";
-		else
-			return byteArrayToUNCString(abyte1, 0, j);
+		if (j < 0) {
+            return "";
+        } else {
+            return byteArrayToUNCString(abyte1, 0, j);
+        }
 	}
 
 	public void destroy() {
@@ -74,8 +80,9 @@ public class Blowfish {
 		}
 
 		byte byte0 = (byte) (abyte0.length - (i << 1));
-		while (j < abyte0.length)
-			abyte0[j++] = byte0;
+		while (j < abyte0.length) {
+            abyte0[j++] = byte0;
+        }
 		m_bfish.setCBCIV(l);
 		m_bfish.encrypt(abyte0);
 		byte abyte1[] = new byte[8];
@@ -134,11 +141,13 @@ public class Blowfish {
 				0xce77e25b, 0x578fdfe3, 0x3ac372e6 };
 
 		public void cleanUp() {
-			for (int i = 0; i < 18; i++)
-				m_pbox[i] = 0;
+			for (int i = 0; i < 18; i++) {
+                m_pbox[i] = 0;
+            }
 
-			for (int j = 0; j < 256; j++)
-				m_sbox1[j] = m_sbox2[j] = m_sbox3[j] = m_sbox4[j] = 0;
+			for (int j = 0; j < 256; j++) {
+                m_sbox1[j] = m_sbox2[j] = m_sbox3[j] = m_sbox4[j] = 0;
+            }
 
 		}
 
@@ -154,11 +163,13 @@ public class Blowfish {
 			int ai5[] = new int[2];
 			BlowfishECB blowfishecb = new BlowfishECB(abyte0);
 			blowfishecb.encrypt(ai, ai2);
-			if (ai2[0] != ai1[0] || ai2[1] != ai1[1])
-				return false;
+			if (ai2[0] != ai1[0] || ai2[1] != ai1[1]) {
+                return false;
+            }
 			blowfishecb.decrypt(ai2);
-			if (ai2[0] != ai[0] || ai2[1] != ai[1])
-				return false;
+			if (ai2[0] != ai[0] || ai2[1] != ai[1]) {
+                return false;
+            }
 			BlowfishECB blowfishecb1 = new BlowfishECB(abyte1);
 			blowfishecb1.encrypt(ai3, ai5);
 			if (ai5[0] != ai4[0] || ai5[1] != ai4[1]) {
@@ -262,15 +273,17 @@ public class Blowfish {
 
 		public void encrypt(long al[], long al1[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al1[j] = encryptBlock(al[j]);
+			for (int j = 0; j < i; j++) {
+                al1[j] = encryptBlock(al[j]);
+            }
 
 		}
 
 		public void encrypt(long al[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al[j] = encryptBlock(al[j]);
+			for (int j = 0; j < i; j++) {
+                al[j] = encryptBlock(al[j]);
+            }
 
 		}
 
@@ -316,22 +329,25 @@ public class Blowfish {
 
 		public void decrypt(long al[], long al1[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al1[j] = decryptBlock(al[j]);
+			for (int j = 0; j < i; j++) {
+                al1[j] = decryptBlock(al[j]);
+            }
 
 		}
 
 		public void decrypt(long al[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al[j] = decryptBlock(al[j]);
+			for (int j = 0; j < i; j++) {
+                al[j] = decryptBlock(al[j]);
+            }
 
 		}
 
 		public BlowfishECB(byte abyte0[]) {
 			m_pbox = new int[18];
-			for (int i = 0; i < 18; i++)
-				m_pbox[i] = pbox_init[i];
+			for (int i = 0; i < 18; i++) {
+                m_pbox[i] = pbox_init[i];
+            }
 
 			m_sbox1 = new int[256];
 			m_sbox2 = new int[256];
@@ -345,15 +361,17 @@ public class Blowfish {
 			}
 
 			int k = abyte0.length;
-			if (k == 0)
-				return;
+			if (k == 0) {
+                return;
+            }
 			int l = 0;
 			int i1 = 0;
 			for (int j1 = 0; j1 < 18; j1++) {
 				for (int k1 = 0; k1 < 4; k1++) {
 					i1 = i1 << 8 | abyte0[l] & 0xff;
-					if (++l == k)
-						l = 0;
+					if (++l == k) {
+                        l = 0;
+                    }
 				}
 
 				m_pbox[j1] ^= i1;
@@ -413,6 +431,7 @@ public class Blowfish {
 			m_lCBCIV = Blowfish.byteArrayToLong(abyte0, 0);
 		}
 
+		@Override
 		public void cleanUp() {
 			m_lCBCIV = 0L;
 			super.cleanUp();
@@ -432,6 +451,7 @@ public class Blowfish {
 			return l;
 		}
 
+		@Override
 		public void encrypt(byte abyte0[], byte abyte1[]) {
 			int i = abyte0.length;
 			for (int j = 0; j < i; j += 8) {
@@ -442,6 +462,7 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void encrypt(byte abyte0[]) {
 			int i = abyte0.length;
 			for (int j = 0; j < i; j += 8) {
@@ -452,6 +473,7 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void encrypt(int ai[], int ai1[]) {
 			int i = ai.length;
 			for (int j = 0; j < i; j += 2) {
@@ -462,6 +484,7 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void encrypt(int ai[]) {
 			int i = ai.length;
 			for (int j = 0; j < i; j += 2) {
@@ -472,20 +495,25 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void encrypt(long al[], long al1[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al1[j] = encryptBlockCBC(al[j]);
+			for (int j = 0; j < i; j++) {
+                al1[j] = encryptBlockCBC(al[j]);
+            }
 
 		}
 
+		@Override
 		public void encrypt(long al[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al[j] = encryptBlockCBC(al[j]);
+			for (int j = 0; j < i; j++) {
+                al[j] = encryptBlockCBC(al[j]);
+            }
 
 		}
 
+		@Override
 		public void decrypt(byte abyte0[], byte abyte1[]) {
 			int i = abyte0.length;
 			for (int j = 0; j < i; j += 8) {
@@ -496,6 +524,7 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void decrypt(byte abyte0[]) {
 			int i = abyte0.length;
 			for (int j = 0; j < i; j += 8) {
@@ -506,6 +535,7 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void decrypt(int ai[], int ai1[]) {
 			int i = ai.length;
 			for (int j = 0; j < i; j += 2) {
@@ -516,6 +546,7 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void decrypt(int ai[]) {
 			int i = ai.length;
 			for (int j = 0; j < i; j += 2) {
@@ -526,17 +557,21 @@ public class Blowfish {
 
 		}
 
+		@Override
 		public void decrypt(long al[], long al1[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al1[j] = decryptBlockCBC(al[j]);
+			for (int j = 0; j < i; j++) {
+                al1[j] = decryptBlockCBC(al[j]);
+            }
 
 		}
 
+		@Override
 		public void decrypt(long al[]) {
 			int i = al.length;
-			for (int j = 0; j < i; j++)
-				al[j] = decryptBlockCBC(al[j]);
+			for (int j = 0; j < i; j++) {
+                al[j] = decryptBlockCBC(al[j]);
+            }
 
 		}
 
@@ -607,11 +642,13 @@ public class Blowfish {
 	private static int binHexToBytes(String s, byte abyte0[], int i, int j, int k) {
 		int l = s.length();
 		int i1 = l - i >> 1;
-		if (i1 < k)
-			k = i1;
+		if (i1 < k) {
+            k = i1;
+        }
 		int j1 = abyte0.length - j;
-		if (k > j1)
-			k = j1;
+		if (k > j1) {
+            k = j1;
+        }
 		int k1 = 0;
 		for (int l1 = 0; l1 < k; l1++) {
 			byte byte0 = 0;
@@ -623,10 +660,11 @@ public class Blowfish {
 					byte0 |= (byte) (c - 97) + 10;
 					continue;
 				}
-				if (c >= '0' && c <= '9')
-					byte0 |= (byte) (c - 48);
-				else
-					flag = false;
+				if (c >= '0' && c <= '9') {
+                    byte0 |= (byte) (c - 48);
+                } else {
+                    flag = false;
+                }
 			}
 
 			if (flag) {
@@ -641,8 +679,9 @@ public class Blowfish {
 	private static String byteArrayToUNCString(byte abyte0[], int i, int j) {
 		j &= 0xfffffffe;
 		int k = abyte0.length - i;
-		if (k < j)
-			j = k;
+		if (k < j) {
+            j = k;
+        }
 		StringBuffer stringbuffer = new StringBuffer();
 		stringbuffer.setLength(j >> 1);
 		int l = 0;

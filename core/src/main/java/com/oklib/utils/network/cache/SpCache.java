@@ -50,7 +50,9 @@ public class SpCache implements ICache {
     public Object get(String key) {
         try {
             String hex = get(key, null);
-            if (hex == null) return null;
+            if (hex == null) {
+                return null;
+            }
             byte[] bytes = HexUtil.decodeHex(hex.toCharArray());
             bytes = Base64Util.decode(bytes);
             Object obj = ByteUtil.byteToObject(bytes);

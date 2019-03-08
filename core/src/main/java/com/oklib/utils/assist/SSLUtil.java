@@ -52,7 +52,9 @@ public class SSLUtil {
     }
 
     private static TrustManager[] prepareTrustManager(InputStream... certificates) {
-        if (certificates == null || certificates.length <= 0) return null;
+        if (certificates == null || certificates.length <= 0) {
+            return null;
+        }
         try {
 
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
@@ -63,7 +65,9 @@ public class SSLUtil {
                 String certificateAlias = Integer.toString(index++);
                 keyStore.setCertificateEntry(certificateAlias, certificateFactory.generateCertificate(certificate));
                 try {
-                    if (certificate != null) certificate.close();
+                    if (certificate != null) {
+                        certificate.close();
+                    }
                 } catch (IOException e) {
                 }
             }
@@ -91,7 +95,9 @@ public class SSLUtil {
 
     private static KeyManager[] prepareKeyManager(InputStream bksFile, String password) {
         try {
-            if (bksFile == null || password == null) return null;
+            if (bksFile == null || password == null) {
+                return null;
+            }
 
             KeyStore clientKeyStore = KeyStore.getInstance("BKS");
             clientKeyStore.load(bksFile, password.toCharArray());
@@ -134,7 +140,9 @@ public class SSLUtil {
 
         @Override
         public boolean verify(String hostname, SSLSession session) {
-            if (this.host == null || "".equals(this.host) || !this.host.contains(hostname)) return false;
+            if (this.host == null || "".equals(this.host) || !this.host.contains(hostname)) {
+                return false;
+            }
             return true;
         }
     }

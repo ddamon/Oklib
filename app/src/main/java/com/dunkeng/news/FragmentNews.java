@@ -2,8 +2,8 @@ package com.dunkeng.news;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
@@ -14,20 +14,23 @@ import com.dunkeng.news.model.News;
 import com.dunkeng.news.model.NewsModel;
 import com.dunkeng.news.model.NewslistBean;
 import com.dunkeng.news.presenter.NewsPresenter;
+import com.dunkeng.news.view.NewsAdapter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
-import com.oklib.widget.imageloader.ImageLoader;
-import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
-import com.oklib.widget.recyclerview.listener.OnItemClickListener;
+import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+
+import butterknife.BindView;
 
 
 /**
  * @author Damon
  */
 public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> implements NewsContract.ViewNews {
+    @BindView(R.id.recycler)
     CoreRecyclerView coreRecyclerView;
     private int pageNum = 20;
+    private NewsAdapter adapter;
 
     public static FragmentNews newInstance(int position) {
         FragmentNews fragment = new FragmentNews();
@@ -37,31 +40,31 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
         return fragment;
     }
 
-    /**
-     * 初始化view
-     *
-     * @return
-     */
     @Override
-    public View getLayoutView() {
-        coreRecyclerView = new CoreRecyclerView(mContext).init(new BaseQuickAdapter<NewslistBean, BaseViewHolder>(R.layout.item_news) {
+    public void initData() {
+        int position = getArguments().getInt(Config.ArgumentKey.ARG_POSITION, 0);
+        String type = Config.getApiType(position);
+        mPresenter.getNewsData(type, pageNum);
+    }
+
+    @Override
+    public void showContent(News info) {
+        adapter.addAll(info.getNewslist());
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.base_recyclerview;
+    }
+
+    @Override
+    public void initUI(View view, @Nullable Bundle savedInstanceState) {
+        adapter = new NewsAdapter(mContext);
+        coreRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
-            protected void convert(BaseViewHolder helper, NewslistBean item) {
-                helper.setText(R.id.tv_daily_item_title, item.getTitle());
-                if (item.getCtime() != null && item.getCtime().contains(" ")) {
-                    helper.setText(R.id.tv_daily_item_date, item.getCtime().split(" ")[0]);
-                }
-                helper.setText(R.id.tv_daily_item_description, item.getDescription());
-                ImageLoaderUtil.getInstance().loadImage(mContext,
-                        new ImageLoader.Builder()
-                                .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
-                                .url(item.getPicUrl()).build());
-            }
-        });
-        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                NewslistBean newslistBean = ((NewslistBean) adapter.getData().get(position));
+            public void onItemClick(View view, int position) {
+                NewslistBean newslistBean = ((NewslistBean) adapter.getItem(position));
                 if (newslistBean == null) {
                     return;
                 }
@@ -74,36 +77,13 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
                 ActWebDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), detailBean);
             }
         });
-        //单独使用refresh需要使用带参数的
-        coreRecyclerView.openRefresh(new CoreRecyclerView.addDataListener() {
+        coreRecyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void addData(int page) {
+            public void onRefresh() {
+                adapter.clear();
                 initData();
             }
         });
-        return coreRecyclerView;
-    }
-
-    @Override
-    public void initData() {
-        int position = getArguments().getInt(Config.ArgumentKey.ARG_POSITION, 0);
-        String type = Config.getApiType(position);
-        mPresenter.getNewsData(type, pageNum);
-    }
-
-    @Override
-    public void showContent(News info) {
-        coreRecyclerView.getAdapter().addData(info.getNewslist());
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initUI(View view, @Nullable Bundle savedInstanceState) {
-
     }
 
     @Override

@@ -3,9 +3,9 @@ package com.dunkeng.wx;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
@@ -17,12 +17,11 @@ import com.dunkeng.wx.model.Wx;
 import com.dunkeng.wx.model.WxBean;
 import com.dunkeng.wx.model.WxModel;
 import com.dunkeng.wx.presenter.WxPresenter;
+import com.dunkeng.wx.view.WxAdapter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
-import com.oklib.widget.imageloader.ImageLoader;
-import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
-import com.oklib.widget.recyclerview.listener.OnItemClickListener;
+import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 import butterknife.BindView;
 
@@ -38,6 +37,7 @@ public class FragmentWx extends CoreBaseFragment<WxPresenter, WxModel> implement
     Toolbar toolbar;
     protected OnFragmentOpenDrawerListener mOpenDraweListener;
     private int pageNum = 30;
+    private WxAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
@@ -61,23 +61,9 @@ public class FragmentWx extends CoreBaseFragment<WxPresenter, WxModel> implement
 
     @Override
     public void showContent(Wx info) {
-        coreRecyclerView.getAdapter().addData(info.getNewslist());
-        coreRecyclerView.addOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WxBean newslistBean = ((WxBean) adapter.getData().get(position));
-                if (newslistBean == null) {
-                    return;
-                }
-                DetailBean detailBean = new DetailBean();
-                detailBean.setCtime(newslistBean.getCtime());
-                detailBean.setDescription(newslistBean.getDescription());
-                detailBean.setPicUrl(newslistBean.getPicUrl());
-                detailBean.setTitle(newslistBean.getTitle());
-                detailBean.setUrl(newslistBean.getUrl());
-                ActWebDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), detailBean);
-            }
-        });
+        adapter.addAll(info.getNewslist());
+
+
     }
 
 
@@ -95,21 +81,30 @@ public class FragmentWx extends CoreBaseFragment<WxPresenter, WxModel> implement
                 mOpenDraweListener.onOpenDrawer();
             }
         });
-        coreRecyclerView.init(new BaseQuickAdapter<WxBean, BaseViewHolder>(R.layout.item_news) {
+
+        adapter = new WxAdapter(mContext);
+        coreRecyclerView.setAdapter(adapter);
+        coreRecyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            protected void convert(BaseViewHolder helper, WxBean item) {
-                helper.setText(R.id.tv_daily_item_title, item.getTitle());
-                ImageLoaderUtil.getInstance().loadImage(mContext,
-                        new ImageLoader.Builder()
-                                .imgView((ImageView) helper.getView(R.id.iv_daily_item_image))
-                                .url(item.getPicUrl()).build());
+            public void onRefresh() {
+                adapter.clear();
+                initData();
             }
         });
-        //单独使用refresh需要使用带参数的
-        coreRecyclerView.openRefresh(new CoreRecyclerView.addDataListener() {
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
-            public void addData(int page) {
-                initData();
+            public void onItemClick(View view, int position) {
+                WxBean newslistBean = ((WxBean) adapter.getAllData().get(position));
+                if (newslistBean == null) {
+                    return;
+                }
+                DetailBean detailBean = new DetailBean();
+                detailBean.setCtime(newslistBean.getCtime());
+                detailBean.setDescription(newslistBean.getDescription());
+                detailBean.setPicUrl(newslistBean.getPicUrl());
+                detailBean.setTitle(newslistBean.getTitle());
+                detailBean.setUrl(newslistBean.getUrl());
+                ActWebDetail.start(mActivity, view.findViewById(R.id.iv_daily_item_image), detailBean);
             }
         });
     }

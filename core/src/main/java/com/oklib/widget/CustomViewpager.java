@@ -82,12 +82,14 @@ public class CustomViewpager extends RelativeLayout implements CustomInterface {
         vpAd.setAdapter(adapter);
     }
 
+    @Override
     public void startScorll() {
         isStart = true;
         mHandler.sendEmptyMessageDelayed(AUTO_SCORLL, 3000);
     }
 
 
+    @Override
     public void endScorll() {
         isStart = false;
         mHandler.removeMessages(AUTO_SCORLL);
@@ -129,11 +131,13 @@ public class CustomViewpager extends RelativeLayout implements CustomInterface {
                 lp.leftMargin = ScreenUtil.dp2px(getContext(), 7);
             }
             iv.setLayoutParams(lp);
-            if (resid != 0)
+            if (resid != 0) {
                 iv.setBackgroundResource(resid);
-            else
+            } else
                 //设置导航点的背景图片
+            {
                 iv.setBackgroundResource(R.drawable.abc_background_indicator);
+            }
             iv.setEnabled(false);
             if (i == 0) {
                 iv.setEnabled(true);
