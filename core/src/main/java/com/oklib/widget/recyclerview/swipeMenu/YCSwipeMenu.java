@@ -27,7 +27,7 @@ import com.oklib.R;
  * 【解决屏幕上多个侧滑删除菜单】：内设一个类静态View类型变量 ViewCache，存储的是当前正处于右滑状态的CstSwipeMenuItemViewGroup，
  * 每次Touch时对比，如果两次Touch的不是一个View，那么令ViewCache恢复普通状态，并且设置新的CacheView
  * 只要有一个侧滑菜单处于打开状态， 就不给外层布局上下滑动了
- *
+ * <p>
  * 注意要点：
  * 1 菜单处于侧滑时，拦截长按事件
  * 2 解决侧滑时 点击 的冲突
@@ -40,10 +40,10 @@ import com.oklib.R;
  * 9 解决长按事件和侧滑的冲突。
  * 10 2配GridLayoutManager，将以第一个子Item(即ContentItem)的宽度为控件宽度。
  * 11 支持padding,且后续计划加入上滑下滑，因此不再支持ContentItem的margin属性。
- *      修改回弹的动画，更平滑。
- *      微小位移的move不回回弹的bug
- *      当ItemView存在高度可变的情况
- *      禁止侧滑时(isSwipeEnable false)，点击事件不受干扰。
+ * 修改回弹的动画，更平滑。
+ * 微小位移的move不回回弹的bug
+ * 当ItemView存在高度可变的情况
+ * 禁止侧滑时(isSwipeEnable false)，点击事件不受干扰。
  */
 public class YCSwipeMenu extends ViewGroup {
 
@@ -108,7 +108,8 @@ public class YCSwipeMenu extends ViewGroup {
 
     /**
      * 设置侧滑功能开关
-     * @param swipeEnable           是否打开
+     *
+     * @param swipeEnable 是否打开
      */
     public void setSwipeEnable(boolean swipeEnable) {
         isSwipeEnable = swipeEnable;
@@ -133,7 +134,8 @@ public class YCSwipeMenu extends ViewGroup {
 
     /**
      * 设置是否开启左滑出菜单，设置false 为右滑出菜单
-     * @param leftSwipe             是否画出左边菜单
+     *
+     * @param leftSwipe 是否画出左边菜单
      */
     public YCSwipeMenu setLeftSwipe(boolean leftSwipe) {
         isLeftSwipe = leftSwipe;
@@ -146,7 +148,6 @@ public class YCSwipeMenu extends ViewGroup {
     /*public static YCSwipeMenu getViewCache() {
         return mViewCache;
     }*/
-
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         mScaleTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mMaxVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();

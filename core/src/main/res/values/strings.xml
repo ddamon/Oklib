@@ -1,8 +1,14 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="dialog_positive">确定</string>
     <string name="dialog_negative">取消</string>
 
     <string name="loading">正在加载中...</string>
     <string name="load_failed">加载失败，请点我重试</string>
     <string name="load_end">没有更多数据</string>
+
+    <!--更新模块-->
+    <string name="update_title_info">上新了</string>
+    <string name="update_content_info">1.更新内容；\n2.更新内容啦；\n3.更新内容，赶紧查看；\n1.更新内容；\n2.更新内容啦；\n3.更新内容，赶紧查看；1.更新内容；\n2.更新内容啦；\n3.更新内容，赶紧查看；1.更新内容；\n2.更新内容啦；\n3.更新内容，赶紧查看；</string>
+    <string name="update_info">立即更新</string>
+    <string name="update_next">下次再说</string>
 </resources>
