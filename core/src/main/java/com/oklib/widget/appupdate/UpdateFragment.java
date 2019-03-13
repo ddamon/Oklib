@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,6 +21,10 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.liulishuo.okdownload.DownloadListener;
+import com.liulishuo.okdownload.DownloadTask;
+import com.liulishuo.okdownload.core.cause.ResumeFailedCause;
+import com.liulishuo.okdownload.core.listener.DownloadListener3;
 import com.oklib.R;
 import com.oklib.widget.notification.NotificationUtils;
 
@@ -53,7 +58,7 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
     private int downloadStatus = UpdateUtils.DownloadStatus.START;
 
     private FragmentActivity mActivity;
-    private BaseDownloadTask downloadTask;
+    private DownloadTask downloadTask;
 
     private ProgressBar mProgress;
     private TextView mTvCancel;
@@ -284,7 +289,51 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
         boolean granted = PermissionUtils.isGranted(mPermission);
         if (granted) {
             setNotification(0);
-            downloadTask = downApk(apkUrl, saveApkPath, getListener());
+            downloadTask = downApk(apkUrl, saveApkPath, new DownloadListener3() {
+                @Override
+                protected void started(@NonNull DownloadTask task) {
+
+                }
+
+                @Override
+                protected void completed(@NonNull DownloadTask task) {
+
+                }
+
+                @Override
+                protected void canceled(@NonNull DownloadTask task) {
+
+                }
+
+                @Override
+                protected void error(@NonNull DownloadTask task, @NonNull Exception e) {
+
+                }
+
+                @Override
+                protected void warn(@NonNull DownloadTask task) {
+
+                }
+
+                @Override
+                public void retry(@NonNull DownloadTask task, @NonNull ResumeFailedCause cause) {
+
+                }
+
+                @Override
+                public void connected(@NonNull DownloadTask task, int blockCount, long currentOffset, long totalLength) {
+
+                }
+
+                @Override
+                public void progress(@NonNull DownloadTask task, long currentOffset, long totalLength) {
+                    float total = task.getSmallFileTotalBytes();
+                    float downsize = task.getSmallFileSoFarBytes();
+                    int progress = (int) ((downsize / total) * 100);
+                    mProgress.setProgress(progress);
+                    setNotification(progress);
+                }
+            });
         } else {
             /*PermissionUtils permission = PermissionUtils.permission(mPermission);
             permission.callback(new PermissionUtils.SimpleCallback() {
@@ -305,22 +354,18 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
     }
 
 
-    private BaseDownloadTask downApk(String apkUrl, String saveApkPath, FileDownloadListener listener) {
-        BaseDownloadTask baseDownloadTask = FileDownloader
-                .getImpl()
-                .create(apkUrl)
-                .setPath(saveApkPath)
-                .setListener(listener);
-        baseDownloadTask.start();
+    private DownloadTask downApk(String apkUrl, String saveApkPath, DownloadListener listener) {
+        DownloadTask baseDownloadTask = new DownloadTask.Builder(apkUrl, new File(saveApkPath).getAbsolutePath(), new File(saveApkPath).getName()).build();
+        baseDownloadTask.execute(listener);
         return baseDownloadTask;
     }
 
 
-    private FileDownloadListener listener;
+    private DownloadListener listener;
 
-    public FileDownloadListener getListener() {
+    public DownloadListener getListener() {
         if (listener == null) {
-            listener = new FileDownloadListener() {
+            listener = new DownloadListener() {
                 @Override
                 protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                     changeUploadStatus(UpdateUtils.DownloadStatus.UPLOADING);
