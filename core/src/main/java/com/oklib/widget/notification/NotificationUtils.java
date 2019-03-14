@@ -7,13 +7,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
+
+import com.oklib.BuildConfig;
 
 import static android.support.v4.app.NotificationCompat.PRIORITY_DEFAULT;
 import static android.support.v4.app.NotificationCompat.VISIBILITY_SECRET;
@@ -24,24 +24,59 @@ import static android.support.v4.app.NotificationCompat.VISIBILITY_SECRET;
  *     blog  : https://www.jianshu.com/p/514eb6193a06
  *     time  : 2018/2/10
  *     desc  : 通知栏工具类
- *     revise:
+ *
  * </pre>
  */
-public class NotificationUtils extends ContextWrapper {
+public class NotificationUtils {
 
 
-    public static final String CHANNEL_ID = "default";
-    private static final String CHANNEL_NAME = "Default_Channel";
-    private NotificationManager mManager;
-    private int[] flags;
-
-    public NotificationUtils(Context base) {
-        super(base);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //android 8.0以上需要特殊处理，也就是targetSDKVersion为26以上
-            createNotificationChannel();
-        }
+    /**
+     * 构造器
+     *
+     * @param builder
+     */
+    public NotificationUtils(Builder builder) {
+        this.context = builder.context;
+        this.CHANNEL_ID = builder.CHANNEL_ID;
+        this.CHANNEL_NAME = builder.CHANNEL_NAME;
+        this.progress = builder.progress;
+        this.flags = builder.flags;
+        this.ongoing = builder.ongoing;
+        this.remoteViews = builder.remoteViews;
+        this.intent = builder.intent;
+        this.ticker = builder.ticker;
+        this.onlyAlertOnce = builder.onlyAlertOnce;
+        this.when = builder.when;
+        this.sound = builder.sound;
+        this.defaults = builder.defaults;
+        this.vibrate = builder.vibrate;
+        this.priority = builder.priority;
+        this.smallIcon = builder.smallIcon;
+        createNotificationChannel();
     }
+
+    private NotificationManager mManager;
+    private NotificationChannel channel;
+
+
+    private NotificationCompat.Builder builder;
+    private Context context;
+    private int smallIcon;
+    private String CHANNEL_ID;
+    private String CHANNEL_NAME;
+    private int progress;
+    private int[] flags;
+    private boolean ongoing;
+    private RemoteViews remoteViews;
+    private PendingIntent intent;
+    private String ticker;
+    private boolean onlyAlertOnce;
+    private long when;
+    private Uri sound;
+    private int defaults;
+    private long[] vibrate;
+    private int priority;
+
 
     @TargetApi(Build.VERSION_CODES.O)
     private void createNotificationChannel() {
@@ -50,7 +85,7 @@ public class NotificationUtils extends ContextWrapper {
         //第三个参数：设置通知重要性级别
         //注意：该级别必须要在 NotificationChannel 的构造函数中指定，总共要五个级别；
         //范围是从 NotificationManager.IMPORTANCE_NONE(0) ~ NotificationManager.IMPORTANCE_HIGH(4)
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+        channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
         channel.canBypassDnd();//是否绕过请勿打扰模式
         channel.enableLights(true);//闪光灯
         channel.setLockscreenVisibility(VISIBILITY_SECRET);//锁屏显示通知
@@ -72,7 +107,7 @@ public class NotificationUtils extends ContextWrapper {
      */
     public NotificationManager getManager() {
         if (mManager == null) {
-            mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
         return mManager;
     }
@@ -85,28 +120,23 @@ public class NotificationUtils extends ContextWrapper {
     }
 
     /**
-     * 获取Notification
+     * 获取但未显示
      *
      * @param title   title
      * @param content content
      */
     public Notification getNotification(String title, String content, int icon) {
-        Notification build;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //android 8.0以上需要特殊处理，也就是targetSDKVersion为26以上
-            //通知用到NotificationCompat()这个V4库中的方法。但是在实际使用时发现书上的代码已经过时并且Android8.0已经不支持这种写法
-            Notification.Builder builder = getChannelNotification(title, content, icon);
-            build = builder.build();
-        } else {
-            NotificationCompat.Builder builder = getNotificationCompat(title, content, icon);
-            build = builder.build();
-        }
+        Notification notification;
+        builder = getNotificationBuilder(title, content, icon);
+        builder.setProgress(100, progress, false);
+        notification = builder.build();
+
         if (flags != null && flags.length > 0) {
             for (int a = 0; a < flags.length; a++) {
-                build.flags |= flags[a];
+                notification.flags |= flags[a];
             }
         }
-        return build;
+        return notification;
     }
 
     /**
@@ -117,266 +147,245 @@ public class NotificationUtils extends ContextWrapper {
      * @param title    title
      * @param content  content
      */
-    public void sendNotification(int notifyId, String title, String content, int icon) {
-        Notification build;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //android 8.0以上需要特殊处理，也就是targetSDKVersion为26以上
-            //通知用到NotificationCompat()这个V4库中的方法。但是在实际使用时发现书上的代码已经过时并且Android8.0已经不支持这种写法
-            Notification.Builder builder = getChannelNotification(title, content, icon);
-            build = builder.build();
-        } else {
-            NotificationCompat.Builder builder = getNotificationCompat(title, content, icon);
-            build = builder.build();
+    public Notification sendNotification(int notifyId, String title, String content, int icon) {
+        Notification notification;
+        builder = getNotificationBuilder(title, content, icon);
+        if (progress >= 0) {
+            builder.setProgress(100, progress, false);
         }
+        notification = builder.build();
         if (flags != null && flags.length > 0) {
             for (int a = 0; a < flags.length; a++) {
-                build.flags |= flags[a];
+                notification.flags |= flags[a];
             }
         }
-        getManager().notify(notifyId, build);
+        getManager().notify(notifyId, notification);
+        return notification;
+    }
+
+
+    public NotificationCompat.Builder getNotificationBuilder(String title, String content, int icon) {
+        if (builder == null) {
+            builder = new NotificationCompat.Builder(context, CHANNEL_ID);
+            builder.setPriority(priority);
+            builder.setContentTitle(title);
+            builder.setContentText(content);
+            builder.setSmallIcon(icon);
+            builder.setOnlyAlertOnce(onlyAlertOnce);
+            builder.setOngoing(ongoing);
+            if (remoteViews != null) {
+                builder.setContent(remoteViews);
+            }
+            if (intent != null) {
+                builder.setContentIntent(intent);
+            }
+            if (ticker != null && ticker.length() > 0) {
+                builder.setTicker(ticker);
+            }
+            if (when != 0) {
+                builder.setWhen(when);
+            }
+            if (sound != null) {
+                builder.setSound(sound);
+            }
+            if (defaults != 0) {
+                builder.setDefaults(defaults);
+            }
+            if (vibrate != null) {
+                //自定义震动效果
+                builder.setVibrate(vibrate);
+            }
+            //点击自动删除通知
+            builder.setAutoCancel(true);
+        }
+        return builder;
     }
 
     /**
-     * 调用该方法可以发送通知
+     * 更新进度条
      *
-     * @param notifyId notifyId
-     * @param title    title
-     * @param content  content
+     * @param notiId
+     * @param progress
      */
-    public void sendNotificationCompat(int notifyId, String title, String content, int icon) {
-        NotificationCompat.Builder builder = getNotificationCompat(title, content, icon);
-        Notification build = builder.build();
-        if (flags != null && flags.length > 0) {
-            for (int a = 0; a < flags.length; a++) {
-                build.flags |= flags[a];
-            }
+    public void setNotificationProgress(int notiId, int progress) {
+        builder.setProgress(100, progress, false);
+        if (progress >= 100 || progress < 0) {
+            getManager().cancel(notiId);
+        } else {
+            getManager().notify(notiId, getBuilder().build());
         }
-        getManager().notify(notifyId, build);
     }
 
-
-    private NotificationCompat.Builder getNotificationCompat(String title, String content, int icon) {
-        NotificationCompat.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
-        } else {
-            //注意用下面这个方法，在8.0以上无法出现通知栏。8.0之前是正常的。这里需要增强判断逻辑
-            builder = new NotificationCompat.Builder(getApplicationContext());
-            builder.setPriority(PRIORITY_DEFAULT);
-        }
-        builder.setContentTitle(title);
-        builder.setContentText(content);
-        builder.setSmallIcon(icon);
-        builder.setPriority(priority);
-        builder.setOnlyAlertOnce(onlyAlertOnce);
-        builder.setOngoing(ongoing);
-        if (remoteViews != null) {
-            builder.setContent(remoteViews);
-        }
-        if (intent != null) {
-            builder.setContentIntent(intent);
-        }
-        if (ticker != null && ticker.length() > 0) {
-            builder.setTicker(ticker);
-        }
-        if (when != 0) {
-            builder.setWhen(when);
-        }
-        if (sound != null) {
-            builder.setSound(sound);
-        }
-        if (defaults != 0) {
-            builder.setDefaults(defaults);
-        }
-        //点击自动删除通知
-        builder.setAutoCancel(true);
+    /**
+     * 获取notification builder
+     *
+     * @return
+     */
+    public NotificationCompat.Builder getBuilder() {
         return builder;
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private Notification.Builder getChannelNotification(String title, String content, int icon) {
-        Notification.Builder builder = new Notification.Builder(getApplicationContext(), CHANNEL_ID);
-        Notification.Builder notificationBuilder = builder
-                //设置标题
-                .setContentTitle(title)
-                //消息内容
-                .setContentText(content)
-                //设置通知的图标
-                .setSmallIcon(icon)
-                //让通知左右滑的时候是否可以取消通知
-                .setOngoing(ongoing)
-                //设置优先级
-                .setPriority(priority)
-                //是否提示一次.true - 如果Notification已经存在状态栏即使在调用notify函数也不会更新
-                .setOnlyAlertOnce(onlyAlertOnce)
-                .setAutoCancel(true);
-        if (remoteViews != null) {
-            //设置自定义view通知栏
-            notificationBuilder.setContent(remoteViews);
+    public static class Builder {
+        private Context context;
+        private String CHANNEL_ID = BuildConfig.APPLICATION_ID + "_Channel_Id";
+        private String CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_Channel_Name";
+        private int progress = -1;
+        private int[] flags;
+        private boolean ongoing = false;
+        private RemoteViews remoteViews = null;
+        private PendingIntent intent = null;
+        private String ticker = "";
+        private boolean onlyAlertOnce = false;
+        private long when = 0;
+        private Uri sound = null;
+        private int defaults = 0;
+        private int smallIcon;
+
+        public long[] getVibrate() {
+            return vibrate;
         }
-        if (intent != null) {
-            notificationBuilder.setContentIntent(intent);
+
+        public Builder setVibrate(long[] vibrate) {
+            this.vibrate = vibrate;
+            return this;
         }
-        if (ticker != null && ticker.length() > 0) {
-            //设置状态栏的标题
-            notificationBuilder.setTicker(ticker);
+
+        private long[] vibrate = null;
+        private int priority = PRIORITY_DEFAULT;
+
+        public String getCHANNEL_ID() {
+            return CHANNEL_ID;
         }
-        if (when != 0) {
-            //设置通知时间，默认为系统发出通知的时间，通常不用设置
-            notificationBuilder.setWhen(when);
+
+        public Builder setCHANNEL_ID(String CHANNEL_ID) {
+            this.CHANNEL_ID = CHANNEL_ID;
+            return this;
         }
-        if (sound != null) {
-            //设置sound
-            notificationBuilder.setSound(sound);
+
+        public String getCHANNEL_NAME() {
+            return CHANNEL_NAME;
         }
-        if (defaults != 0) {
-            //设置默认的提示音
-            notificationBuilder.setDefaults(defaults);
+
+        public Builder setCHANNEL_NAME(String CHANNEL_NAME) {
+            this.CHANNEL_NAME = CHANNEL_NAME;
+            return this;
         }
-        if (pattern != null) {
-            //自定义震动效果
-            notificationBuilder.setVibrate(pattern);
+
+        public int getProgress() {
+            return progress;
         }
-        return notificationBuilder;
+
+        public Builder setProgress(int progress) {
+            this.progress = progress;
+            return this;
+        }
+
+        public int[] getFlags() {
+            return flags;
+        }
+
+        public Builder setFlags(int... flags) {
+            this.flags = flags;
+            return this;
+        }
+
+        public boolean isOngoing() {
+            return ongoing;
+        }
+
+        public Builder setOngoing(boolean ongoing) {
+            this.ongoing = ongoing;
+            return this;
+        }
+
+        public RemoteViews getRemoteViews() {
+            return remoteViews;
+        }
+
+        public Builder setRemoteViews(RemoteViews remoteViews) {
+            this.remoteViews = remoteViews;
+            return this;
+        }
+
+        public PendingIntent getIntent() {
+            return intent;
+        }
+
+        public Builder setIntent(PendingIntent intent) {
+            this.intent = intent;
+            return this;
+        }
+
+        public String getTicker() {
+            return ticker;
+        }
+
+        public Builder setTicker(String ticker) {
+            this.ticker = ticker;
+            return this;
+        }
+
+        public boolean isOnlyAlertOnce() {
+            return onlyAlertOnce;
+        }
+
+        public Builder setOnlyAlertOnce(boolean onlyAlertOnce) {
+            this.onlyAlertOnce = onlyAlertOnce;
+            return this;
+        }
+
+        public long getWhen() {
+            return when;
+        }
+
+        public Builder setWhen(long when) {
+            this.when = when;
+            return this;
+        }
+
+        public Uri getSound() {
+            return sound;
+        }
+
+        public Builder setSound(Uri sound) {
+            this.sound = sound;
+            return this;
+        }
+
+        public int getDefaults() {
+            return defaults;
+        }
+
+        public Builder setDefaults(int defaults) {
+            this.defaults = defaults;
+            return this;
+        }
+
+
+        public int getPriority() {
+            return priority;
+        }
+
+        public Builder setPriority(int priority) {
+            this.priority = priority;
+            return this;
+        }
+
+        /**
+         * 设置图标 如果sendNotification传0则此处必须设置
+         *
+         * @param icon
+         * @return
+         */
+        public Builder setSmallIcon(int icon) {
+            this.smallIcon = icon;
+            return this;
+        }
+
+        public NotificationUtils build(Context context) {
+            this.context = context;
+            return new NotificationUtils(this);
+        }
     }
-
-
-    private boolean ongoing = false;
-    private RemoteViews remoteViews = null;
-    private PendingIntent intent = null;
-    private String ticker = "";
-    private int priority = Notification.PRIORITY_DEFAULT;
-    private boolean onlyAlertOnce = false;
-    private long when = 0;
-    private Uri sound = null;
-    private int defaults = 0;
-    private long[] pattern = null;
-
-    /**
-     * 让通知左右滑的时候是否可以取消通知
-     *
-     * @param ongoing 是否可以取消通知
-     * @return
-     */
-    public NotificationUtils setOngoing(boolean ongoing) {
-        this.ongoing = ongoing;
-        return this;
-    }
-
-    /**
-     * 设置自定义view通知栏布局
-     *
-     * @param remoteViews view
-     * @return
-     */
-    public NotificationUtils setContent(RemoteViews remoteViews) {
-        this.remoteViews = remoteViews;
-        return this;
-    }
-
-    /**
-     * 设置内容点击
-     *
-     * @param intent intent
-     * @return
-     */
-    public NotificationUtils setContentIntent(PendingIntent intent) {
-        this.intent = intent;
-        return this;
-    }
-
-    /**
-     * 设置状态栏的标题
-     *
-     * @param ticker 状态栏的标题
-     * @return
-     */
-    public NotificationUtils setTicker(String ticker) {
-        this.ticker = ticker;
-        return this;
-    }
-
-
-    /**
-     * 设置优先级
-     * 注意：
-     * Android 8.0以及上，在 NotificationChannel 的构造函数中指定，总共要五个级别；
-     * Android 7.1（API 25）及以下的设备，还得调用NotificationCompat 的 setPriority方法来设置
-     *
-     * @param priority 优先级，默认是Notification.PRIORITY_DEFAULT
-     * @return
-     */
-    public NotificationUtils setPriority(int priority) {
-        this.priority = priority;
-        return this;
-    }
-
-    /**
-     * 是否提示一次.true - 如果Notification已经存在状态栏即使在调用notify函数也不会更新
-     *
-     * @param onlyAlertOnce 是否只提示一次，默认是false
-     * @return
-     */
-    public NotificationUtils setOnlyAlertOnce(boolean onlyAlertOnce) {
-        this.onlyAlertOnce = onlyAlertOnce;
-        return this;
-    }
-
-    /**
-     * 设置通知时间，默认为系统发出通知的时间，通常不用设置
-     *
-     * @param when when
-     * @return
-     */
-    public NotificationUtils setWhen(long when) {
-        this.when = when;
-        return this;
-    }
-
-    /**
-     * 设置sound
-     *
-     * @param sound sound
-     * @return
-     */
-    public NotificationUtils setSound(Uri sound) {
-        this.sound = sound;
-        return this;
-    }
-
-
-    /**
-     * 设置默认的提示音
-     *
-     * @param defaults defaults
-     * @return
-     */
-    public NotificationUtils setDefaults(int defaults) {
-        this.defaults = defaults;
-        return this;
-    }
-
-    /**
-     * 自定义震动效果
-     *
-     * @param pattern pattern
-     * @return
-     */
-    public NotificationUtils setVibrate(long[] pattern) {
-        this.pattern = pattern;
-        return this;
-    }
-
-    /**
-     * 设置flag标签
-     *
-     * @param flags flags
-     * @return
-     */
-    public NotificationUtils setFlags(int... flags) {
-        this.flags = flags;
-        return this;
-    }
-
 }
