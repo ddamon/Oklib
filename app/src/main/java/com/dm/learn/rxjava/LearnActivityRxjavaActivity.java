@@ -120,6 +120,7 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
 
     @Subscribe
     public void testRxbusEvent(ExceptionEvent exceptionEvent) {
-        Logger.e(exceptionEvent.text);
+        exceptionEvent.text=null;
+        Logger.e(exceptionEvent.text.substring(0));
     }
 }
