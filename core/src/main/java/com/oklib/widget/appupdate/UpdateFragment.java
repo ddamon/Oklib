@@ -23,6 +23,7 @@ import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.cause.ResumeFailedCause;
 import com.liulishuo.okdownload.core.listener.DownloadListener3;
 import com.oklib.R;
+import com.oklib.utils.file.SdCardUtil;
 import com.oklib.widget.notification.NotificationUtils;
 
 import java.io.File;
@@ -245,7 +246,8 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
         boolean granted = PermissionUtils.isGranted(mPermission);
         if (granted) {
             setNotification(0);
-            String apkPath = UpdateUtils.getLocalApkDownSavePath(updateConfig.getApkName());
+            String sdCardPath = SdCardUtil.getNormalSDCardPath();
+            String apkPath = sdCardPath + File.separator + updateConfig.getApkName();
             downloadTask = downApk(updateConfig.getApkUrl(), apkPath);
         } else {
             /*PermissionUtils permission = PermissionUtils.permission(mPermission);
@@ -344,7 +346,7 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
                     .setOnlyAlertOnce(true).build(mActivity);
             notification = notificationUtils.getNotification("", "下载中...", 0);
         }
-        notificationUtils.setNotificationProgress(notificationId,progress);
+        notificationUtils.setNotificationProgress(notificationId, progress);
     }
 
     private Notification notification;
