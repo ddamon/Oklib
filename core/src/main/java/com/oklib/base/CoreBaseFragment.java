@@ -53,8 +53,10 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
     @CallSuper
     @MainThread
     protected void initLifecycleObserver(@NotNull Lifecycle lifecycle) {
-        mPresenter.setLifecycleOwner(this);
-        lifecycle.addObserver(mPresenter);
+        if (mPresenter != null) {
+            mPresenter.setLifecycleOwner(this);
+            lifecycle.addObserver(mPresenter);
+        }
     }
 
     @Override
