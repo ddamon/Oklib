@@ -2,7 +2,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = "com.oklib"
-version = '2.0.2'
+version = '2.0.3'
 def siteUrl = "https://github.com/ddamon/Oklib"
 def gitUrl = "https://github.com/ddamon/Oklib.git"
 install {
@@ -71,9 +71,9 @@ bintray {
         repo = 'maven'
         name = 'oklib'
         version {
-            name = '2.0.2-release'
+            name = '2.0.3-release'
             desc = "oklib"
-            vcsTag = '2.0.2'
+            vcsTag = '2.0.3'
         }
         websiteUrl = siteUrl
         vcsUrl = gitUrl

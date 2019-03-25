@@ -1,11 +1,14 @@
-package com.oklib.utils.view;
+package com.oklib.widget.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Html;
 import android.view.View;
+
+import com.oklib.R;
 
 public class DialogUtil {
 
@@ -72,5 +75,34 @@ public class DialogUtil {
         dialog.setCanceledOnTouchOutside(true);
         dialog.setOnDismissListener(dismissListener);
         return dialog;
+    }
+
+    public static Dialog createProgressDialog(Context context) {
+        return createProgressDialog(context, true);
+    }
+
+    public static Dialog createProgressDialog(Context context, boolean needCancle) {
+        ProgressDialog dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading ...");
+        dialog.setCancelable(needCancle);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
+    }
+
+    public static Dialog showCommonDialog(Context context, String message,
+                                          DialogInterface.OnClickListener listener) {
+        return new android.support.v7.app.AlertDialog.Builder(context)
+                .setMessage(message)
+                .setPositiveButton(context.getString(R.string.dialog_positive), listener)
+                .setNegativeButton(context.getString(R.string.dialog_negative), null)
+                .show();
+    }
+
+    public static Dialog showConfirmDialog(Context context, String message,
+                                           DialogInterface.OnClickListener listener) {
+        return new android.support.v7.app.AlertDialog.Builder(context)
+                .setMessage(message)
+                .setPositiveButton(context.getString(R.string.dialog_positive), listener)
+                .show();
     }
 }
