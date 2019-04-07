@@ -52,3 +52,13 @@
 }
 -keep class **$Properties
 
+#AnyPref
+-keep class com.oklib.utils.pref.** { *; }
+
+-dontwarn com.vise.utils.**
+
+-keep com.oklib.utils.rxbus.** { *; }
+-keep class com.oklib.utils.network.http.api.ApiService { *; }
+-keep class com.oklib.utils.network.http.mode.** { *; }
+-keep class com.oklib.utils.network.http.strategy.**
+-keep class com.oklib.utils.network.mode.** { *; }
