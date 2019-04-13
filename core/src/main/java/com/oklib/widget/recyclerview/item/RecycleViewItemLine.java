@@ -6,19 +6,23 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.oklib.widget.recyclerview.utils.RefreshLogUtils;
+
+
 /**
- * ================================================
- * 作    者：杨充
- * 版    本：1.0
- * 创建日期：2016/6/22
- * 描    述：自定义recycleView的分割线【可以是分割线，也可以是分割条】
- * 修订历史：
- * ================================================
+ * <pre>
+ *     @author 杨充
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/5/2
+ *     desc  : list条目的分割线
+ *     revise: 可以设置线条颜色和宽度
+ * </pre>
  */
 public class RecycleViewItemLine extends RecyclerView.ItemDecoration {
 
@@ -27,7 +31,7 @@ public class RecycleViewItemLine extends RecyclerView.ItemDecoration {
     /**
      * 分割线高度，默认为1px
      */
-    private int mDividerHeight = 2;
+    private int mDividerHeight = 1;
     /**
      * 列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
      */
@@ -40,7 +44,8 @@ public class RecycleViewItemLine extends RecyclerView.ItemDecoration {
      * @param orientation 列表方向
      */
     public RecycleViewItemLine(Context context, int orientation) {
-        if (orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL) {
+        if (orientation != LinearLayoutManager.VERTICAL &&
+                orientation != LinearLayoutManager.HORIZONTAL) {
             throw new IllegalArgumentException("请输入正确的参数！");
         }
         mOrientation = orientation;
@@ -58,7 +63,9 @@ public class RecycleViewItemLine extends RecyclerView.ItemDecoration {
     public RecycleViewItemLine(Context context, int orientation, int drawableId) {
         this(context, orientation);
         mDivider = ContextCompat.getDrawable(context, drawableId);
-        mDividerHeight = mDivider.getIntrinsicHeight();
+        if (mDivider != null) {
+            mDividerHeight = mDivider.getIntrinsicHeight();
+        }
     }
 
     /**
@@ -68,35 +75,72 @@ public class RecycleViewItemLine extends RecyclerView.ItemDecoration {
      * @param dividerHeight 分割线高度
      * @param dividerColor  分割线颜色
      */
-    public RecycleViewItemLine(Context context, int orientation, int dividerHeight, int dividerColor) {
+    public RecycleViewItemLine(Context context, int orientation,
+                               int dividerHeight, int dividerColor) {
         this(context, orientation);
         mDividerHeight = dividerHeight;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        //设置画笔paint的颜色
         mPaint.setColor(dividerColor);
+        //设置样式
         mPaint.setStyle(Paint.Style.FILL);
     }
 
 
     /**
-     * 获取分割线尺寸
+     * 调用的是getItemOffsets会被多次调用，在layoutManager每次测量可摆放的view的时候回调用一次，
+     * 在当前状态下需要摆放多少个view这个方法就会回调多少次。
+     * @param outRect                   核心参数，这个rect相当于item摆放的时候设置的margin，
+     *                                  rect的left相当于item的marginLeft，
+     *                                  rect的right相当于item的marginRight
+     * @param view                      当前绘制的view，可以用来获取它在adapter中的位置
+     * @param parent                    recyclerView
+     * @param state                     状态，用的很少
      */
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                               @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
+        //给bottom留出一个高度为mDividerHeight的空白
+        //这样做的目的是什么呢？就是为下面onDraw方法绘制高度为mDividerHeight的分割线做准备用的
         outRect.set(0, 0, 0, mDividerHeight);
+        RefreshLogUtils.d("RecycleViewItemLine-------"+"getItemOffsets");
     }
 
     /**
      * 绘制分割线
+     * ItemDecoration的onDraw方法是在RecyclerView的onDraw方法中调用的
+     * 注意这时候传入的canvas是RecyclerView的canvas，要时刻注意这点，它是和RecyclerView的边界是一致的。
+     * 这个时候绘制的内容相当于背景，会被item覆盖。
+     * @param c                         canvas用来绘制的画板
+     * @param parent                    recyclerView
+     * @param state                     状态，用的很少
      */
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent,
+                       @NonNull RecyclerView.State state) {
         super.onDraw(c, parent, state);
         if (mOrientation == LinearLayoutManager.VERTICAL) {
             drawVertical(c, parent);
         } else {
             drawHorizontal(c, parent);
         }
+        RefreshLogUtils.d("RecycleViewItemLine-------"+"onDraw");
+    }
+
+    /**
+     * 绘制分割线
+     * ItemDecoration的onDrawOver方法是在RecyclerView的draw方法中调用的
+     * 同样传入的是RecyclerView的canvas，这时候onLayout已经调用，所以此时绘制的内容会覆盖item。
+     * @param c                         canvas用来绘制的画板
+     * @param parent                    recyclerView
+     * @param state                     状态，用的很少
+     */
+    @Override
+    public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent,
+                           @NonNull RecyclerView.State state) {
+        super.onDrawOver(c, parent, state);
+        RefreshLogUtils.d("RecycleViewItemLine-------"+"onDrawOver");
     }
 
     /**
@@ -105,16 +149,23 @@ public class RecycleViewItemLine extends RecyclerView.ItemDecoration {
     private void drawHorizontal(Canvas canvas, RecyclerView parent) {
         final int left = parent.getPaddingLeft();
         final int right = parent.getMeasuredWidth() - parent.getPaddingRight();
+        RefreshLogUtils.d("小杨逗比左右的间距分别是" + left + "----"+right);
+        //获取的当前显示的view的数量，并不会获取不显示的view的数量。
+        //假如recyclerView里共有30条数据，而当前屏幕内显示的只有5条，这paren.getChildCount的值是5，不是30。
         final int childSize = parent.getChildCount();
         for (int i = 0; i < childSize; i++) {
+            //获取索引i处的控件view
             final View child = parent.getChildAt(i);
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+            //拿到layoutParams属性
+            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams)
+                    child.getLayoutParams();
             final int top = child.getBottom() + layoutParams.bottomMargin;
             final int bottom = top + mDividerHeight;
             if (mDivider != null) {
                 mDivider.setBounds(left, top, right, bottom);
                 mDivider.draw(canvas);
             }
+            //使用画笔paint进行绘制
             if (mPaint != null) {
                 canvas.drawRect(left, top, right, bottom, mPaint);
             }
@@ -130,7 +181,8 @@ public class RecycleViewItemLine extends RecyclerView.ItemDecoration {
         final int childSize = parent.getChildCount();
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams)
+                    child.getLayoutParams();
             final int left = child.getRight() + layoutParams.rightMargin;
             final int right = left + mDividerHeight;
             if (mDivider != null) {

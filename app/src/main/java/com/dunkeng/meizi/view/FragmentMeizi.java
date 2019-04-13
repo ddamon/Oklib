@@ -22,6 +22,10 @@ import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.oklib.widget.recyclerview.inter.OnErrorListener;
+import com.oklib.widget.recyclerview.inter.OnItemClickListener;
+import com.oklib.widget.recyclerview.inter.OnLoadMoreListener;
+import com.oklib.widget.recyclerview.inter.OnNoMoreListener;
 
 import butterknife.BindView;
 
@@ -79,14 +83,14 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
         coreRecyclerView.setLayoutManager(manager);
         adapter = new MeiZiAdapter(getContext());
         coreRecyclerView.setAdapter(adapter);
-        adapter.setMore(new RecyclerArrayAdapter.OnLoadMoreListener() {
+        adapter.setMore(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 page++;
                 mPresenter.getMeizi(page);
             }
         });
-        adapter.setNoMore(new RecyclerArrayAdapter.OnNoMoreListener() {
+        adapter.setNoMore(new OnNoMoreListener() {
             @Override
             public void onNoMoreShow() {
                 adapter.pauseMore();
@@ -97,7 +101,7 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
 
             }
         });
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 PictureBean pictureBean = new PictureBean();
@@ -106,7 +110,7 @@ public class FragmentMeizi extends CoreBaseFragment<MeiziPresenter, MeiziModel> 
                 ActPictureDesc.start(mActivity, view.findViewById(R.id.image), pictureBean);
             }
         });
-        adapter.setError(new RecyclerArrayAdapter.OnErrorListener() {
+        adapter.setError(new OnErrorListener() {
             @Override
             public void onErrorShow() {
                 adapter.resumeMore();

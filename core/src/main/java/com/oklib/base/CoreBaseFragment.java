@@ -96,6 +96,7 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
                 mainView = inflater.inflate(getLayoutId(), container, false);
             }
         }
+        binder = ButterKnife.bind(this, mainView);
         return mainView;
     }
 
@@ -121,7 +122,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
         super.onViewCreated(view, savedInstanceState);
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         TAG = getClass().getSimpleName();
-        binder = ButterKnife.bind(this, view);
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
         if (this instanceof CoreBaseView && mPresenter != null && mModel != null) {

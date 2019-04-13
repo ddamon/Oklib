@@ -1,28 +1,35 @@
 package com.oklib.widget.recyclerview.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.oklib.widget.recyclerview.CoreRecyclerView;
-import com.oklib.widget.recyclerview.inter.AbsEventDelegate;
+import com.oklib.widget.recyclerview.inter.InterEventDelegate;
+import com.oklib.widget.recyclerview.inter.InterItemView;
+import com.oklib.widget.recyclerview.inter.OnErrorListener;
+import com.oklib.widget.recyclerview.inter.OnMoreListener;
+import com.oklib.widget.recyclerview.inter.OnNoMoreListener;
+import com.oklib.widget.recyclerview.utils.RefreshLogUtils;
 
 
 /**
- * @author          杨充
- * @version         1.0
- * @date            2017/1/29
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/1/29
+ *     desc  : 默认设置数据和加载监听的类
+ *     revise:
+ * </pre>
  */
-public class DefaultEventDelegate implements AbsEventDelegate {
+public class DefaultEventDelegate implements InterEventDelegate {
 
     private RecyclerArrayAdapter adapter;
     private EventFooter footer ;
 
-    private RecyclerArrayAdapter.OnMoreListener onMoreListener;
-    private RecyclerArrayAdapter.OnNoMoreListener onNoMoreListener;
-    private RecyclerArrayAdapter.OnErrorListener onErrorListener;
+    private OnMoreListener onMoreListener;
+    private OnNoMoreListener onNoMoreListener;
+    private OnErrorListener onErrorListener;
 
     private boolean hasData = false;
     private boolean isLoadingMore = false;
@@ -32,7 +39,7 @@ public class DefaultEventDelegate implements AbsEventDelegate {
     private int status = STATUS_INITIAL;
     private static final int STATUS_INITIAL = 291;
     private static final int STATUS_MORE = 260;
-    private static final int STATUS_NOMORE = 408;
+    private static final int STATUS_NO_MORE = 408;
     private static final int STATUS_ERROR = 732;
 
     DefaultEventDelegate(RecyclerArrayAdapter adapter) {
@@ -42,7 +49,7 @@ public class DefaultEventDelegate implements AbsEventDelegate {
     }
 
     private void onMoreViewShowed() {
-        log("onMoreViewShowed");
+        RefreshLogUtils.d("onMoreViewShowed");
         if (!isLoadingMore&& onMoreListener !=null){
             isLoadingMore = true;
             onMoreListener.onMoreShow();
@@ -83,13 +90,13 @@ public class DefaultEventDelegate implements AbsEventDelegate {
 
     @Override
     public void addData(int length) {
-        log("addData" + length);
+        RefreshLogUtils.d("addData" + length);
         if (hasMore){
             if (length == 0){
                 //当添加0个时，认为已结束加载到底
                 if (status==STATUS_INITIAL || status == STATUS_MORE){
                     footer.showNoMore();
-                    status = STATUS_NOMORE;
+                    status = STATUS_NO_MORE;
                 }
             }else {
                 //当Error或初始时。添加数据，如果有More则还原。
@@ -100,7 +107,7 @@ public class DefaultEventDelegate implements AbsEventDelegate {
         }else{
             if (hasNoMore){
                 footer.showNoMore();
-                status = STATUS_NOMORE;
+                status = STATUS_NO_MORE;
             }
         }
         isLoadingMore = false;
@@ -108,7 +115,7 @@ public class DefaultEventDelegate implements AbsEventDelegate {
 
     @Override
     public void clear() {
-        log("clear");
+        RefreshLogUtils.d("clear");
         hasData = false;
         status = STATUS_INITIAL;
         footer.hide();
@@ -117,15 +124,15 @@ public class DefaultEventDelegate implements AbsEventDelegate {
 
     @Override
     public void stopLoadMore() {
-        log("stopLoadMore");
+        RefreshLogUtils.d("stopLoadMore");
         footer.showNoMore();
-        status = STATUS_NOMORE;
+        status = STATUS_NO_MORE;
         isLoadingMore = false;
     }
 
     @Override
     public void pauseLoadMore() {
-        log("pauseLoadMore");
+        RefreshLogUtils.d("pauseLoadMore");
         footer.showError();
         status = STATUS_ERROR;
         isLoadingMore = false;
@@ -142,7 +149,7 @@ public class DefaultEventDelegate implements AbsEventDelegate {
     //-------------------3种View设置-------------------
 
     @Override
-    public void setMore(View view, RecyclerArrayAdapter.OnMoreListener listener) {
+    public void setMore(View view, OnMoreListener listener) {
         this.footer.setMoreView(view);
         this.onMoreListener = listener;
         hasMore = true;
@@ -150,27 +157,27 @@ public class DefaultEventDelegate implements AbsEventDelegate {
         if (adapter.getCount()>0){
             addData(adapter.getCount());
         }
-        log("setMore");
+        RefreshLogUtils.d("setMore");
     }
 
     @Override
-    public void setNoMore(View view, RecyclerArrayAdapter.OnNoMoreListener listener) {
+    public void setNoMore(View view, OnNoMoreListener listener) {
         this.footer.setNoMoreView(view);
         this.onNoMoreListener = listener;
         hasNoMore = true;
-        log("setNoMore");
+        RefreshLogUtils.d("setNoMore");
     }
 
     @Override
-    public void setErrorMore(View view, RecyclerArrayAdapter.OnErrorListener listener) {
+    public void setErrorMore(View view, OnErrorListener listener) {
         this.footer.setErrorView(view);
         this.onErrorListener = listener;
         hasError = true;
-        log("setErrorMore");
+        RefreshLogUtils.d("setErrorMore");
     }
 
     @Override
-    public void setMore(int res, RecyclerArrayAdapter.OnMoreListener listener) {
+    public void setMore(int res, OnMoreListener listener) {
         this.footer.setMoreViewRes(res);
         this.onMoreListener = listener;
         hasMore = true;
@@ -178,28 +185,30 @@ public class DefaultEventDelegate implements AbsEventDelegate {
         if (adapter.getCount()>0){
             addData(adapter.getCount());
         }
-        log("setMore");
+        RefreshLogUtils.d("setMore");
     }
 
     @Override
-    public void setNoMore(int res, RecyclerArrayAdapter.OnNoMoreListener listener) {
+    public void setNoMore(int res, OnNoMoreListener listener) {
         this.footer.setNoMoreViewRes(res);
         this.onNoMoreListener = listener;
         hasNoMore = true;
-        log("setNoMore");
+        RefreshLogUtils.d("setNoMore");
     }
 
     @Override
-    public void setErrorMore(int res, RecyclerArrayAdapter.OnErrorListener listener) {
+    public void setErrorMore(int res, OnErrorListener listener) {
         this.footer.setErrorViewRes(res);
         this.onErrorListener = listener;
         hasError = true;
-        log("setErrorMore");
+        RefreshLogUtils.d("setErrorMore");
     }
 
 
-
-    private class EventFooter implements RecyclerArrayAdapter.ItemView {
+    /**
+     * 这个是设置上拉加载footer
+     */
+    public class EventFooter implements InterItemView {
 
         private View moreView = null;
         private View noMoreView = null;
@@ -207,59 +216,70 @@ public class DefaultEventDelegate implements AbsEventDelegate {
         private int moreViewRes = 0;
         private int noMoreViewRes = 0;
         private int errorViewRes = 0;
-        private int flag = Hide;
-        private static final int Hide = 0;
-        private static final int ShowMore = 1;
-        private static final int ShowError = 2;
-        private static final int ShowNoMore = 3;
+        private int flag = HIDE;
+        static final int HIDE = 520;
+        private static final int SHOW_MORE = 521;
+        private static final int SHOW_ERROR = 522;
+        static final int SHOW_NO_MORE = 523;
+        /**
+         * 是否展示error的view
+         */
         private boolean skipError = false;
+        /**
+         * 是否展示noMore的view
+         */
         private boolean skipNoMore = false;
 
         private EventFooter(){}
 
         @Override
         public View onCreateView(ViewGroup parent) {
-            log("onCreateView");
+            RefreshLogUtils.d("onCreateView");
             return refreshStatus(parent);
         }
 
         @Override
         public void onBindView(View headerView) {
-            log("onBindView");
+            RefreshLogUtils.d("onBindView");
             headerView.post(new Runnable() {
                 @Override
                 public void run() {
-                    switch (flag){
-                        case ShowMore:
-                            onMoreViewShowed();
-                            break;
-                        case ShowNoMore:
-                            if (!skipNoMore) {
-                                onNoMoreViewShowed();
-                            }
-                            skipNoMore = false;
-                            break;
-                        case ShowError:
-                            if (!skipError) {
-                                onErrorViewShowed();
-                            }
-                            skipError = false;
-                            break;
-                        default:
-                            break;
-                    }
+                    running(flag);
                 }
             });
+        }
+
+        private void running(int flag) {
+            switch (flag){
+                case SHOW_MORE:
+                    onMoreViewShowed();
+                    break;
+                case SHOW_NO_MORE:
+                    if (!skipNoMore) {
+                        onNoMoreViewShowed();
+                    }
+                    skipNoMore = false;
+                    break;
+                case SHOW_ERROR:
+                    if (!skipError) {
+                        onErrorViewShowed();
+                    }
+                    skipError = false;
+                    break;
+                default:
+                    break;
+            }
         }
 
         View refreshStatus(ViewGroup parent){
             View view = null;
             switch (flag){
-                case ShowMore:
+                case SHOW_MORE:
                     if (moreView!=null) {
                         view = moreView;
                     } else if (moreViewRes!=0) {
-                        view = LayoutInflater.from(parent.getContext()).inflate(moreViewRes, parent, false);
+                        view = LayoutInflater.from(parent.getContext())
+                                .inflate(moreViewRes, parent, false);
                     }
                     if (view!=null) {
                         view.setOnClickListener(new View.OnClickListener() {
@@ -270,11 +290,12 @@ public class DefaultEventDelegate implements AbsEventDelegate {
                         });
                     }
                     break;
-                case ShowError:
+                case SHOW_ERROR:
                     if (errorView!=null) {
                         view = errorView;
                     } else if (errorViewRes!=0) {
-                        view = LayoutInflater.from(parent.getContext()).inflate(errorViewRes, parent, false);
+                        view = LayoutInflater.from(parent.getContext())
+                                .inflate(errorViewRes, parent, false);
                     }
                     if (view!=null) {
                         view.setOnClickListener(new View.OnClickListener() {
@@ -285,11 +306,12 @@ public class DefaultEventDelegate implements AbsEventDelegate {
                         });
                     }
                     break;
-                case ShowNoMore:
+                case SHOW_NO_MORE:
                     if (noMoreView!=null) {
                         view = noMoreView;
                     } else if (noMoreViewRes!=0) {
-                        view = LayoutInflater.from(parent.getContext()).inflate(noMoreViewRes, parent, false);
+                        view = LayoutInflater.from(parent.getContext())
+                                .inflate(noMoreViewRes, parent, false);
                     }
                     if (view!=null) {
                         view.setOnClickListener(new View.OnClickListener() {
@@ -310,36 +332,35 @@ public class DefaultEventDelegate implements AbsEventDelegate {
         }
 
         void showError(){
-            log("footer showError");
+            RefreshLogUtils.d("footer showError");
             skipError = true;
-            flag = ShowError;
+            flag = SHOW_ERROR;
             //noinspection deprecation
             if (adapter.getItemCount()>0){
                 adapter.notifyItemChanged(adapter.getItemCount()-1);
             }
         }
         void showMore(){
-            log("footer showMore");
-            flag = ShowMore;
+            RefreshLogUtils.d("footer showMore");
+            flag = SHOW_MORE;
             //noinspection deprecation
             if (adapter.getItemCount()>0){
                 adapter.notifyItemChanged(adapter.getItemCount()-1);
             }
         }
         void showNoMore(){
-            log("footer showNoMore");
+            RefreshLogUtils.d("footer showNoMore");
             skipNoMore = true;
-            flag = ShowNoMore;
+            flag = SHOW_NO_MORE;
             //noinspection deprecation
             if (adapter.getItemCount()>0){
                 adapter.notifyItemChanged(adapter.getItemCount()-1);
             }
         }
 
-        //初始化
         void hide(){
-            log("footer hide");
-            flag = Hide;
+            RefreshLogUtils.d("footer hide");
+            flag = HIDE;
             //noinspection deprecation
             if (adapter.getItemCount()>0){
                 adapter.notifyItemChanged(adapter.getItemCount()-1);
@@ -378,15 +399,7 @@ public class DefaultEventDelegate implements AbsEventDelegate {
 
         @Override
         public int hashCode() {
-            return flag+13589;
-        }
-    }
-
-
-
-    private static void log(String content){
-        if (CoreRecyclerView.DEBUG){
-            Log.i(CoreRecyclerView.TAG,content);
+            return flag;
         }
     }
 

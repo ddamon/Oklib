@@ -19,6 +19,7 @@ import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.oklib.widget.recyclerview.inter.OnItemClickListener;
 
 import butterknife.BindView;
 
@@ -61,10 +62,10 @@ public class FragmentNews extends CoreBaseFragment<NewsPresenter, NewsModel> imp
     public void initUI(View view, @Nullable Bundle savedInstanceState) {
         adapter = new NewsAdapter(mContext);
         coreRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                NewslistBean newslistBean = ((NewslistBean) adapter.getItem(position));
+                NewslistBean newslistBean = ((NewslistBean) adapter.getAllData().get(position));
                 if (newslistBean == null) {
                     return;
                 }

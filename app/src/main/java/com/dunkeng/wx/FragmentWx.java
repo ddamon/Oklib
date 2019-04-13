@@ -22,6 +22,7 @@ import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.oklib.widget.recyclerview.inter.OnItemClickListener;
 
 import butterknife.BindView;
 
@@ -91,7 +92,7 @@ public class FragmentWx extends CoreBaseFragment<WxPresenter, WxModel> implement
                 initData();
             }
         });
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 WxBean newslistBean = ((WxBean) adapter.getAllData().get(position));

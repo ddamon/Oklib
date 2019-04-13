@@ -2,21 +2,24 @@ package com.oklib.widget.recyclerview.observer;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
-
+import com.oklib.widget.recyclerview.CoreRecyclerView;
 
 /**
- * @author          杨充
- * @version         1.0
- * @date            2017/4/28
+ * <pre>
+ *     @author 杨充
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/4/28
+ *     desc  : 自定义AdapterDataObserver
+ *     revise:
+ * </pre>
  */
-public class EasyDataObserver extends RecyclerView.AdapterDataObserver {
+public class ViewDataObserver extends RecyclerView.AdapterDataObserver {
 
     private CoreRecyclerView recyclerView;
     private RecyclerArrayAdapter adapter;
 
-    public EasyDataObserver(CoreRecyclerView recyclerView) {
+    public ViewDataObserver(CoreRecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
             adapter = (RecyclerArrayAdapter) recyclerView.getAdapter();

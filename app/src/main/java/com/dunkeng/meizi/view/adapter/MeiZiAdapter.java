@@ -9,7 +9,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dunkeng.R;
 import com.dunkeng.meizi.model.Meizi;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
-import com.oklib.widget.recyclerview.viewHolder.BaseViewHolder;
+import com.oklib.widget.recyclerview.holder.BaseViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

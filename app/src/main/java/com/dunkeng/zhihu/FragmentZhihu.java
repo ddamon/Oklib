@@ -18,6 +18,7 @@ import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.oklib.widget.recyclerview.inter.OnItemClickListener;
 
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class FragmentZhihu extends CoreBaseFragment<ZhihuPresenter, ZhihuModel> 
         coreRecyclerView.setAdapter(adapter);
 
 
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 

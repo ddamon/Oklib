@@ -19,6 +19,7 @@ import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.oklib.widget.recyclerview.inter.OnItemClickListener;
 
 import butterknife.BindView;
 
@@ -69,7 +70,7 @@ public class FragmentGanHuos extends CoreBaseFragment<GanHuosPresenter, GanHuosM
         adapter = new GanHuosAdapter(mContext);
         coreRecyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 GanHuoBean newslistBean = ((GanHuoBean) adapter.getAllData().get(position));

@@ -10,7 +10,7 @@ import com.dunkeng.zhihu.model.StoryItemBean;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
-import com.oklib.widget.recyclerview.viewHolder.BaseViewHolder;
+import com.oklib.widget.recyclerview.holder.BaseViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
