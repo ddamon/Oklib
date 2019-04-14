@@ -931,7 +931,7 @@ public abstract class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      *
      * @param listener 监听器
      */
-    public void setOnItemChildClickListener(View view,OnItemChildClickListener listener) {
+    public void setOnItemChildClickListener(OnItemChildClickListener listener) {
         this.mOnItemChildClickListener = listener;
     }
 
