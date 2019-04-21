@@ -210,7 +210,7 @@ public class NotificationUtils {
     public void setNotificationProgress(int notiId, int progress) {
         builder.setProgress(100, progress, false);
         if (progress >= 100 || progress < 0) {
-            getManager().cancel(notiId);
+            getManager().cancelAll();
         } else {
             getManager().notify(notiId, getBuilder().build());
         }

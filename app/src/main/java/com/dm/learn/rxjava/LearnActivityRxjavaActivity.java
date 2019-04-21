@@ -2,6 +2,7 @@ package com.dm.learn.rxjava;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,11 +16,17 @@ import com.dm.learn.rxjava.ch2.FragmentRxjavaCh2;
 import com.dm.learn.rxjava.ch2.FragmentRxjavaCh3;
 import com.dm.learn.rxjava.rxbus.ExceptionEvent;
 import com.dm.learn.rxjava.rxbus.RxBusTestActivity;
+import com.dunkeng.BuildConfig;
 import com.dunkeng.R;
 import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.rxbus.BusManager;
 import com.oklib.utils.rxbus.Subscribe;
+import com.oklib.widget.appupdate.UpdateConfig;
+import com.oklib.widget.appupdate.UpdateFragment;
+import com.oklib.widget.appupdate.UpdateUtils;
+
+import java.io.File;
 
 import butterknife.BindView;
 
@@ -111,6 +118,8 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
 
         } else if (id == R.id.nav_13) {
             startActivity(new Intent(mContext, RxBusTestActivity.class));
+        } else if (id == R.id.nav_test_update) {
+            testAppUpdate();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,7 +129,23 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
 
     @Subscribe
     public void testRxbusEvent(ExceptionEvent exceptionEvent) {
-        exceptionEvent.text=null;
+        exceptionEvent.text = null;
         Logger.e(exceptionEvent.text.substring(0));
+    }
+
+    private void testAppUpdate() {
+        String firstUrl = "http://ucan.25pp.com/Wandoujia_web_seo_baidu_homepage.apk";
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "apk";
+        String desc = getResources().getString(R.string.update_content_info);
+        UpdateConfig updateConfig = new UpdateConfig(false, firstUrl, path, "aaa.apk", desc, BuildConfig.APPLICATION_ID, R.mipmap.shit_blue, true);
+
+        /*
+         * @param isForceUpdate             是否强制更新
+         * @param desc                      更新文案
+         * @param url                       下载链接
+         * @param apkFileName               apk下载文件路径名称
+         * @param packName                  包名
+         */
+        UpdateFragment.showFragment(LearnActivityRxjavaActivity.this, updateConfig);
     }
 }

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.cause.ResumeFailedCause;
 import com.liulishuo.okdownload.core.listener.DownloadListener3;
 import com.oklib.R;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.file.SdCardUtil;
 import com.oklib.widget.notification.NotificationUtils;
 
@@ -53,6 +56,8 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
     private TextView mTvOk;
     private static UpdateConfig updateConfig;
     private static final int notificationId = 5555;
+
+    NotificationUtils notificationUtils;
 
     /**
      * 版本更新
@@ -246,7 +251,12 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
         boolean granted = PermissionUtils.isGranted(mPermission);
         if (granted) {
             setNotification(0);
-            String sdCardPath = SdCardUtil.getNormalSDCardPath();
+            String sdCardPath = "";
+            if (updateConfig.getSaveApkPath() != null) {
+                sdCardPath = updateConfig.getSaveApkPath();
+            } else {
+                sdCardPath = SdCardUtil.getNormalSDCardPath();
+            }
             String apkPath = sdCardPath + File.separator + updateConfig.getApkName();
             downloadTask = downApk(updateConfig.getApkUrl(), apkPath);
         } else {
@@ -288,6 +298,7 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
                 }
                 changeUploadStatus(UpdateUtils.DownloadStatus.FINISH);
                 UpdateUtils.installNormal(mActivity, saveApkPath, updateConfig.getPackageName());
+                dismissDialog();
             }
 
             @Override
@@ -327,8 +338,12 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
         return baseDownloadTask;
     }
 
-    NotificationUtils notificationUtils;
-
+    /**
+     * 暂不支持自定义
+     * TODO
+     *
+     * @param progress
+     */
     protected void setNotification(int progress) {
         if (mActivity == null) {
             return;
@@ -338,14 +353,16 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
         }
         Intent intent = new Intent();
         PendingIntent pendingIntent = PendingIntent.getActivity(mActivity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (notificationUtils == null) {
-            notificationUtils = new NotificationUtils.Builder()
-                    .setIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.abc_background_indicator)
-                    .setFlags(Notification.FLAG_AUTO_CANCEL)
-                    .setOnlyAlertOnce(true).build(mActivity);
-            notification = notificationUtils.getNotification("", "下载中...", 0);
-        }
+        RemoteViews remoteViews = new RemoteViews(mActivity.getPackageName(), R.layout.remote_notification_view);
+        remoteViews.setTextViewText(R.id.title, "下载中...");
+        remoteViews.setProgressBar(R.id.progress, 100, progress, false);
+        notificationUtils = new NotificationUtils.Builder()
+                .setIntent(pendingIntent)
+                .setRemoteViews(remoteViews)
+                .setSmallIcon(updateConfig.getSmallIcon() > 0 ? updateConfig.getSmallIcon() : R.drawable.lib_img_default)
+                .setFlags(Notification.FLAG_AUTO_CANCEL)
+                .setOnlyAlertOnce(true).build(mActivity);
+        notification = notificationUtils.getNotification("提示", "下载中...", updateConfig.getSmallIcon() > 0 ? updateConfig.getSmallIcon() : R.drawable.lib_img_default);
         notificationUtils.setNotificationProgress(notificationId, progress);
     }
 

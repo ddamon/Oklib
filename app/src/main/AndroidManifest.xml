@@ -54,6 +54,7 @@
         <activity
             android:name="com.dm.learn.rxjava.rxbus.RxBusTestActivity"
             android:theme="@style/Theme.AppCompat" />
+
     </application>
 
 </manifest>

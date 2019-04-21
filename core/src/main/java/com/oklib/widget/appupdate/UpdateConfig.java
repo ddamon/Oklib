@@ -38,6 +38,19 @@ public class UpdateConfig {
      */
     private int notificationViewResId;
     /**
+     * 自定义通知栏更新smallIcon
+     */
+    private int smallIcon;
+
+    public int getSmallIcon() {
+        return smallIcon;
+    }
+
+    public void setSmallIcon(int smallIcon) {
+        this.smallIcon = smallIcon;
+    }
+
+    /**
      * 是否显示通知栏(默认显示)
      */
     private boolean isShowNotification = true;
@@ -55,6 +68,9 @@ public class UpdateConfig {
         return notificationViewResId;
     }
 
+    /**
+     * @param notificationViewResId
+     */
     public void setNotificationViewResId(int notificationViewResId) {
         this.notificationViewResId = notificationViewResId;
     }
@@ -78,6 +94,9 @@ public class UpdateConfig {
 
         if (packageName == null || "".equals(packageName)) {
             throw new RuntimeException("必须指定packageName");
+        }
+        if (isShowNotification && notificationViewResId <= 0) {
+            throw new RuntimeException("设置显示通知时必须指定notificationViewResId");
         }
         this.packageName = packageName;
         this.notificationViewResId = notificationViewResId;

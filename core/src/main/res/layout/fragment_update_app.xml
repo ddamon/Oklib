@@ -14,12 +14,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/shape_white_update_bottom_10bg"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:lineSpacingExtra="5dp"
+                android:text="@string/update_title_info"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
 
-            <!--这个地方需要设置可以滚动-->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -37,7 +48,7 @@
                     android:lineSpacingExtra="5dp"
                     android:text="@string/update_content_info"
                     android:textColor="@android:color/black"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
             </ScrollView>
 
 
@@ -63,9 +74,10 @@
 
                 <TextView
                     android:id="@+id/tv_cancel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/shape_666666_bg_transparent_20dp"
                     android:gravity="center"
                     android:paddingLeft="20dp"
