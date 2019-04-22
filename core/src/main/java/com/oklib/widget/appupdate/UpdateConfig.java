@@ -2,6 +2,8 @@ package com.oklib.widget.appupdate;
 
 import android.support.annotation.NonNull;
 
+import com.oklib.R;
+
 /**
  * Created by Damon.Han on 2019/3/13 0013.
  *
@@ -76,7 +78,7 @@ public class UpdateConfig {
     }
 
 
-    public UpdateConfig(boolean isForceUpdate, String apkUrl, String saveApkPath, String apkName, String desc, String packageName, int notificationViewResId, boolean isShowNotification) {
+    public UpdateConfig(boolean isForceUpdate, String apkUrl, String saveApkPath, String apkName, String desc, String packageName, int smallIcon,int notificationViewResId, boolean isShowNotification) {
         this.isForceUpdate = isForceUpdate;
         if (apkUrl == null || "".equals(apkUrl)) {
             throw new RuntimeException("必须指定apk地址");
@@ -95,10 +97,11 @@ public class UpdateConfig {
         if (packageName == null || "".equals(packageName)) {
             throw new RuntimeException("必须指定packageName");
         }
-        if (isShowNotification && notificationViewResId <= 0) {
-            throw new RuntimeException("设置显示通知时必须指定notificationViewResId");
+        if (isShowNotification && smallIcon <= 0) {
+            smallIcon = R.drawable.ic_file_download_black_36dp;
         }
         this.packageName = packageName;
+        this.smallIcon = smallIcon;
         this.notificationViewResId = notificationViewResId;
         this.isShowNotification = isShowNotification;
     }

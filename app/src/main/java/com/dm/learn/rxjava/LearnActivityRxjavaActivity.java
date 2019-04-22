@@ -137,7 +137,7 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
         String firstUrl = "http://ucan.25pp.com/Wandoujia_web_seo_baidu_homepage.apk";
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "apk";
         String desc = getResources().getString(R.string.update_content_info);
-        UpdateConfig updateConfig = new UpdateConfig(false, firstUrl, path, "aaa.apk", desc, BuildConfig.APPLICATION_ID, R.mipmap.shit_blue, true);
+        UpdateConfig updateConfig = new UpdateConfig(false, firstUrl, path, "aaa.apk", desc, BuildConfig.APPLICATION_ID, R.mipmap.shit_blue, 0,true);
 
         /*
          * @param isForceUpdate             是否强制更新

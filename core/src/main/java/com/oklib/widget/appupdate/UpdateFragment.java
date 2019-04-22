@@ -362,7 +362,7 @@ public class UpdateFragment extends BaseDialogFragment implements View.OnClickLi
                 .setSmallIcon(updateConfig.getSmallIcon() > 0 ? updateConfig.getSmallIcon() : R.drawable.lib_img_default)
                 .setFlags(Notification.FLAG_AUTO_CANCEL)
                 .setOnlyAlertOnce(true).build(mActivity);
-        notification = notificationUtils.getNotification("提示", "下载中...", updateConfig.getSmallIcon() > 0 ? updateConfig.getSmallIcon() : R.drawable.lib_img_default);
+        notification = notificationUtils.getNotification("提示", "下载中...", updateConfig.getSmallIcon() > 0 ? updateConfig.getSmallIcon() : R.drawable.ic_file_download_black_36dp);
         notificationUtils.setNotificationProgress(notificationId, progress);
     }
 
