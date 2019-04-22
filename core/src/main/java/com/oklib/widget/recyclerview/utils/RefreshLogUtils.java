@@ -2,6 +2,8 @@ package com.oklib.widget.recyclerview.utils;
 
 import android.util.Log;
 
+import com.oklib.BuildConfig;
+
 /**
  * <pre>
  *     @author yangchong
@@ -14,7 +16,7 @@ import android.util.Log;
 public final class RefreshLogUtils {
 
     private static final String TAG = "RefreshLogUtils";
-    private static boolean mIsLog = true;
+    private static boolean mIsLog = BuildConfig.LOG_DEBUG;
 
     public static void setLog(boolean isLog){
         mIsLog = isLog;
