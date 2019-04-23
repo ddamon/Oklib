@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Oklib.iml" filepath="$PROJECT_DIR$/Oklib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core_view/core_view.iml" filepath="$PROJECT_DIR$/core_view/core_view.iml" />
     </modules>
   </component>
 </project>
