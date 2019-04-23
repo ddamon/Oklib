@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!-- 填充颜色 -->
-    <solid android:color="#ffe935" />
+    <solid android:color="@color/turquoise" />
     <!-- 线的宽度，颜色灰色 -->
     <stroke
         android:width="0px"
