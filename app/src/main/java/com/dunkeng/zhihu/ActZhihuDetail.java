@@ -26,6 +26,7 @@ import com.oklib.base.CoreBaseActivity;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.file.HtmlUtil;
 import com.oklib.utils.view.SnackbarUtil;
+import com.oklib.utils.view.StatusBarUtil;
 import com.oklib.widget.imageloader.ImageLoader;
 import com.oklib.widget.imageloader.ImageLoaderUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -68,6 +69,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
 
     @Override
     public void initUI(Bundle savedInstanceState) {
+        StatusBarUtil.setTransparent(this);
         ButterKnife.bind(this);
         setSwipeBackEnable(true);
         WebSettings settings = wvDetailContent.getSettings();
