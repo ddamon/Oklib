@@ -677,8 +677,6 @@ public class FileUtil {
      * @param urls the file URLs to convert, {@code null} returns empty array
      * @return a non-{@code null} array of Files matching the input, with a {@code null} item
      * if there was a {@code null} at that index in the input array
-     * @throws IllegalArgumentException if any file is not a URL file
-     * @throws IllegalArgumentException if any file is incorrectly encoded
      * @since 1.1
      */
     public static File[] toFiles(URL[] urls) {
@@ -706,8 +704,8 @@ public class FileUtil {
      *
      * @param files the files to convert, must not be {@code null}
      * @return an array of URLs matching the input
-     * @throws IOException          if a file cannot be converted
-     * @throws NullPointerException if the parameter is null
+     * @throws IOException if a file cannot be converted
+     *                     if the parameter is null
      */
     public static URL[] toURLs(File[] files) throws IOException {
         URL[] urls = new URL[files.length];
@@ -736,9 +734,9 @@ public class FileUtil {
      *
      * @param srcFile an existing file to copy, must not be {@code null}
      * @param destDir the directory to place the copy in, must not be {@code null}
-     * @throws NullPointerException if source or destination is null
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                if source or destination is null
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @see #copyFile(File, File, boolean)
      */
     public static void copyFileToDirectory(File srcFile, File destDir) throws IOException {
@@ -763,9 +761,9 @@ public class FileUtil {
      * @param destDir          the directory to place the copy in, must not be {@code null}
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                         if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @see #copyFile(File, File, boolean)
      * @since 1.3
      */
@@ -795,9 +793,9 @@ public class FileUtil {
      *
      * @param srcFile  an existing file to copy, must not be {@code null}
      * @param destFile the new file, must not be {@code null}
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                 if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @see #copyFileToDirectory(File, File)
      */
     public static void copyFile(File srcFile, File destFile) throws IOException {
@@ -822,9 +820,9 @@ public class FileUtil {
      * @param destFile         the new file, must not be {@code null}
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                         if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @see #copyFileToDirectory(File, File, boolean)
      */
     public static void copyFile(File srcFile, File destFile,
@@ -865,8 +863,8 @@ public class FileUtil {
      * @param input  the <code>File</code> to read from
      * @param output the <code>OutputStream</code> to write to
      * @return the number of bytes copied
-     * @throws NullPointerException if the input or output is null
-     * @throws IOException          if an I/O error occurs
+     * if the input or output is null
+     * @throws IOException if an I/O error occurs
      * @since 2.1
      */
     public static long copyFile(File input, OutputStream output) throws IOException {
@@ -942,9 +940,9 @@ public class FileUtil {
      *
      * @param srcDir  an existing directory to copy, must not be {@code null}
      * @param destDir the directory to place the copy in, must not be {@code null}
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @since 1.2
      */
     public static void copyDirectoryToDirectory(File srcDir, File destDir) throws IOException {
@@ -981,9 +979,9 @@ public class FileUtil {
      *
      * @param srcDir  an existing directory to copy, must not be {@code null}
      * @param destDir the new directory, must not be {@code null}
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @since 1.1
      */
     public static void copyDirectory(File srcDir, File destDir) throws IOException {
@@ -1010,9 +1008,9 @@ public class FileUtil {
      * @param destDir          the new directory, must not be {@code null}
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                         if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @since 1.1
      */
     public static void copyDirectory(File srcDir, File destDir,
@@ -1058,9 +1056,9 @@ public class FileUtil {
      * @param destDir the new directory, must not be {@code null}
      * @param filter  the filter to apply, null means copy all directories and files
      *                should be the same as the original
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @since 1.4
      */
     public static void copyDirectory(File srcDir, File destDir,
@@ -1108,9 +1106,9 @@ public class FileUtil {
      * @param filter           the filter to apply, null means copy all directories and files
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs during copying
+     *                         if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
      * @since 1.4
      */
     public static void copyDirectory(File srcDir, File destDir,
@@ -1380,7 +1378,7 @@ public class FileUtil {
      * @param file    the file to check, must not be {@code null}
      * @param seconds the maximum time in seconds to wait
      * @return true if file exists
-     * @throws NullPointerException if the file is {@code null}
+     * if the file is {@code null}
      */
     public static boolean waitFor(File file, int seconds) {
         int timeout = 0;
@@ -1909,7 +1907,7 @@ public class FileUtil {
      * </ul>
      *
      * @param file file or directory to delete, must not be {@code null}
-     * @throws NullPointerException  if the directory is {@code null}
+     *             if the directory is {@code null}
      * @throws FileNotFoundException if the file was not found
      * @throws IOException           in case deletion is unsuccessful
      */
@@ -1934,8 +1932,8 @@ public class FileUtil {
      * If file is directory delete it and all sub-directories.
      *
      * @param file file or directory to delete, must not be {@code null}
-     * @throws NullPointerException if the file is {@code null}
-     * @throws IOException          in case deletion is unsuccessful
+     *             if the file is {@code null}
+     * @throws IOException in case deletion is unsuccessful
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file.isDirectory()) {
@@ -1949,8 +1947,8 @@ public class FileUtil {
      * Schedules a directory recursively for deletion on JVM exit.
      *
      * @param directory directory to delete, must not be {@code null}
-     * @throws NullPointerException if the directory is {@code null}
-     * @throws IOException          in case deletion is unsuccessful
+     *                  if the directory is {@code null}
+     * @throws IOException in case deletion is unsuccessful
      */
     private static void deleteDirectoryOnExit(File directory) throws IOException {
         if (!directory.exists()) {
@@ -1967,8 +1965,8 @@ public class FileUtil {
      * Cleans a directory without deleting it.
      *
      * @param directory directory to clean, must not be {@code null}
-     * @throws NullPointerException if the directory is {@code null}
-     * @throws IOException          in case cleaning is unsuccessful
+     *                  if the directory is {@code null}
+     * @throws IOException in case cleaning is unsuccessful
      */
     private static void cleanDirectoryOnExit(File directory) throws IOException {
         if (!directory.exists()) {
@@ -2008,8 +2006,8 @@ public class FileUtil {
      * then an IOException is thrown.
      *
      * @param directory directory to create, must not be {@code null}
-     * @throws NullPointerException if the directory is {@code null}
-     * @throws IOException          if the directory cannot be created or the file already exists but is not a directory
+     *                  if the directory is {@code null}
+     * @throws IOException if the directory cannot be created or the file already exists but is not a directory
      */
     public static void forceMkdir(File directory) throws IOException {
         if (directory.exists()) {
@@ -2047,7 +2045,7 @@ public class FileUtil {
      *             of (must not be {@code null}).
      * @return the length of the file, or recursive size of the directory,
      * provided (in bytes).
-     * @throws NullPointerException     if the file is {@code null}
+     * if the file is {@code null}
      * @throws IllegalArgumentException if the file does not exist.
      * @since 2.0
      */
@@ -2077,7 +2075,7 @@ public class FileUtil {
      *             of (must not be {@code null}).
      * @return the length of the file, or recursive size of the directory,
      * provided (in bytes).
-     * @throws NullPointerException     if the file is {@code null}
+     * if the file is {@code null}
      * @throws IllegalArgumentException if the file does not exist.
      * @since 2.4
      */
@@ -2102,7 +2100,7 @@ public class FileUtil {
      * @param directory directory to inspect, must not be {@code null}
      * @return size of directory in bytes, 0 if directory is security restricted, a negative number when the real total
      * is greater than {@link Long#MAX_VALUE}.
-     * @throws NullPointerException if the directory is {@code null}
+     * if the directory is {@code null}
      */
     public static long sizeOfDirectory(File directory) {
         checkDirectory(directory);
@@ -2134,7 +2132,7 @@ public class FileUtil {
      *
      * @param directory directory to inspect, must not be {@code null}
      * @return size of directory in bytes, 0 if directory is security restricted.
-     * @throws NullPointerException if the directory is {@code null}
+     * if the directory is {@code null}
      * @since 2.4
      */
     public static BigInteger sizeOfDirectoryAsBigInteger(File directory) {
@@ -2318,10 +2316,10 @@ public class FileUtil {
      *
      * @param srcDir  the directory to be moved
      * @param destDir the destination directory
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws FileExistsException  if the destination directory exists
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs moving the file
+     *                if source or destination is {@code null}
+     * @throws FileExistsException if the destination directory exists
+     * @throws IOException         if source or destination is invalid
+     * @throws IOException         if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveDirectory(File srcDir, File destDir) throws IOException {
@@ -2361,10 +2359,10 @@ public class FileUtil {
      * @param destDir       the destination file
      * @param createDestDir If {@code true} create the destination directory,
      *                      otherwise if {@code false} throw an IOException
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws FileExistsException  if the directory exists in the destination directory
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs moving the file
+     *                      if source or destination is {@code null}
+     * @throws FileExistsException if the directory exists in the destination directory
+     * @throws IOException         if source or destination is invalid
+     * @throws IOException         if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveDirectoryToDirectory(File src, File destDir, boolean createDestDir) throws IOException {
@@ -2395,10 +2393,10 @@ public class FileUtil {
      *
      * @param srcFile  the file to be moved
      * @param destFile the destination file
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws FileExistsException  if the destination file exists
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs moving the file
+     *                 if source or destination is {@code null}
+     * @throws FileExistsException if the destination file exists
+     * @throws IOException         if source or destination is invalid
+     * @throws IOException         if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveFile(File srcFile, File destFile) throws IOException {
@@ -2438,9 +2436,9 @@ public class FileUtil {
      * @param destDir       the destination file
      * @param createDestDir If {@code true} create the destination directory,
      *                      otherwise if {@code false} throw an IOException
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs moving the file
+     *                      if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveFileToDirectory(File srcFile, File destDir, boolean createDestDir) throws IOException {
@@ -2472,9 +2470,9 @@ public class FileUtil {
      * @param destDir       the destination directory
      * @param createDestDir If {@code true} create the destination directory,
      *                      otherwise if {@code false} throw an IOException
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid
-     * @throws IOException          if an IO error occurs moving the file
+     *                      if source or destination is {@code null}
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveToDirectory(File src, File destDir, boolean createDestDir) throws IOException {

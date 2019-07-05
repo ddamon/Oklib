@@ -1,5 +1,6 @@
 package com.dunkeng.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,8 +41,13 @@ import com.oklib.utils.assist.ShareUtils;
 import com.oklib.utils.helper.RxUtil;
 import com.oklib.utils.network.http.mode.CacheResult;
 import com.oklib.utils.view.SnackbarUtil;
+import com.oklib.widget.dialog.ConfirmDialog;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
@@ -52,6 +58,10 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+    private RxPermissions permissions;
+    private ConfirmDialog confirmDialog;
+    private String appName;
+    private Map<String, Permission> allNeadPermissions;
 
     @Override
     protected void onResume() {
@@ -82,7 +92,32 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
             }
         });
 //        navigationView.setCheckedItem(R.id.nav_zhihu);
+        getPermission();
+    }
 
+    private void getPermission() {
+        appName = getResources().getString(R.string.app_name);
+        if (allNeadPermissions == null) {
+            allNeadPermissions = new HashMap<>();
+        }
+        if (permissions == null) {
+            permissions = new RxPermissions(MainActivity.this);
+        }
+        permissions
+                .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(permission -> {
+                    allNeadPermissions.put(permission.name, permission);
+                    //全部权限请求完毕
+                    if (allNeadPermissions.size() == 2) {
+                        Permission externalPermission = allNeadPermissions.get(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        if (externalPermission.granted) {
+                        } else {
+                            allNeadPermissions.clear();
+                            showMsg("请授予权限");
+                            getPermission();
+                        }
+                    }
+                });
     }
 
     @Override
