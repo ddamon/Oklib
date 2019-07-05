@@ -9,11 +9,8 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import org.jetbrains.annotations.NotNull;
 
 
-
 /**
- * Any Presenter should implement {@link IPresenter}, ensure that IPresenter is
- * <p>
- * Created by qingmei2 on 2017/8/14.
+ * IPresenter-带生命周期管理
  */
 public interface IPresenter extends LifecycleObserver {
 

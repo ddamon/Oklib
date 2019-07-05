@@ -5,8 +5,9 @@ package com.oklib.base;
  *
  * @author Damon
  */
-public interface IBaseActivity extends IView{
+public interface IBaseActivity extends IView {
     void showToast(String string);
+
     void showLog(String string);
 
 }
