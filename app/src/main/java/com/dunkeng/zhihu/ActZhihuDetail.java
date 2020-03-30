@@ -69,9 +69,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
 
     @Override
     public void initUI(Bundle savedInstanceState) {
-        StatusBarUtil.setTransparent(this);
         ButterKnife.bind(this);
-        setSwipeBackEnable(true);
         WebSettings settings = wvDetailContent.getSettings();
         if (App.getNoImageState()) {
             settings.setBlockNetworkImage(true);

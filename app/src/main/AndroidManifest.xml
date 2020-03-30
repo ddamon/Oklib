@@ -26,15 +26,20 @@
         android:theme="@style/AppTheme">
         <activity android:name=".tools.ActivityWebviewCam" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".IndexActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/full_screen_theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".zhihu.ActZhihuDetail"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />

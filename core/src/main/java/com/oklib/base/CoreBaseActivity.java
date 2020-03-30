@@ -120,7 +120,7 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         if (isSwipeBackEnable()) {
             super.setContentView(getContainer());
             View view = LayoutInflater.from(this).inflate(layoutResID, null);
-            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            view.setBackgroundColor(getResources().getColor(R.color.full_transparent));
             swipeBackLayout.addView(view);
         } else {
             super.setContentView(layoutResID);
@@ -132,11 +132,17 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
         swipeBackLayout = new SwipeBackLayout(this);
         swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ivShadow = new ImageView(this);
-        ivShadow.setBackgroundColor(getResources().getColor(R.color.theme_black_7f));
+        ivShadow.setBackgroundColor(getResources().getColor(R.color.full_transparent));
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         container.addView(ivShadow, params);
         container.addView(swipeBackLayout);
         swipeBackLayout.setOnSwipeBackListener((fa, fs) -> ivShadow.setAlpha(1 - fs));
+        swipeBackLayout.setSwipeBackCompleteListener(new SwipeBackLayout.SwipeBackCompleteListener() {
+            @Override
+            public void onSwipeBackCompleted() {
+                swipAction();
+            }
+        });
         return container;
     }
 
@@ -207,6 +213,12 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
 
     public boolean isSwipeBackEnable() {
         return swipeBackEnable;
+    }
+
+    /**
+     * 滑动之后执行的动作
+     */
+    public void swipAction() {
     }
 
     private boolean fixOrientation() {

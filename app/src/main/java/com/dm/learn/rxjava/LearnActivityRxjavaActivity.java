@@ -128,5 +128,4 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
         exceptionEvent.text = null;
         Logger.e(exceptionEvent.text.substring(0));
     }
-
 }

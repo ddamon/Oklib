@@ -31,6 +31,7 @@ import com.dunkeng.meizi.view.FragmentMeizi;
 import com.dunkeng.news.FragmentNewsMain;
 import com.dunkeng.tools.FragmentTools;
 import com.dunkeng.wx.FragmentWx;
+import com.dunkeng.zhihu.ActZhihuDetail;
 import com.dunkeng.zhihu.FragmentZhihu;
 import com.jakewharton.rxbinding3.view.RxView;
 import com.oklib.AppManager;
@@ -254,4 +255,5 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     public void showMsg(String msg) {
         SnackbarUtil.showShort(getWindow().getDecorView(), msg);
     }
+
 }

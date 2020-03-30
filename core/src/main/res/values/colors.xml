@@ -40,7 +40,7 @@
 
     <color name="drop_down_selected">#8BC34A</color>
     <color name="drop_down_unselected">#808080</color>
-
+    <color name="half_white">#7FFFFFFF</color>
     <color name="mask_color">#88888888</color>
     <color name="check_bg">#f1f1f1</color>
     <color name="un_press_color">#8BC34A</color>

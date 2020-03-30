@@ -330,7 +330,11 @@ public class SwipeBackLayout extends ViewGroup {
                     state == ViewDragHelper.STATE_IDLE) {
                 // the view stopped from moving.
                 if (draggingOffset == getDragRange()) {
-                    finish();
+                    if (swipeBackCompleteListener != null) {
+                        swipeBackCompleteListener.onSwipeBackCompleted();
+                    } else {
+                        finish();
+                    }
                 }
             }
 
@@ -455,5 +459,16 @@ public class SwipeBackLayout extends ViewGroup {
 
     }
 
+    private SwipeBackCompleteListener swipeBackCompleteListener;
+
+    public interface SwipeBackCompleteListener {
+
+        void onSwipeBackCompleted();
+
+    }
+
+    public void setSwipeBackCompleteListener(SwipeBackCompleteListener swipeBackCompleteListener) {
+        this.swipeBackCompleteListener = swipeBackCompleteListener;
+    }
 }
 
