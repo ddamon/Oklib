@@ -1,3 +1,19 @@
+/*
+Copyright 2017 yangchong211（github.com/yangchong211）
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package com.oklib.widget.recyclerview.item;
 
 import android.annotation.SuppressLint;
@@ -11,6 +27,7 @@ import android.view.ViewGroup;
 
 
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.oklib.widget.recyclerview.utils.RefreshLogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +75,16 @@ public class StickyHeaderItemLine extends RecyclerView.ItemDecoration {
     }
 
 
+    /**
+     * 调用的是getItemOffsets会被多次调用，在layoutManager每次测量可摆放的view的时候回调用一次，
+     * 在当前状态下需要摆放多少个view这个方法就会回调多少次。
+     * @param outRect                   核心参数，这个rect相当于item摆放的时候设置的margin，
+     *                                  rect的left相当于item的marginLeft，
+     *                                  rect的right相当于item的marginRight
+     * @param view                      当前绘制的view，可以用来获取它在adapter中的位置
+     * @param parent                    recyclerView
+     * @param state                     状态，用的很少
+     */
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
                                @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
@@ -79,12 +106,13 @@ public class StickyHeaderItemLine extends RecyclerView.ItemDecoration {
                 }
             }
         }
-
-        if (position != RecyclerView.NO_POSITION && hasHeader(position)
-                && showHeaderAboveItem(position)) {
+        boolean hasHeader = hasHeader(position);
+        boolean showHeaderAboveItem = showHeaderAboveItem(position);
+        if (position != RecyclerView.NO_POSITION && hasHeader && showHeaderAboveItem) {
             View header = getHeader(parent, position).itemView;
             headerHeight = getHeaderHeightForLayout(header);
         }
+        RefreshLogUtils.d("StickyItemLine------headerHeight---"+headerHeight);
         outRect.set(0, headerHeight, 0, 0);
     }
 
@@ -115,7 +143,11 @@ public class StickyHeaderItemLine extends RecyclerView.ItemDecoration {
         return null;
     }
 
-
+    /**
+     * 判断是否有header
+     * @param position                  索引
+     * @return
+     */
     private boolean hasHeader(int position) {
         return mAdapter.getHeaderId(position) != NO_HEADER_ID;
     }
@@ -147,7 +179,14 @@ public class StickyHeaderItemLine extends RecyclerView.ItemDecoration {
         }
     }
 
-
+    /**
+     * 绘制分割线
+     * ItemDecoration的onDrawOver方法是在RecyclerView的draw方法中调用的
+     * 同样传入的是RecyclerView的canvas，这时候onLayout已经调用，所以此时绘制的内容会覆盖item。
+     * @param canvas                    canvas用来绘制的画板
+     * @param parent                    recyclerView
+     * @param state                     状态，用的很少
+     */
     @Override
     public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent,
                            @NonNull RecyclerView.State state) {
@@ -221,7 +260,6 @@ public class StickyHeaderItemLine extends RecyclerView.ItemDecoration {
             }
             top = Math.max(0, top);
         }
-
         return top;
     }
 

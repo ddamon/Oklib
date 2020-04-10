@@ -106,7 +106,6 @@ dependencies {
 
     //轮播图/首页banner
     api 'cn.yc:YCBannerLib:1.4.0'
-    implementation 'com.orhanobut:dialogplus:1.11@aar'
 }
 
 apply from: '../bintray.gradle'
