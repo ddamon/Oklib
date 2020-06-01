@@ -1,9 +1,9 @@
 package com.oklib.base;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
-import android.support.annotation.CallSuper;
-import android.support.annotation.MainThread;
+import androidx.annotation.CallSuper;
+import androidx.annotation.MainThread;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.oklib.utils.RxLifecycleUtils;
 import com.uber.autodispose.AutoDisposeConverter;

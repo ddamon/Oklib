@@ -5,12 +5,13 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.oklib.R;
 
@@ -18,28 +19,6 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-/**
- * Implementation of {@link android.support.v4.view.PagerAdapter} that
- * uses a {@link android.support.v4.app.Fragment} to manage each page. This class also handles
- * saving and restoring of fragment's state.
- * <p/>
- * <p>This version of the pager is more useful when there are a large number
- * of pages, working more like a list view.  When pages are not visible to
- * the user, their entire fragment may be destroyed, only keeping the saved
- * state of that fragment.  This allows the pager to hold on to much less
- * memory associated with each visited page as compared to
- * {@link android.support.v4.app.FragmentPagerAdapter} at the cost of potentially more overhead when
- * switching between pages.
- * <p/>
- * <p>When using FragmentPagerAdapter the host ViewPager must have a
- * valid ID set.</p>
- * <p/>
- * <p>Subclasses only need to implement {@link #getItem(int, Fragment.SavedState)}
- * and {@link #getItemCount()} to have a working adapter.
- * <p>Warning:The fragment container id will be a simple sequence like [1,2,3....];
- * If you don't like this,you should use custom ContainerIdGenerator by  {@link #setContainerIdGenerator(IContainerIdGenerator)}
- * </p>
- */
 @TargetApi(12)
 public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<FragmentStatePagerAdapter.FragmentViewHolder> {
     private static final String TAG = "FragmentStatePagerAdapter";

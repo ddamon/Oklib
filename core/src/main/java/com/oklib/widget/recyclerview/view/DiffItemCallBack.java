@@ -1,7 +1,8 @@
 package com.oklib.widget.recyclerview.view;
 
-import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 
 public class DiffItemCallBack<T> extends DiffUtil.ItemCallback<T> {
 

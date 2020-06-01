@@ -17,16 +17,17 @@ limitations under the License.
 package com.oklib.widget.recyclerview.holder;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
 import com.oklib.widget.recyclerview.inter.OnItemChildClickListener;

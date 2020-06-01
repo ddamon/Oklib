@@ -91,7 +91,7 @@ public class DialogUtil {
 
     public static Dialog showCommonDialog(Context context, String message,
                                           DialogInterface.OnClickListener listener) {
-        return new android.support.v7.app.AlertDialog.Builder(context)
+        return new  AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton(context.getString(R.string.dialog_positive), listener)
                 .setNegativeButton(context.getString(R.string.dialog_negative), null)
@@ -100,7 +100,7 @@ public class DialogUtil {
 
     public static Dialog showConfirmDialog(Context context, String message,
                                            DialogInterface.OnClickListener listener) {
-        return new android.support.v7.app.AlertDialog.Builder(context)
+        return new  AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton(context.getString(R.string.dialog_positive), listener)
                 .show();

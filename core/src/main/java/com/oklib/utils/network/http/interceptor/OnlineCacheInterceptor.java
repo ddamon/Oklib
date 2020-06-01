@@ -1,7 +1,8 @@
 package com.oklib.utils.network.http.interceptor;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.network.common.ViseConfig;

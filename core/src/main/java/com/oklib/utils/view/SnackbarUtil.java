@@ -1,7 +1,8 @@
 package com.oklib.utils.view;
 
-import android.support.design.widget.Snackbar;
 import android.view.View;
+
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  */

@@ -16,8 +16,9 @@ limitations under the License.
 
 package com.oklib.widget.recyclerview.span;
 
-import android.support.v7.widget.GridLayoutManager;
 
+
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.oklib.widget.recyclerview.inter.InterItemView;
 

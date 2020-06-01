@@ -2,10 +2,11 @@ package com.dunkeng.zhihu;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
@@ -17,7 +18,6 @@ import com.dunkeng.zhihu.view.ZhiHuAdapter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
-import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
 import com.oklib.widget.recyclerview.inter.OnItemClickListener;
 
 import java.util.List;

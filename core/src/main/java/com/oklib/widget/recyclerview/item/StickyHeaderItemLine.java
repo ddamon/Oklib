@@ -19,9 +19,11 @@ package com.oklib.widget.recyclerview.item;
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -42,7 +44,8 @@ import java.util.Map;
  *     revise:
  * </pre>
  */
-public class StickyHeaderItemLine extends RecyclerView.ItemDecoration {
+public class StickyHeaderItemLine extends RecyclerView
+        .ItemDecoration {
 
     private static final long NO_HEADER_ID = -1L;
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;

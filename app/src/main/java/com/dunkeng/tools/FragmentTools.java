@@ -2,10 +2,10 @@ package com.dunkeng.tools;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 import com.dunkeng.R;
 import com.dunkeng.common.OnFragmentOpenDrawerListener;
@@ -71,7 +71,6 @@ public class FragmentTools extends CoreBaseFragment<ToolsPresenter, ToolsModel> 
             }
         });
 
-        GridLayoutManager manager = new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false);
     }
 
     @Override

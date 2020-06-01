@@ -3,7 +3,8 @@ package com.oklib.widget.imageloader;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;

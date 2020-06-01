@@ -2,10 +2,11 @@ package com.dm.learn.rxjava.ch2;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.dm.learn.rxjava.ch2.contract.RxjavaContract;
 import com.dm.learn.rxjava.ch2.model.RxjavaModel;

@@ -1,6 +1,7 @@
 package com.oklib.base;
 
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.view.ToastUtils;

@@ -1,6 +1,7 @@
 package com.oklib.utils.network.http.body;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.network.http.callback.UCallback;

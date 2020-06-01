@@ -1,9 +1,10 @@
 package com.dunkeng.news;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dunkeng.R;
 import com.dunkeng.common.Config;
@@ -18,7 +19,6 @@ import com.dunkeng.news.view.NewsAdapter;
 import com.oklib.base.CoreBaseFragment;
 import com.oklib.utils.view.ToastUtils;
 import com.oklib.widget.recyclerview.CoreRecyclerView;
-import com.oklib.widget.recyclerview.adapter.RecyclerArrayAdapter;
 import com.oklib.widget.recyclerview.inter.OnItemClickListener;
 
 import butterknife.BindView;

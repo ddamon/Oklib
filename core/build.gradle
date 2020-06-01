@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.ddamon'
+group = 'com.github.ddamon'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -31,7 +31,6 @@ android {
 }
 
 
-
 dependencies {
     //support
     api(rootProject.ext.dependencies["support-v4"]) {
@@ -47,11 +46,9 @@ dependencies {
     api rootProject.ext.dependencies["cardview-v7"]
     api rootProject.ext.dependencies["annotations"]
     //view
-    api(rootProject.ext.dependencies["butterknife"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-compat'
-    }
-    //rx
+    //引入ButterKnife
+    api "com.jakewharton:butterknife:10.0.0"
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     //    api rootProject.ext.dependencies["rxjava2"]
     api(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
@@ -87,12 +84,12 @@ dependencies {
     }
     api rootProject.ext.dependencies["rxbinding"]
     api rootProject.ext.dependencies["okhttp3"]
-    compileOnly rootProject.ext.dependencies["glide"]
+    annotationProcessor 'androidx.annotation:annotation:1.0.0'
+    api rootProject.ext.dependencies["glide"]
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }
     //tools
-    compileOnly rootProject.ext.dependencies["javax.annotation"]
     api rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["auto-dispose"]
     api rootProject.ext.dependencies["auto-dispose-archcomponents"]

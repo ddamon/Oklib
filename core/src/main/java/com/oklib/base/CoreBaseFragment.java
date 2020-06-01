@@ -1,24 +1,24 @@
 package com.oklib.base;
 
 import android.app.Activity;
-import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.MainThread;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.CallSuper;
+import androidx.annotation.MainThread;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+
 import com.oklib.R;
 import com.oklib.base.swipeback.SwipeBackLayout;
 import com.oklib.utils.RxLifecycleUtils;
 import com.oklib.utils.TUtil;
-import com.oklib.utils.view.StatusBarUtil;
 import com.uber.autodispose.AutoDisposeConverter;
 
 import org.jetbrains.annotations.NotNull;
@@ -173,9 +173,6 @@ public abstract class CoreBaseFragment<P extends CoreBasePresenter, M extends Co
 
     }
 
-    public void setStatusBarColor() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(), null);
-    }
 
     @Override
     public void showToast(String string) {

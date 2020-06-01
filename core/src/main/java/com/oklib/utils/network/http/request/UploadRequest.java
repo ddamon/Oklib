@@ -1,7 +1,8 @@
 package com.oklib.utils.network.http.request;
 
-import android.support.annotation.NonNull;
 
+
+import androidx.annotation.NonNull;
 
 import com.oklib.utils.network.http.body.UploadProgressRequestBody;
 import com.oklib.utils.network.http.callback.ACallback;
