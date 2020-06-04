@@ -231,8 +231,8 @@ public class NotificationUtils {
 
     public static class Builder {
         private Context context;
-        private String CHANNEL_ID = BuildConfig.APPLICATION_ID + "_Channel_Id";
-        private String CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_Channel_Name";
+        private String CHANNEL_ID = BuildConfig.LIBRARY_PACKAGE_NAME + "_Channel_Id";
+        private String CHANNEL_NAME = BuildConfig.LIBRARY_PACKAGE_NAME + "_Channel_Name";
         private int progress = -1;
         private int[] flags;
         private boolean ongoing = false;
