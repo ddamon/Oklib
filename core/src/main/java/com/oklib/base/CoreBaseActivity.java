@@ -23,6 +23,7 @@ import com.oklib.R;
 import com.oklib.base.swipeback.SwipeBackLayout;
 import com.oklib.utils.RxLifecycleUtils;
 import com.oklib.utils.TUtil;
+import com.oklib.utils.view.SnackbarUtil;
 import com.oklib.utils.view.ThemeUtil;
 import com.uber.autodispose.AutoDisposeConverter;
 
@@ -201,6 +202,10 @@ public abstract class CoreBaseActivity<P extends CoreBasePresenter, M extends Co
     @Override
     public void showToast(String msg) {
         baseActivityDelegate.showToast(msg);
+    }
+
+    public void showSnackBar(String msg) {
+        SnackbarUtil.showShort(getWindow().getDecorView(), msg);
     }
 
     @Override

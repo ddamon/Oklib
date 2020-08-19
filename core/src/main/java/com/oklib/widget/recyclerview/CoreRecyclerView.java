@@ -179,6 +179,7 @@ public class CoreRecyclerView extends FrameLayout {
         //生成主View
         View v = LayoutInflater.from(getContext()).inflate(R.layout.refresh_recyclerview, this);
         mPtrLayout = v.findViewById(R.id.ptr_layout);
+        mPtrLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         mPtrLayout.setEnabled(false);
 
         //加载进度view

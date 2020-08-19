@@ -124,8 +124,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
             options.placeholder(imageLoader.getPlaceHolder());
         }
         if (imageLoader.isCircle()) {
-            options.centerCrop();
-            //圆形图片
+            options.circleCrop();
             drawableRequestBuilder.apply(options).into(imageLoader.getImgView());
         }
         if (imageLoader.getRoundRadius() > 0) {
@@ -135,6 +134,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         if (isCache) {
             options.diskCacheStrategy(DiskCacheStrategy.ALL);
         }
+
         drawableRequestBuilder.transition(DrawableTransitionOptions.withCrossFade());
         drawableRequestBuilder.apply(options).into(imageLoader.getImgView());
         return drawableRequestBuilder;

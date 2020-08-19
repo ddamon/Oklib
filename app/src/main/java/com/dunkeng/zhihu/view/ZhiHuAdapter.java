@@ -53,7 +53,7 @@ public class ZhiHuAdapter extends RecyclerArrayAdapter {
             String url = "";
             url = item.getImage();
             ImageLoaderUtil.getInstance().loadImage(getContext(),
-                    new ImageLoader.Builder().placeHolder(R.mipmap.shit_blue).fallback(R.mipmap.shit_blue)
+                    new ImageLoader.Builder().placeHolder(R.mipmap.shit_blue).fallback(R.mipmap.shit_blue).roundRadius(10)
                             .imgView(ivDailyItemImage)
                             .url(url).build());
         }

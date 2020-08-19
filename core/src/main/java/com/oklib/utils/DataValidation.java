@@ -46,7 +46,7 @@ public class DataValidation {
      * @return 验证成功返回true，验证失败返回false
      */
     public static boolean checkMobile(String mobile) {
-        String regex = "(\\+\\d+)?1[34578]\\d{9}$";
+        String regex = "(\\+\\d+)?1[3456789]\\d{9}$";
         return Pattern.matches(regex, mobile);
     }
 
@@ -231,5 +231,14 @@ public class DataValidation {
     }
 
     private DataValidation() {
+    }
+
+    public static void main(String[] args){
+       boolean t1 =  checkMobile("19912345678");
+       boolean t2 =  checkMobile("13612345678");
+       boolean t3 =  checkMobile("16612345678");
+       System.out.println(t1);
+       System.out.println(t2);
+       System.out.println(t3);
     }
 }
