@@ -50,6 +50,7 @@
             android:name=".meizi.view.ActPictureDesc"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
         <activity android:name=".about.ActivityAbout" />
+        <activity android:name="com.dm.learn.rxjava.ActX5FileDetail" />
 
 
         <!--rxjava_learn-->
@@ -70,6 +71,22 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <provider
+            android:name="com.tencent.smtt.utils.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" />
+
     </application>
 
 </manifest>

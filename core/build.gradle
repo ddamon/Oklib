@@ -96,10 +96,10 @@ dependencies {
     //photoview
     api rootProject.ext.dependencies["photoview"]
     //fragmentation
-    // To get SwipeBack feature, rely on both fragmentation & fragmentation-swipeback
-    api 'me.yokeyword:fragmentationx:1.0.2'
-    // Swipeback is based on fragmentation. Refer to SwipeBackActivity/Fragment for your Customized SupportActivity/Fragment
-    api 'me.yokeyword:fragmentationx-swipeback:1.0.2'
+// 如果想使用SwipeBack 滑动边缘退出Fragment/Activity功能，完整的添加规则如下：
+    api 'me.yokeyword:fragmentation:1.3.8'
+// swipeback基于fragmentation, 如果是自定制SupportActivity/Fragment，则参照SwipeBackActivity/Fragment实现即可
+    api 'me.yokeyword:fragmentation-swipeback:1.3.8'
 
     compileOnly 'org.greenrobot:greendao:3.2.0'
 

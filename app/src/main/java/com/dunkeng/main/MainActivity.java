@@ -68,10 +68,7 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
     @Override
     protected void onResume() {
         super.onResume();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, (Toolbar) findViewById(R.id.toolbar), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        
     }
 
     @Override
@@ -134,7 +131,14 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressedSupport();
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {
+                Toast.makeText(this, "再按一次结束蹲坑", Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;
+            } else {
+                finish();
+                AppManager.getAppManager().AppExit(mContext);
+            }
         }
     }
 
@@ -191,24 +195,6 @@ public class MainActivity extends CoreBaseActivity<MainPresenter, MainModel> imp
 
     private long firstTime = 0;
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                long secondTime = System.currentTimeMillis();
-                if (secondTime - firstTime > 2000) {
-                    Toast.makeText(this, "再按一次结束蹲坑", Toast.LENGTH_SHORT).show();
-                    firstTime = secondTime;
-                    return true;
-                } else {
-                    finish();
-                    AppManager.getAppManager().AppExit(mContext);
-                }
-                break;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     public void showLunar(LunarModel info) {

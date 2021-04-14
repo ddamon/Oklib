@@ -114,6 +114,8 @@ public class LearnActivityRxjavaActivity extends CoreBaseActivity
         } else if (id == R.id.nav_13) {
             startActivity(new Intent(mContext, RxBusTestActivity.class));
         } else if (id == R.id.nav_test_update) {
+        } else if (id == R.id.nav_test_ppt) {
+            startActivity(new Intent(mContext, ActX5FileDetail.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

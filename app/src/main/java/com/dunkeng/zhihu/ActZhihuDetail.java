@@ -24,6 +24,7 @@ import com.dunkeng.zhihu.presenter.ZhihuDetailsPresenter;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.oklib.base.CoreBaseActivity;
+import com.oklib.utils.Logger.Logger;
 import com.oklib.utils.NetUtils;
 import com.oklib.utils.file.HtmlUtil;
 import com.oklib.utils.view.SnackbarUtil;
@@ -126,6 +127,7 @@ public class ActZhihuDetail extends CoreBaseActivity<ZhihuDetailsPresenter, Zhih
         String htmlData = HtmlUtil.createHtmlData(info.getBody(), info.getCss(), info.getJs());
         wvDetailContent.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
         setToolBar(toolbar,info.getTitle());
+        Logger.e(wvDetailContent.getHeight()+"============");
     }
 
     @Override
